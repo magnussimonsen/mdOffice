@@ -618,15 +618,13 @@ footer {
 
   nav .menu {
     flex-wrap: wrap;
+    justify-content: center;
     row-gap: 10px;
     gap: 16px;
   }
 
   nav .menu-links {
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 16px;
+    display: contents;
   }
 
   .page-hero {
