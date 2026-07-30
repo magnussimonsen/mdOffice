@@ -68,7 +68,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 40px;
+  padding: 0px 12px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -78,34 +78,35 @@ nav {
   z-index: 100;
 }
 
-/* Taken out of flex flow so its height doesn't stretch the bar; nav's own
-   height now comes only from .menu, and a taller logo can overflow below it. */
-nav .logo {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  display: flex;
-  align-items: flex-start;
-  text-decoration: none;
-  z-index: 1;
-}
-
-nav .logo img {
-  height: 62px;
-  display: block;
-}
-
 nav .menu {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin-left: auto;
+  width: 100%;
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+nav .logo img {
+  height: 32px;
+  display: block;
+}
+
+nav .menu-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 nav .menu a {
   text-decoration: none;
   color: var(--color-ink-muted);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 8px;
@@ -113,7 +114,7 @@ nav .menu a {
 }
 
 nav .menu .score {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--color-ink-subtle);
   white-space: nowrap;
@@ -128,7 +129,7 @@ nav .menu a:not(.cta):hover {
 nav .menu a.cta {
   color: var(--color-accent-ink);
   background: var(--color-accent-wash);
-  padding: 7px 14px;
+  padding: 7px 12px;
   border-radius: 999px;
 }
 
@@ -611,16 +612,15 @@ footer {
     padding: 14px 20px;
   }
 
-  nav .logo {
-    left: 20px;
-    top: 14px;
-  }
-
   nav .logo img {
     height: 48px;
   }
 
   nav .menu {
+    gap: 16px;
+  }
+
+  nav .menu-links {
     gap: 16px;
   }
 
