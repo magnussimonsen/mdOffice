@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started — mdOffice</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <nav>
+    <a class="logo" href="index.html"><img src="img/mdOffice_logo_light.png" alt="mdOffice" /></a>
+    <div class="menu">
+      <span class="score" id="kitten-score"></span>
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get Started</a>
+      <a href="https://github.com/magnussimonsen/mdOffice">View on GitHub</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html" class="cta">Support me</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="page-hero">
+    <h1>Getting Started on Windows, macOS and Linux</h1>
+    <p>Four one-time setup steps, then save a Markdown file to build it.</p>
+  </section>
+
+  <!-- Steps -->
+  <section class="page-content">
+    <ol class="steps">
+      <li>
+        <h3>Install Pandoc and a LaTeX distribution</h3>
+        <p>Pandoc does the document conversion; a LaTeX distribution (providing <code>xelatex</code>) is only needed for PDF and Beamer output.</p>
+
+        <span class="os-label">Windows</span>
+        <pre><code>winget install --id JohnMacFarlane.Pandoc</code></pre>
+        <p>Then install <a href="https://miktex.org/download">MiKTeX</a> for <code>xelatex</code>.</p>
+
+        <span class="os-label">Linux</span>
+        <pre><code>sudo apt install pandoc texlive-xetex texlive-latex-extra texlive-fonts-extra</code></pre>
+
+        <span class="os-label">macOS</span>
+        <pre><code>brew install pandoc</code></pre>
+        <p>Then install <a href="https://tug.org/mactex/">MacTeX</a> for <code>xelatex</code>.</p>
+
+        <p>Verify both are on <code>PATH</code>:</p>
+        <pre><code>pandoc --version
+xelatex --version</code></pre>
+      </li>
+
+      <li>
+        <h3>Check that Python is installed</h3>
+        <span class="os-label">Windows</span>
+        <pre><code>python --version</code></pre>
+        <span class="os-label">Linux / macOS</span>
+        <pre><code>python3 --version</code></pre>
+        <p>
+          Common issue: Python may be aliased differently on your system. If
+          <code>python</code>/<code>python3</code> isn't found, try <code>py</code>,
+          <code>py3</code>, or a version-specific name like <code>python3.13</code>.
+        </p>
+        <p>If none of those print a Python 3 version, install it from <a href="https://www.python.org/downloads/">python.org</a> first.</p>
+      </li>
+
+      <li>
+        <h3>Create the virtual environment</h3>
+        <p>The workspace expects a <code>.venv</code> folder at the root of the repo.</p>
+
+        <span class="os-label">Windows (PowerShell)</span>
+        <pre><code>py -3.13 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r _core/scripts/requirements.txt</code></pre>
+
+        <span class="os-label">Linux / macOS</span>
+        <pre><code>python3.13 -m venv .venv
+./.venv/bin/python -m pip install -r _core/scripts/requirements.txt</code></pre>
+      </li>
+
+      <li>
+        <h3>Configure VS Code settings</h3>
+        <p><code>_core/vscode-settings-templates/</code> has ready-to-paste templates. Copy the one matching your OS into a new <code>.vscode/settings.json</code>:</p>
+
+        <span class="os-label">Windows (PowerShell)</span>
+        <pre><code>copy _core\vscode-settings-templates\settings.windows.json .vscode\settings.json</code></pre>
+
+        <span class="os-label">Linux / macOS</span>
+        <pre><code>cp _core/vscode-settings-templates/settings.linux.json .vscode/settings.json</code></pre>
+
+        <p>Then install the recommended extensions:  <a href="https://marketplace.visualstudio.com/items?itemName=emeraldwalk.runonsave">Run on Save</a>
+        (required for the build-on-save workflow) and <a href="https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-highlight">Highlight</a>
+        (optional syntax highlighting for math and solution blocks).</p>
+      </li>
+
+      <li>
+        <h3>Save a Markdown file and watch it build</h3>
+        <p>
+          Open one of the ready-to-use files in <code>_core/examples/</code>, or start your own with
+          <code>mdoffice.make-pdf: true</code> in the frontmatter. Saving the file runs the build
+          automatically and drops the output next to it.
+        </p>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <strong>Full reference:</strong> the <a href="https://github.com/magnussimonsen/mdOffice#readme">README</a>
+      covers every frontmatter key, custom LaTeX themes, and troubleshooting for each step above.
+    </div>
+  </section>
+
+  <footer>
+    © 2026 mdOffice: The menu-free and AI-friendly Office suite in VS Code
+  </footer>
+
+  <script src="kittens.js" defer></script>
+</body>
+</html>

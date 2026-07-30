@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — mdOffice</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <nav>
+    <a class="logo" href="index.html"><img src="img/mdOffice_logo_light.png" alt="mdOffice" /></a>
+    <div class="menu">
+      <span class="score" id="kitten-score"></span>
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get Started</a>
+      <a href="https://github.com/magnussimonsen/mdOffice">View on GitHub</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html" class="cta">Support me</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="page-hero">
+    <h1>Contact</h1>
+    <p>Questions, bugs, and ideas are all welcome.</p>
+  </section>
+
+  <!-- Contact content -->
+  <section class="page-content">
+    <ul class="contact-methods">
+      <li>
+        <span class="label">Email</span>
+        <a href="mailto:contact.simonsen@protonmail.com">contact.simonsen@protonmail.com</a>
+      </li>
+      <li>
+        <span class="label">Bug reports &amp; feature requests</span>
+        <a href="https://github.com/magnussimonsen/mdOffice/issues">GitHub Issues</a>
+      </li>
+      <li>
+        <span class="label">Source code</span>
+        <a href="https://github.com/magnussimonsen/mdOffice">GitHub repo</a>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <strong>Before opening an issue:</strong> include the frontmatter block
+      of the document you were building and the exact error output from
+      <code>mdoffice.py validate</code> or <code>build</code> — it makes the
+      bug much faster to reproduce.
+    </div>
+  </section>
+
+  <footer>
+    © 2026 mdOffice: The menu-free and AI-friendly Office suite in VS Code
+  </footer>
+
+  <script src="kittens.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+    "emeraldwalk.runonsave": {
+        "isEnabled": true,
+        "commands": [
+            {
+                "match": ".*",
+                "cmd": "echo '${fileBasename}' saved."
+            },
+            {
+                "match": ".*\\.md$",
+                "cmd": "\"${workspaceFolder}\\.venv\\Scripts\\python.exe\" \"${workspaceFolder}/_core/scripts/mdoffice.py\" build-all \"${file}\""
+            },
+            {
+                "match": ".*\\.md$",
+                "cmd": "\"${workspaceFolder}\\.venv\\Scripts\\python.exe\" \"${workspaceFolder}/_core/scripts/mdoffice.py\" build-ai-instructions \"${file}\""
+            }
+        ]
+    }
+}

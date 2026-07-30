@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdOffice</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <nav>
+    <a class="logo" href="index.html"><img src="img/mdOffice_logo_light.png" alt="mdOffice" /></a>
+    <div class="menu">
+      <span class="score" id="kitten-score"></span>
+      <a href="index.html">Home</a>
+      <a href="getting-started.html">Get Started</a>
+      <a href="https://github.com/magnussimonsen/mdOffice">View on GitHub</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html" class="cta">Support me</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero page-hero-home">
+    <h1>The <em>menu-free</em> and <em>AI-friendly</em>  Office suite in VS Code</h1>
+    <p>Write in <strong>Markdown and LaTeX</strong>, and generate PDF, DOCX, ODT, PPTX, EPUB, or Beamer presentations with custom themes and macros</p>
+  </section>
+
+  <!-- Section 1: Why mdOffice + save -> instant multi-format output -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>Why mdOffice?</h2>
+      <p>
+        Word processors and other menu-heavy, point-and-click WYSIWYG editors are slow and cumbersome for academic text and math,
+        and a pure LaTeX document turns into a lot of markup fast. <strong>Markdown</strong> with small
+        <strong>LaTeX blocks</strong> stays small, readable, fast to type, and easy to understand. Markdown and LaTeX are also the <strong>preferred file format
+        for AI assistants</strong>.
+      </p>
+      <ul>
+        <li>Write in Markdown with LaTeX snippets, and build documents, presentations, or books in formats like PDF, DOCX, ODT,
+          PPTX, Beamer, or EPUB automatically on save, without leaving VS Code.</li>
+        <li>Choose which formats to build with a setting at the top of the file.</li>
+        <li>Each output file lands in its own output folder.</li>
+        <li>Choose between built-in doc-styles, or build your own reusable theme
+          in custom LaTeX markup for a specific document type: tests and exams,
+          meeting minutes and agendas, or consultation responses.</li>
+        <li>mdOffice is a codebase running in VS Code, not a separate application, so it can be customized
+          with your own <strong>macros and keybindings</strong>.</li>
+        <li>mdOffice is <strong>open-source</strong> under the MIT license.
+          The tech stack is Python, Pandoc, LaTeX, Lua, and VS Code extensions
+          like Run on Save and Highlight.</li>
+      </ul>
+    </div>
+    <img src="img/screenshot-1.png" alt="VS Code showing a Markdown file with frontmatter on the left and the generated PDF, with a colored title block, logo, math, and a plotted graph, on the right" />
+  </section>
+
+  <!-- Section 2: Frontmatter walkthrough -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <h2>One YAML block per document</h2>
+      <p>
+        A <strong>frontmatter block</strong> at the top of the file controls the document:
+        <code>doc-style: exam</code> picks the theme, <code>titlebg</code> colors the
+        title block, <code>show-solution</code> / <code>show-blankbox</code> toggle
+        whether answers appear, and <code>ai-instructions</code> adds guidance for AI
+        assistants editing the document.
+      </p>
+      <p>
+        The frontmatter is split into two parts: standard Pandoc keys, which
+        control the document title, author, and date, and mdOffice's own
+        keys, which control the theme, logo, and other document-specific
+        settings.
+      </p>
+    </div>
+    <img src="img/screenshot-2.png" alt="Screenshot: frontmatter block annotated with arrows pointing to the logo, doc-style, and show-solution keys" />
+  </section>
+
+  <!-- Section 3a: Exam / quiz toggle - questions only -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <h2>One markdown file, three handout document types</h2>
+      <p>
+        Two frontmatter flags, <code>show-solution</code> and <code>show-blankbox</code>,
+        control which parts of a quiz or exam show up in the generated PDF.
+        <strong>The same markdown file</strong> produces a question sheet, an answer key,
+        or a worksheet with room to write, depending on how they're set:
+      </p>
+      <p>
+        <code>show-solution: false</code><br />
+        <code>show-blankbox: false</code>
+      </p>
+      <p>
+        With both flags set to <code>false</code>, the PDF shows only the questions.
+      </p>
+    </div>
+    <img src="img/screenshot-3-1.png"
+      alt="Screenshot: exam PDF with show-solution and show-blankbox both false, showing only the questions" />
+  </section>
+
+  <!-- Section 3b: Exam / quiz toggle - show solutions -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <p>
+        Set <code>show-solution: true</code> and the same file renders each
+        task's worked solution in a labeled box right below the question,
+        ready to hand out as an answer key.
+      </p>
+    </div>
+    <img src="img/screenshot-3-2.png"
+      alt="Screenshot: exam PDF with show-solution true, showing the worked solution for each task in a labeled box" />
+  </section>
+
+  <!-- Section 3c: Exam / quiz toggle - blank boxes -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <p>
+        Set <code>show-blankbox: true</code> instead, and each task gets a
+        blank, bordered box for students to write their own solution in,
+        turning the same handout into a worksheet.
+      </p>
+    </div>
+    <img src="img/screenshot-3-3.png"
+      alt="Screenshot: exam PDF with show-blankbox true, showing a blank box under each task for students to write their solution" />
+  </section>
+
+  <!-- Section 2: Frontmatter walkthrough -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <p>
+        As shown in the code screenshot, <strong>blank boxes</strong> are added with the Lua macro
+        <code>:::blankbox (Number of blank lines) :::</code>, or, equivalently, with the attribute
+        syntax <code>::: {.blankbox lines=10} :::</code>. If no number of lines is given, mdOffice
+        defaults to <strong>5 blank lines</strong> (the default can be changed in
+        <code>_core/scripts/filters/solution_filter.lua</code>). <strong>Solution blocks</strong>
+        are added the same way, with the Lua macro <code>:::solution (The solution goes here) :::</code>.
+      </p>
+    </div>
+    <img src="img/screenshot-4-1.png" alt="Screenshot: The syntax for blank boxes and solution blocks in the Markdown file" />
+  </section>
+
+  <!-- Section 4a: Custom templates for consistency - themed slide -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <h2>One file defines the slide theme</h2>
+      <p>
+        Custom LaTeX themes control logo placement, colors, and title layout in one file.
+        The built-in <code>fancybeamer</code> theme gives every slide a full-width colored
+        header bar that you switch per slide with a macro like <code>\blueheader</code>,
+        <code>\cyanheader</code>, <code>\greenheader</code> or <code>\grayheader</code>, plus
+        matching theorem boxes (<code>bluebox</code>, <code>cyanbox</code>, …), focus boxes
+        (<code>bluefocus</code>, <code>greenfocus</code>, …), and warning/info callouts for
+        flagging what's in or out of the syllabus.
+      </p>
+    </div>
+    <img src="img/screenshot-blue-beamer.png" alt="Beamer slide with a blue header bar, showing a blue theorem box and a blue focus box" />
+  </section>
+
+  <!-- Section 4b: Custom templates for consistency - markdown source -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <p>
+        That slide is plain Markdown: a <code>\blueheader</code> macro sets the title bar
+        color, a <code>.columns</code> fenced div lays out the two-column grid, and
+        <code>bluebox*</code> / <code>bluebox</code> / <code>bluefocus</code> environments
+        render the boxes. No LaTeX beyond the theme file itself is needed.
+      </p>
+      <p>
+        Every color on the slide, including headers, box frames, and tinted backgrounds, is
+        derived from five base RGB values in <code>_core/scripts/themes/fancybeamer.tex</code>,
+        so changing the palette for every document that uses the theme is a one-line edit.
+      </p>
+    </div>
+    <img src="img/screenshot-fancybeamer-markdown-example.png" alt="Markdown source for the blue slide, showing the frontmatter and the .columns / bluebox* / bluefocus syntax that produces it" />
+  </section>
+
+  <!-- Section 4c: Custom templates for consistency - remaining theme colors and macros -->
+  <section class="section-theme-gallery">
+    <div class="text">
+      <p>
+        The same header, theorem-box, and focus-box macros are also available in cyan,
+        green, and gray, along with the bundled warning, info, and math macros:
+      </p>
+    </div>
+    <div class="theme-grid">
+      <figure class="theme-cyan">
+        <img src="img/screenshot-cyan-beamer.png" alt="Beamer slide with a cyan header bar, showing a cyan exercise box" />
+        <figcaption>Cyan: <code>\cyanheader</code></figcaption>
+      </figure>
+      <figure class="theme-green">
+        <img src="img/screenshot-green-beamer.png" alt="Beamer slide with a green header bar, showing a green worked-example box" />
+        <figcaption>Green: <code>\greenheader</code></figcaption>
+      </figure>
+      <figure class="theme-gray">
+        <img src="img/screenshot-gray-beamer.png" alt="Beamer slide with a gray header bar, showing a gray exploration box" />
+        <figcaption>Gray: <code>\grayheader</code></figcaption>
+      </figure>
+      <figure class="theme-macros">
+        <img src="img/screenshot-macros-beamer.png" alt="Beamer slide listing the warning, info, and math macros bundled with the theme" />
+        <figcaption>Warning, info &amp; math macros</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Section 5: AI instructions -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>AI instructions live in <code>mdoffice.ai-instructions</code></h2>
+      <p>
+        <strong>Note to all users: make sure any AI assistant you connect stays
+        compliant with GDPR (or your institution's data-protection rules) before pointing
+        it at your workspace.</strong>
+      </p>
+      <p>
+        Add a <code>mdoffice.ai-instructions</code> key to the frontmatter to give
+        AI assistants a set of instructions to follow when editing the document.
+        The instructions are passed to the AI model along with the document content, so
+        its edits stay consistent with your preferences.
+      </p>
+      <p>
+        Point it at reusable rule files instead of inlining instructions per document.
+        mdOffice compiles them into a <code>CLAUDE.md</code> next to the file, which
+        Claude Code, Cursor, or any other assistant picks up automatically.
+      </p>
+      <p>
+        <code>---</code><br />
+        <code>mdoffice:</code><br />
+        <code>&nbsp;&nbsp;ai-instructions:</code><br />
+        <code>&nbsp;&nbsp;&nbsp;&nbsp;- "../ai-instructions/math.md"</code><br />
+        <code>&nbsp;&nbsp;&nbsp;&nbsp;- "../ai-instructions/text.md"</code><br />
+        <code>---</code>
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 6: Native plots -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>LaTeX plots with pgfplots</h2>
+      <p>
+        Plot functions directly in LaTeX (pgfplots) inside the Markdown. The plot and
+        the surrounding math are compiled together by xelatex into one vector figure,
+        with no separate plotting tool or screenshot involved.
+      </p>
+    </div>
+    <img src="img/screenshot-8.png" alt="Screenshot: a native LaTeX plot" />
+  </section>
+  
+  <!-- Section 7: Native diagrams -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>LaTeX diagrams with TikZ</h2>
+      <p>
+        Draw flowcharts directly in LaTeX (TikZ) inside the Markdown. Pandoc passes the
+        TikZ code straight to xelatex, which renders it as a vector diagram in the PDF.
+      </p>
+    </div>
+    <img src="img/screenshot-7.png" alt="Screenshot: a TikZ code block next to the rendered flowchart in the PDF" />
+  </section>
+
+  <!-- Trust signal -->
+  <div class="callout">
+    <code>mdoffice.py validate</code> flags unknown frontmatter keys, like
+    <code>haeder</code> instead of <code>header</code>, before a mistake
+    silently disappears into an unstyled document.
+  </div>
+
+  <!-- Closing CTA -->
+  <div class="cta-band">
+    <h2>Get started</h2>
+    <p>Install Pandoc and LaTeX, set up a virtual environment, and build your first document.</p>
+    <a class="btn" href="getting-started.html">Get Started</a>
+  </div>
+
+  <footer>
+    © 2026 mdOffice: The menu-free and AI-friendly Office suite in VS Code
+  </footer>
+
+  <script src="kittens.js" defer></script>
+</body>
+</html>

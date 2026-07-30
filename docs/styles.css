@@ -1,0 +1,641 @@
+/* ============ Design tokens ============ */
+:root {
+  /* Layout */
+  --text-max-width: 800px;
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  /* Color */
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-border: #e8e8ea;
+  --color-ink: #000000;
+  --color-ink-muted: #52555c;
+  --color-ink-subtle: #86888f;
+  --color-accent: #00b5c0;
+  --color-accent-ink: #007e86;
+  --color-accent-wash: #e6f8f9;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+  font-size: 0.9em;
+  background: var(--color-accent-wash);
+  color: var(--color-accent-ink);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+
+pre {
+  background: var(--color-ink);
+  color: #e8e8ea;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 1em;
+}
+
+/* ============ Top Navigation (all pages) ============ */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Taken out of flex flow so its height doesn't stretch the bar; nav's own
+   height now comes only from .menu, and a taller logo can overflow below it. */
+nav .logo {
+  position: absolute;
+  left: 40px;
+  top: 16px;
+  display: flex;
+  align-items: flex-start;
+  text-decoration: none;
+  z-index: 1;
+}
+
+nav .logo img {
+  height: 84px;
+  display: block;
+}
+
+nav .menu {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+nav .menu a {
+  text-decoration: none;
+  color: var(--color-ink-muted);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+nav .menu .score {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink-subtle);
+  white-space: nowrap;
+  user-select: none;
+}
+
+nav .menu a:not(.cta):hover {
+  color: var(--color-ink);
+  background: var(--color-accent-wash);
+}
+
+nav .menu a.cta {
+  color: var(--color-accent-ink);
+  background: var(--color-accent-wash);
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+
+nav .menu a.cta:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+/* Animal wander: spawned by kittens.js on hover of .cta, position updated
+   frame-by-frame in JS as it roams the viewport, then fades out and is
+   removed. Fixed to the viewport so it isn't confined to the button. */
+.kitten {
+  position: fixed;
+  font-size: 40px;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Trophy burst on a goal */
+.kitten-boom {
+  font-size: 52px;
+  animation: kitten-boom 1000ms ease-out forwards;
+}
+
+@keyframes kitten-boom {
+  from {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kitten {
+    display: none;
+  }
+}
+
+/* ============ Page header (all pages) ============
+   Base is the centered, single-line style used by About / Contact /
+   Support / Getting Started. Home adds .page-hero-home for the left-aligned,
+   longer marketing headline. */
+.page-hero {
+  text-align: center;
+  padding: 72px 20px 16px;
+  max-width: var(--text-max-width);
+  margin: auto;
+}
+
+.page-hero h1 {
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.page-hero p {
+  font-size: 19px;
+  color: var(--color-ink-muted);
+  margin: 0 auto;
+}
+
+.page-hero-home {
+  text-align: left;
+}
+
+.page-hero-home h1 {
+  margin: 0 0 18px;
+}
+
+.page-hero-home p {
+  max-width: var(--text-max-width);
+  margin: 0 auto 10px;
+}
+
+/* ============ Page content (About / Contact / Support / Getting Started) ============ */
+.page-content {
+  max-width: var(--text-max-width);
+  margin: auto;
+  padding: 40px 20px 80px;
+  font-size: 17px;
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+}
+
+.page-content h2 {
+  color: var(--color-ink);
+  font-size: 22px;
+  margin: 40px 0 12px;
+}
+
+.page-content strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.page-content a {
+  color: var(--color-accent-ink);
+}
+
+/* ============ Callout strip (all pages) ============ */
+.callout {
+  max-width: var(--text-max-width);
+  margin: 20px auto 64px;
+  padding: 18px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  color: var(--color-ink-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.callout strong {
+  color: var(--color-ink);
+}
+
+/* ============ Footer (all pages) ============ */
+footer {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--color-ink-subtle);
+  font-size: 13px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ============ Home: image + text blocks, side by side ============ */
+.section-side-by-side {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+  width: 100%;
+  margin: auto;
+  gap: 20px;
+}
+
+.section-side-by-side img {
+  flex: 1 1 calc(66% - 10px);
+  width: calc(66% - 10px);
+  max-width: 650px;
+  height: 100%;
+  background: var(--color-border);
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.section-side-by-side .text {
+  flex: 1 1 calc(34% - 10px);
+  max-width: min(var(--text-max-width), calc(34% - 10px));
+  font-size: 17px;
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+}
+
+.section-side-by-side .text h2 {
+  color: var(--color-ink);
+  font-size: 24px;
+  margin: 0 0 12px;
+}
+
+/* Home: stacked layout, text above a full-width screenshot, for wide images
+   (e.g. an editor + preview split) that get cropped too tightly at the
+   420x260 side-by-side size. Also used for text-only sections with no image. */
+.section-stack {
+  text-align: center;
+  padding: 24px 20px 56px;
+  width: 100%;
+  margin: auto;
+}
+
+.section-stack .text {
+  max-width: var(--text-max-width);
+  width: 100%;
+  margin: 0 auto 32px;
+  font-size: 17px;
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.section-stack .text h2 {
+  color: var(--color-ink);
+  font-size: 26px;
+  margin: 0 0 16px;
+}
+
+.section-stack .text p {
+  text-align: left;
+  margin: 0 auto 20px;
+}
+
+.section-stack .text strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.section-stack .text ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 auto;
+  padding-left: 0;
+  list-style: none;
+}
+
+.section-stack .text ul li {
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 10px;
+}
+
+.section-stack .text ul li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.section-stack img {
+  width: 100%;
+  max-width: 1400px;
+  border-radius: var(--radius);
+  display: block;
+  margin: auto;
+  border: 1px solid var(--color-border);
+}
+
+/* ============ Home: theme gallery (intro text + image grid) ============ */
+.section-theme-gallery {
+  padding: 0px 0px 0px;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.section-theme-gallery .text {
+  max-width: var(--text-max-width);
+  width: 100%;
+  margin: 0 auto 32px;
+  font-size: 17px;
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.section-theme-gallery .text h2 {
+  color: var(--color-ink);
+  font-size: 26px;
+  margin: 0 0 16px;
+}
+
+.section-theme-gallery .text p {
+  text-align: left;
+  margin: 0 auto 16px;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.theme-grid figure {
+  margin: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border-top: 0px solid var(--theme-color, var(--color-accent));
+}
+
+.theme-grid img {
+  width: 100%;
+  display: block;
+}
+
+.theme-grid figcaption {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--theme-color, var(--color-ink));
+}
+
+.theme-cyan { --theme-color: #00aab4; }
+.theme-gray { --theme-color: #404040; }
+.theme-green { --theme-color: #2e7d32; }
+.theme-macros { --theme-color: #1a1a1e; }
+
+/* ============ Home: closing CTA band ============ */
+.cta-band {
+  max-width: var(--text-max-width);
+  margin: 0 auto 64px;
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.cta-band h2 {
+  color: var(--color-ink);
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.cta-band p {
+  color: var(--color-ink-muted);
+  font-size: 16px;
+  margin: 0 0 20px;
+}
+
+.cta-band a.btn {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  background: var(--color-accent);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 11px 26px;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+
+.cta-band a.btn:hover {
+  background: var(--color-accent-ink);
+}
+
+/* ============ Contact page: contact method cards ============ */
+.contact-methods {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 8px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-methods li {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+}
+
+.contact-methods .label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.contact-methods a {
+  color: var(--color-accent-ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.contact-methods a:hover {
+  text-decoration: underline;
+}
+
+/* ============ Support page: support option cards ============ */
+.support-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 8px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.support-options li {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  text-align: center;
+}
+
+.support-options .label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.support-options a {
+  display: inline-block;
+  color: var(--color-accent-ink);
+  background: var(--color-accent-wash);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.support-options a:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+/* ============ Getting Started page: setup steps ============ */
+.steps {
+  list-style: none;
+  margin: 24px 0;
+  padding: 0;
+  counter-reset: step;
+}
+
+.steps > li {
+  position: relative;
+  padding: 0 0 32px 44px;
+  margin-bottom: 8px;
+  border-left: 2px solid var(--color-border);
+}
+
+.steps > li:last-child {
+  border-left: 2px solid transparent;
+  padding-bottom: 0;
+}
+
+.steps > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: -17px;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steps h3 {
+  color: var(--color-ink);
+  font-size: 18px;
+  margin: 4px 0 8px;
+}
+
+.steps p {
+  margin: 0 0 10px;
+}
+
+.steps .os-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 14px 0 6px;
+}
+
+/* ============ Responsive (all pages) ============ */
+@media (max-width: 640px) {
+  nav {
+    padding: 14px 20px;
+  }
+
+  nav .logo {
+    left: 20px;
+    top: 14px;
+  }
+
+  nav .logo img {
+    height: 48px;
+  }
+
+  nav .menu {
+    gap: 16px;
+  }
+
+  .page-hero {
+    padding: 48px 20px 32px;
+  }
+
+  .section-side-by-side {
+    padding: 40px 20px;
+  }
+
+  .section-side-by-side .text,
+  .section-side-by-side img {
+    flex-basis: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+}
