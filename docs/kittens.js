@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  const minSpeed = 100; // px per second
+  const minSpeed = 160; // px per second
   const maxSpeed = 800; // px per second
   const maxBallSpeed = 1000; // px per second cap for ball-like emojis
   const defaultMass = 1;
-  const gravityConstant = 50000000; // tuned for screen-space inverse-square pull
+  const gravityConstant = 40000000; // tuned for screen-space inverse-square pull
   const gravityMinDistance = 44; // softening floor to avoid singularity at close range
   const maxGravityAccel = 1400; // cap to keep motion stable near the star
   const lifespan = 60000; // ms an animal wanders before fading out
