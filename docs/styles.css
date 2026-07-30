@@ -82,7 +82,7 @@ nav {
    height now comes only from .menu, and a taller logo can overflow below it. */
 nav .logo {
   position: absolute;
-  left: 40px;
+  left: 16px;
   top: 16px;
   display: flex;
   align-items: flex-start;
@@ -91,21 +91,21 @@ nav .logo {
 }
 
 nav .logo img {
-  height: 84px;
+  height: 62px;
   display: block;
 }
 
 nav .menu {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   margin-left: auto;
 }
 
 nav .menu a {
   text-decoration: none;
   color: var(--color-ink-muted);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 8px;
