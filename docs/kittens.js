@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  const minSpeed = 150; // px per second
-  const maxSpeed = 900; // px per second
-  const maxBallSpeed = 1100; // px per second cap for ball-like emojis
+  const minSpeed = 80; // px per second
+  const maxSpeed = 700; // px per second
+  const maxBallSpeed = 800; // px per second cap for ball-like emojis
   const lifespan = 30000; // ms an animal wanders before fading out
   const collisionDistance = 44; // px between centers to count as a crash
   const maxBalls = 1; // bump for testing multiple balls at once
