@@ -93,7 +93,7 @@ nav .logo {
 }
 
 nav .logo img {
-  height: 42px;
+  height: 52px;
   display: block;
 }
 
@@ -143,7 +143,7 @@ nav .menu a.cta:hover {
    removed. Fixed to the viewport so it isn't confined to the button. */
 .kitten {
   position: fixed;
-  font-size: 40px;
+  font-size: 52px;
   line-height: 1;
   pointer-events: none;
   z-index: 9999;
