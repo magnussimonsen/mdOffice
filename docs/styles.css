@@ -617,11 +617,16 @@ footer {
   }
 
   nav .menu {
+    flex-wrap: wrap;
+    row-gap: 10px;
     gap: 16px;
   }
 
   nav .menu-links {
-    gap: 16px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 16px;
   }
 
   .page-hero {
