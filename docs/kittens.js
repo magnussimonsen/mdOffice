@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderScore() {
-    const text = `Number of goals ${EMOJI.trophy} ${goals}`;
+    const text = `${EMOJI.trophy} ${goals}`;
     scoreEls.forEach((el) => { el.textContent = text; });
   }
 
