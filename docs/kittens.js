@@ -2,10 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  const minSpeed = 80; // px per second
-  const maxSpeed = 700; // px per second
-  const maxBallSpeed = 800; // px per second cap for ball-like emojis
-  const lifespan = 30000; // ms an animal wanders before fading out
+  const minSpeed = 100; // px per second
+  const maxSpeed = 800; // px per second
+  const maxBallSpeed = 1000; // px per second cap for ball-like emojis
+  const defaultMass = 1;
+  const gravityConstant = 25000000; // tuned for screen-space inverse-square pull
+  const gravityMinDistance = 44; // softening floor to avoid singularity at close range
+  const maxGravityAccel = 1400; // cap to keep motion stable near the star
+  const lifespan = 60000; // ms an animal wanders before fading out
   const collisionDistance = 54; // px between centers to count as a crash
   const maxBalls = 1; // bump for testing multiple balls at once
   const maxGoals = 1; // bump for testing multiple goals at once
@@ -104,6 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return animal.role === 'ball' || (isSupportPage && animal.role === 'special');
   }
 
+  function isCoffee(animal) {
+    return normalizeEmoji(animal.emoji) === EMOJI.coffee;
+  }
+
   function explode(x, y, emoji) {
     const boom = document.createElement('span');
     boom.className = 'kitten kitten-boom';
@@ -129,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
       el,
       emoji,
       role,
+      mass: defaultMass,
       x: rect.left + Math.random() * rect.width,
       y: rect.bottom + Math.random() * 10,
       angle: Math.random() * Math.PI * 2,
@@ -186,6 +195,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (entity.speed > speedCap) entity.speed = speedCap;
   }
 
+  function getCoffeeGravityAccel(entity) {
+    let ax = 0;
+    let ay = 0;
+
+    for (const source of active) {
+      if (!isAlive(source)) continue;
+      if (source === entity) continue;
+      if (!isCoffee(source)) continue;
+
+      const dx = source.x - entity.x;
+      const dy = source.y - entity.y;
+      const distance = Math.hypot(dx, dy);
+      if (!Number.isFinite(distance) || distance === 0) continue;
+
+      // Inverse-square force where both masses are currently 1.
+      const clampedDistance = Math.max(distance, gravityMinDistance);
+      const force = (gravityConstant * entity.mass * source.mass) / (clampedDistance * clampedDistance);
+      const accel = Math.min(force / entity.mass, maxGravityAccel);
+
+      ax += (dx / distance) * accel;
+      ay += (dy / distance) * accel;
+    }
+
+    return { ax, ay };
+  }
+
   // A goal only counts if, at contact, the ball is positioned below the net
   // (y grows downward on screen, so larger y = below) and its velocity
   // relative to the net's points up within goalEntryConeDegrees of straight
@@ -210,6 +245,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateEntity(entity, now) {
     const dt = Math.min(now - entity.lastFrame, 50) / 1000;
     entity.lastFrame = now;
+
+    let vx = Math.cos(entity.angle) * entity.speed;
+    let vy = Math.sin(entity.angle) * entity.speed;
+
+    // Only coffee creates gravity; non-coffee entities are pulled toward it.
+    if (!isCoffee(entity)) {
+      const { ax, ay } = getCoffeeGravityAccel(entity);
+      vx += ax * dt;
+      vy += ay * dt;
+      entity.angle = Math.atan2(vy, vx);
+      entity.speed = Math.hypot(vx, vy);
+    }
 
     clampEntitySpeed(entity);
 
