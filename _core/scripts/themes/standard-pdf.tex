@@ -33,6 +33,7 @@
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{titling} % defines \thetitle / \theauthor / \thedate
+\usepackage{etoolbox} % \pretocmd/\apptocmd, used below to wrap \tableofcontents
 
 \newcommand{\mdpagefooter}{%
   \ifdefined\hidepagenumbers\else
@@ -102,11 +103,19 @@
   \ifx\theauthor\md@empty\else\noindent\theauthor\par\fi%
   \ifx\thedate\md@empty\else\noindent\thedate\par\fi%
   \newpage%
-  % \newpage above doesn't ship the title page out immediately -- LaTeX's
-  % output routine defers that, and it's the output routine that steps the
-  % `page` counter for the page just left. That deferred +1 lands AFTER this
-  % \setcounter (both act on the same counter register), so resetting to 1
-  % here actually yields 2 on the next page's footer. Reset to 0 so the
-  % pending increment lands exactly on 1.
-  \ifdefined\hidefirstpagenumber\setcounter{page}{0}\fi%
+  % Reset so the page immediately following the (unnumbered) title page
+  % displays "1" in its footer, instead of continuing the count that would
+  % otherwise treat the title page itself as page 1.
+  \ifdefined\hidefirstpagenumber\setcounter{page}{1}\fi%
 }
+
+% Pandoc calls \tableofcontents directly (no \newpage of its own) when
+% `toc: true`. Wrap it (via etoolbox, not \let -- \let-aliasing
+% \tableofcontents trips a "Missing \begin{document}" error on current
+% TeX Live) so the TOC gets classic front-matter roman page numbers
+% (i, ii, ...), and the body that follows always restarts cleanly at
+% arabic 1, regardless of how many pages the TOC itself spans.
+\ifdefined\hidefirstpagenumber
+  \pretocmd{\tableofcontents}{\pagenumbering{roman}}{}{}
+  \apptocmd{\tableofcontents}{\newpage\pagenumbering{arabic}}{}{}
+\fi
