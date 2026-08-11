@@ -15,7 +15,6 @@ local ALLOWED_ENVS = {
   ["gather*"] = true,
   ["multline"] = true,
   ["multline*"] = true,
-  ["cases"] = true,
 }
 
 -- Escape Lua pattern special characters so names like "align*" match literally.

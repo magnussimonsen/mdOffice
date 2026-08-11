@@ -14,8 +14,8 @@
 
 local show_solution = false
 local show_blankbox = false
-local blankbox_text = "Write your solution in this box"
-local solution_text = "Solution"
+local blankbox_text = "Vis utregningene dine i denne boksen"
+local solution_text = "Løsningsforslag"
 local has_placeins = false
 
 local DEFAULT_BLANKBOX_LINES = 5
@@ -112,11 +112,18 @@ return {
         -- inside the box (instead of a fixed tcolorbox height) so `breakable`
         -- can split tall boxes across page breaks.
         local n = blankbox_lines(el)
-        local opts = 'breakable, colback=white, colframe=gray!90, boxrule=0.4pt, arc=4pt, left=4pt, right=4pt, top=4pt, bottom=4pt'
+        -- tcolorbox's own toprule/bottomrule keys only control the rule
+        -- width drawn at a page break inside a breakable box, not the box's
+        -- actual top/bottom edge, which boxrule draws uniformly on all four
+        -- sides regardless. To omit just the bottom edge, hide the built-in
+        -- frame entirely and draw the other three sides by hand.
+        local opts = 'breakable, enhanced, colback=white, frame hidden'
+          .. ', borderline west={0.4pt}{0pt}{gray!90}, borderline east={0.4pt}{0pt}{gray!90}, borderline north={0.4pt}{0pt}{gray!90}'
+          .. ', left=4pt, right=4pt, top=4pt, bottom=4pt'
 
         local text = el.attributes["text"] or blankbox_text
         if text and text ~= '' then
-          opts = 'enhanced, ' .. opts .. framed_title_opts(text)
+          opts = opts .. framed_title_opts(text)
         end
 
         return pandoc.RawBlock('latex',
