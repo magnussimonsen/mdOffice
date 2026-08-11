@@ -205,6 +205,16 @@ After these four steps VS Code will use `.venv` as the Python interpreter and Ru
 
 ---
 
+### Troubleshooting: save triggers no PDF (or Run on Save fails silently)
+
+**`[WinError 2] Systemet finner ikke angitt fil` / "cannot find the file specified" for pandoc**
+Pandoc auto-updates itself (e.g. via winget) into a new version-numbered install folder, but a terminal or VS Code window opened *before* that update keeps the old, now-deleted path cached in its environment. Fully restart VS Code (not just open a new terminal tab) so it re-reads `PATH`, then save the file again.
+
+**`fontspec Error: The font "..." cannot be found`**
+Any `mainfont` (or other font) set in a document's frontmatter must be a font actually installed on the machine running the build — pandoc/xelatex does not bundle fonts. Fonts like "Liberation Serif" are common on Linux but usually missing on Windows; install the font family (e.g. the [Liberation Fonts](https://github.com/liberationfonts/liberation-fonts) release) or change `mainfont` in the frontmatter to a font you already have (e.g. "Times New Roman").
+
+---
+
 The rest of this README has two goals:
 
 1. Point you to the frontmatter reference for PDF, DOCX, ODT, PPTX, Beamer, and EPUB.
