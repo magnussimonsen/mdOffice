@@ -11,7 +11,12 @@ from typing import Sequence
 
 
 def _clear_readonly_and_retry(func, path, _exc: BaseException) -> None:
-    """Allow rmtree to retry when OneDrive marks files/directories read-only."""
+    """Allow rmtree to retry when OneDrive marks files/directories read-only.
+
+    OneDrive briefly flips newly-created files to read-only while it syncs
+    them, which makes a normal rmtree fail with PermissionError. Clearing the
+    flag and retrying the failed operation works around that window.
+    """
     try:
         os.chmod(path, stat.S_IWRITE)
     except OSError:
@@ -20,7 +25,13 @@ def _clear_readonly_and_retry(func, path, _exc: BaseException) -> None:
 
 
 def _remove_tree_with_retries(path: Path, attempts: int = 6, base_delay: float = 0.1) -> bool:
-    """Best-effort recursive delete with backoff for transient Windows locks."""
+    """Best-effort recursive delete with backoff for transient Windows locks.
+
+    Beyond the read-only flag, OneDrive's sync process can also hold a file
+    handle open for a moment right after pandoc writes it, which raises
+    PermissionError/OSError even after the readonly fix above. Retrying with
+    a small increasing delay gives OneDrive time to release the handle.
+    """
     last_error: Exception | None = None
 
     for attempt in range(1, attempts + 1):
@@ -36,6 +47,9 @@ def _remove_tree_with_retries(path: Path, attempts: int = 6, base_delay: float =
             time.sleep(base_delay * attempt)
 
     if path.exists():
+        # All retries exhausted (e.g. OneDrive still has the folder locked) -
+        # warn instead of raising so a stale media-* folder doesn't fail the
+        # whole pandoc run; it will simply be cleaned up on the next build.
         print(
             f"Warning: could not remove temporary folder '{path}': {last_error}",
             file=sys.stderr,
