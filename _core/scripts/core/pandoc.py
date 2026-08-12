@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Sequence
 
 
-def _clear_readonly_and_retry(func, path, _exc_info) -> None:
+def _clear_readonly_and_retry(func, path, _exc: BaseException) -> None:
     """Allow rmtree to retry when OneDrive marks files/directories read-only."""
     try:
         os.chmod(path, stat.S_IWRITE)
@@ -25,7 +25,7 @@ def _remove_tree_with_retries(path: Path, attempts: int = 6, base_delay: float =
 
     for attempt in range(1, attempts + 1):
         try:
-            shutil.rmtree(path, onerror=_clear_readonly_and_retry)
+            shutil.rmtree(path, onexc=_clear_readonly_and_retry)
             return True
         except FileNotFoundError:
             return True
