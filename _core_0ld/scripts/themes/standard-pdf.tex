@@ -1,0 +1,159 @@
+% standard-pdf.tex - mdOffice's simple, flush-left PDF theme.
+%
+% Intentionally minimal: title, subtitle, author, date -- all flush-left, on
+% their own lines, on their OWN page (unlike exam.tex, where body text
+% starts right under the title on page 1). This file is meant to double as
+% a starting point for writing new themes: copy it, rename it, and edit the
+% title block at the bottom to taste -- everything above that
+% (geometry/header/footer) is boilerplate every PDF theme needs.
+%
+% frontmatter -> \ifdefined macro contract (set by pdf.py, consumed here):
+%   logo:                          -> \logopath / \logoheight
+%   subtitle:                      -> \mdsubtitle
+%   mdoffice.header:               -> \rightheader
+%   mdoffice.page-numbering: false -> \hidepagenumbers
+%   mdoffice.first-page-numbering: true -> number the title page too
+%                                    (default: title page is unnumbered,
+%                                    body restarts at page 1)
+
+% \usepackage{...} loads a LaTeX package -- a bundle of extra commands, the
+% same idea as an `import`/`require` in most programming languages. Each
+% one below adds the commands that the rest of this file relies on.
+
+% "geometry" controls page margins. \ifdefined\logopath ... \else ... \fi is
+% LaTeX's if/else: it checks whether the \logopath macro has been defined
+% (set by pdf.py when the document's frontmatter has a `logo:` field) and
+% picks different margins depending on the answer -- a logo needs extra
+% room at the top for the header to sit in.
+\usepackage{geometry}
+\ifdefined\logopath
+  \geometry{top=0.2cm, bottom=2.54cm, left=2.54cm, right=2.54cm,
+            headheight=2.4cm, headsep=0.6cm, includehead}
+\else
+  \geometry{top=2.00cm, bottom=2.00cm, left=2.5cm, right=2.5cm}
+\fi
+
+\usepackage{graphicx} % lets \includegraphics{...} embed images (e.g. the logo)
+\usepackage{float}    % gives finer control over where figures/images are placed
+\floatplacement{figure}{H} % force figures to render exactly where they occur
+                            % in the document ("H" = Here), rather than LaTeX's
+                            % usual behavior of floating them to a "nicer" spot
+\usepackage{placeins}   % adds \FloatBarrier, stops floats drifting past a point
+\usepackage{array}      % extra formatting options for tables
+\usepackage[breakable,skins]{tcolorbox} % colored/boxed callouts that can
+                                         % break across a page instead of
+                                         % being forced to fit on one page
+\usepackage{fancyhdr}   % the package that provides \pagestyle{fancy}, \fancyhf,
+                         % \fancyhead, \fancyfoot etc. used throughout this file
+\usepackage{lastpage}   % lets other code reference the total page count
+\usepackage{titling}    % defines \thetitle / \theauthor / \thedate
+\usepackage{etoolbox}   % \pretocmd/\apptocmd, used below to wrap \tableofcontents
+
+% \newcommand defines a new custom command (like defining a function).
+% \mdpagefooter, once called, fills in the page-number footer -- unless the
+% frontmatter set `mdoffice.page-numbering: false` (which defines the
+% \hidepagenumbers macro), in which case it does nothing.
+\newcommand{\mdpagefooter}{%
+  \ifdefined\hidepagenumbers\else
+    \fancyfoot[R]{\thepage}% put the current page number in the footer, Right-aligned
+  \fi
+}
+
+% Activate the "fancyhdr" package's custom header/footer style for all
+% normal pages (page numbers, logos, etc. are defined further down).
+\pagestyle{fancy}
+% Clear out fancyhdr's default header/footer content so we start from a
+% blank slate before defining our own left/right header and footer below.
+\fancyhf{}
+
+% If the frontmatter set a logo, put it in the header's Left slot (sized to
+% \logoheight) and hide the thin horizontal rule fancyhdr draws under the
+% header by default (headrulewidth 0pt = invisible). Without a logo there's
+% nothing in the header, so the rule is hidden either way.
+\ifdefined\logopath
+  \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}
+  \renewcommand{\headrulewidth}{0.0pt}
+\else
+  \renewcommand{\headrulewidth}{0pt}
+\fi
+
+% If the frontmatter set a header string (\rightheader), show it in the
+% header's Right slot, in a small 9pt font.
+\ifdefined\rightheader
+  \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}
+\fi
+
+% Apply the page-number footer defined above to this ("fancy") page style.
+\mdpagefooter
+
+% "plain" is a page style name LaTeX itself falls back to automatically on
+% certain pages (e.g. the very first page of some document classes). We
+% redefine it here so those pages get the same logo/header/footer as every
+% other page instead of LaTeX's plain default. \fancypagestyle{name}{...}
+% defines a *named* style; it isn't applied to any page until something
+% calls \pagestyle{name} or \thispagestyle{name}. The trailing %
+% after each line stops LaTeX from inserting an unwanted space/newline into
+% the output at that point -- a common tic in LaTeX macro definitions.
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \ifdefined\logopath
+    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
+    \renewcommand{\headrulewidth}{0.0pt}%
+  \else
+    \renewcommand{\headrulewidth}{0pt}%
+  \fi
+  \ifdefined\rightheader
+    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
+  \fi
+  \mdpagefooter
+}
+
+% Dedicated, unnumbered title-page style: same header (logo/right-header)
+% as every other page, but no footer -- used only when the title page is
+% NOT opting into numbering (the default; see \hidefirstpagenumber below).
+\fancypagestyle{titlepage}{%
+  \fancyhf{}%
+  \ifdefined\logopath
+    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
+    \renewcommand{\headrulewidth}{0.0pt}%
+  \else
+    \renewcommand{\headrulewidth}{0pt}%
+  \fi
+  \ifdefined\rightheader
+    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
+  \fi
+}
+
+% Title block: flush-left title, subtitle, author, date, each on its own
+% line, then a \newpage -- the title always gets its own page, and the
+% body always starts fresh on the page after it.
+%
+% \maketitle is only called by pandoc AFTER \title{}/\author{}/\date{} have
+% already run, so \thetitle/\theauthor/\thedate correctly hold whatever the
+% frontmatter set by the time this reads them -- no clearing hooks needed.
+% Author/date lines are skipped entirely when empty, so a document with no
+% author/date doesn't get a stray blank line.
+\def\md@empty{}
+\renewcommand{\maketitle}{%
+  \ifdefined\hidefirstpagenumber\thispagestyle{titlepage}\else\thispagestyle{fancy}\fi%
+  \noindent{\Large\bfseries\thetitle\par}%
+  \ifdefined\mdsubtitle{\noindent\large\mdsubtitle\par}\fi%
+  \ifx\theauthor\md@empty\else\noindent\theauthor\par\fi%
+  \ifx\thedate\md@empty\else\noindent\thedate\par\fi%
+  \newpage%
+  % Reset so the page immediately following the (unnumbered) title page
+  % displays "1" in its footer, instead of continuing the count that would
+  % otherwise treat the title page itself as page 1.
+  \ifdefined\hidefirstpagenumber\setcounter{page}{1}\fi%
+}
+
+% Pandoc calls \tableofcontents directly (no \newpage of its own) when
+% `toc: true`. Wrap it (via etoolbox, not \let -- \let-aliasing
+% \tableofcontents trips a "Missing \begin{document}" error on current
+% TeX Live) so the TOC gets classic front-matter roman page numbers
+% (i, ii, ...), and the body that follows always restarts cleanly at
+% arabic 1, regardless of how many pages the TOC itself spans.
+\ifdefined\hidefirstpagenumber
+  \pretocmd{\tableofcontents}{\pagenumbering{roman}}{}{}
+  \apptocmd{\tableofcontents}{\newpage\pagenumbering{arabic}}{}{}
+\fi

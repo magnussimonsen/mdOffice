@@ -62,7 +62,6 @@
 \usepackage[most]{tcolorbox}   % theorem/focus boxes
 \usepackage{fontawesome5}       % icons for \warn / \info
 \usepackage{xspace}             % smart spacing after macros
-\usepackage{icomma}             % no extra space after "," in math mode, e.g. $2,0$
 % ---------------------------------------------------------------
 
 
@@ -90,11 +89,11 @@
 %
 % 2. Heading colors — for slide headers, block titles, theorem box frames
 %    Adjust the ! expression to darken/shift without touching the base RGB
-\colorlet{myblueheading}{myblue!85}
-\colorlet{myredheading}{myred!85}
-\colorlet{mygreenheading}{mygreen!85}
-\colorlet{mycyanheading}{mycyan!85}
-\colorlet{mygrayheading}{mygray!85}
+\colorlet{myblueheading}{myblue!90}
+\colorlet{myredheading}{myred!90}
+\colorlet{mygreenheading}{mygreen!90}
+\colorlet{mycyanheading}{mycyan!90}
+\colorlet{mygrayheading}{mygray!90}
 %
 % 3. Focus colors — light tints of the base colors
 %    Used for focus box backgrounds and block body backgrounds
@@ -184,8 +183,8 @@
   \nointerlineskip
   \edef\fancybeamer@bgcol{\fancyheadcolor}%
   \setbeamercolor{fancybeamer@hdr}{bg=\fancybeamer@bgcol, fg=white}%
-  \begin{beamercolorbox}[wd=\paperwidth, ht=1.9ex, dp=0.7ex, leftskip=0.3cm]{fancybeamer@hdr}%
-    \usebeamerfont{frametitle}\fontsize{14}{16}\selectfont\insertframetitle%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=2.1ex, dp=0.8ex, leftskip=0.3cm]{fancybeamer@hdr}%
+    \usebeamerfont{frametitle}\insertframetitle%
   \end{beamercolorbox}%
 }
 % ---------------------------------------------------------------
