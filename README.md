@@ -65,7 +65,7 @@ mdOffice is a thin Python wrapper around Pandoc; Pandoc (and, for PDF/Beamer, a 
 |---|---|---|
 | [Pandoc](https://pandoc.org/installing.html) | every target | Built/tested against Pandoc 3.x |
 | A LaTeX distribution providing `xelatex` | PDF, Beamer only | MiKTeX (Windows), TeX Live (Linux), or MacTeX (macOS) — see Step 1 below |
-| Python 3 | running `mdoffice.py` itself | Version pinned in [`.python-version`](.python-version) (currently 3.13) |
+| Python 3 | running `mdoffice.py` itself | Version pinned in [`.python-version`](.python-version) (currently 3.14) |
 | [`pyyaml`](https://pypi.org/project/PyYAML/) | frontmatter parsing | Installed via `_core/scripts/requirements.txt` in Step 3 |
 | VS Code *(recommended, not required)* | the "build on save" workflow | See [`_core/vscode-settings-templates/extensions.json`](_core/vscode-settings-templates/extensions.json) |
 
@@ -80,6 +80,36 @@ VS Code extensions, if you use it:
 Docx/ODT/PPTX/EPUB output only need Pandoc — skip the LaTeX install if you never build PDF or Beamer.
 
 ## Getting Started
+
+If you want a faster setup, use the install scripts below. They automate dependency checks and local setup:
+
+- Check Python (and fail with instructions if missing)
+- Check `pandoc` and `xelatex` on `PATH`
+- Check required LaTeX packages listed in `_core/scripts/setup/latex-required-packages.txt`
+- Create `.venv`
+- Install `_core/scripts/requirements.txt`
+- Create `.vscode/settings.json` with highlight rules
+
+**Windows (CMD or PowerShell):**
+
+```bat
+_core\scripts\setup\install_windows.bat
+```
+
+If you already have `.vscode/settings.json` and want to overwrite it:
+
+```bat
+_core\scripts\setup\install_windows.bat -Force
+```
+
+**Linux / macOS (bash):**
+
+```bash
+bash ./_core/scripts/setup/install_linux.sh
+```
+
+Both scripts define a Python command constant near the top (`$PythonCommand` / `PYTHON_CMD`).
+If your machine uses a different Python alias/path, edit that value once and re-run.
 
 Follow these steps once when you set up mdOffice on a new machine.
 
@@ -149,26 +179,26 @@ The workspace expects a `.venv` folder at the root of the repo. Create it with t
 **Step 3: Windows (PowerShell)**
 
 ```powershell
-py -3.13 -m venv .venv
+py -3.14 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r _core/scripts/requirements.txt
 ```
 
-If `py -3.13` is not available but Python 3.13 is installed, use the full path:
+If `py -3.14` is not available but Python 3.14 is installed, use the full path:
 
 ```powershell
-& "C:\Path\To\Python313\python.exe" -m venv .venv
+& "C:\Path\To\Python314\python.exe" -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r _core/scripts/requirements.txt
 ```
 
 **Step 3: Linux / macOS**
 
 ```bash
-python3.13 -m venv .venv
+python3.14 -m venv .venv
 ./.venv/bin/python -m pip install -r _core/scripts/requirements.txt
 ```
 
-If `python3.13` is not available, substitute the installed interpreter name, e.g. `python3`.
+If `python3.14` is not available, substitute the installed interpreter name, e.g. `python3`.
 
 ---
 

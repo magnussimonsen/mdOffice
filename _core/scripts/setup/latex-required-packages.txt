@@ -1,0 +1,21 @@
+# LaTeX package names required by mdOffice's built-in themes.
+# One package name per line, without .sty.
+# Scripts validate these via: kpsewhich <name>.sty
+#
+# Note: user-authored documents can still require additional packages.
+
+graphics
+geometry
+graphicx
+float
+placeins
+array
+tcolorbox
+fancyhdr
+lastpage
+xcolor
+titling
+etoolbox
+fontawesome5
+xspace
+icomma

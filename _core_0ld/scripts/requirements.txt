@@ -1,4 +1,0 @@
-# Install Python separately before using this requirements file.
-# `pip install -r requirements.txt` installs packages only; it does not install or upgrade Python itself.
-# This project keeps dependencies compatible with current Python 3 releases.
-pyyaml>=6.0
