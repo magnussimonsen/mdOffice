@@ -29,15 +29,28 @@
   <!-- Header -->
   <section class="page-hero">
     <h1>Getting Started on Windows, macOS and Linux</h1>
-    <p>Four one-time setup steps, then save a Markdown file to build it.</p>
+    <p>Recommended: run one install script. Done in a minute.</p>
   </section>
 
   <!-- Steps -->
   <section class="page-content">
     <ol class="steps">
       <li>
-        <h3>Install Pandoc and a LaTeX distribution</h3>
-        <p>Pandoc does the document conversion; a LaTeX distribution (providing <code>xelatex</code>) is only needed for PDF and Beamer output.</p>
+        <h3>Run the install script (recommended)</h3>
+        <p>This sets up <code>.venv</code>, installs Python requirements, writes <code>.vscode/settings.json</code>, and checks Pandoc/LaTeX.</p>
+
+        <span class="os-label">Windows (CMD or PowerShell)</span>
+        <pre><code>_core\scripts\setup\install_windows.bat</code></pre>
+
+        <span class="os-label">Linux / macOS (bash)</span>
+        <pre><code>bash _core/scripts/setup/install_linux.sh</code></pre>
+
+        <p>Both scripts also verify required LaTeX packages from <code>_core/scripts/setup/latex-required-packages.txt</code>.</p>
+      </li>
+
+      <li>
+        <h3>Manual fallback (if you prefer)</h3>
+        <p>Only use this if you don't want the script above.</p>
 
         <span class="os-label">Windows</span>
         <pre><code>winget install --id JohnMacFarlane.Pandoc</code></pre>
@@ -53,49 +66,14 @@
         <p>Verify both are on <code>PATH</code>:</p>
         <pre><code>pandoc --version
 xelatex --version</code></pre>
-      </li>
 
-      <li>
-        <h3>Check that Python is installed</h3>
         <span class="os-label">Windows</span>
-        <pre><code>python --version</code></pre>
-        <span class="os-label">Linux / macOS</span>
-        <pre><code>python3 --version</code></pre>
-        <p>
-          Common issue: Python may be aliased differently on your system. If
-          <code>python</code>/<code>python3</code> isn't found, try <code>py</code>,
-          <code>py3</code>, or a version-specific name like <code>python3.13</code>.
-        </p>
-        <p>If none of those print a Python 3 version, install it from <a href="https://www.python.org/downloads/">python.org</a> first.</p>
-      </li>
-
-      <li>
-        <h3>Create the virtual environment</h3>
-        <p>The workspace expects a <code>.venv</code> folder at the root of the repo.</p>
-
-        <span class="os-label">Windows (PowerShell)</span>
-        <pre><code>py -3.13 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r _core/scripts/requirements.txt</code></pre>
+        <pre><code>python --version
+py -3.14 --version</code></pre>
 
         <span class="os-label">Linux / macOS</span>
-        <pre><code>python3.13 -m venv .venv
-./.venv/bin/python -m pip install -r _core/scripts/requirements.txt</code></pre>
-      </li>
-
-      <li>
-        <h3>Configure VS Code settings</h3>
-        <p><code>_core/vscode-settings-templates/</code> has ready-to-paste templates. Copy the one matching your OS into a new <code>.vscode/settings.json</code>:</p>
-
-        <span class="os-label">Windows (PowerShell)</span>
-        <pre><code>copy _core\vscode-settings-templates\settings.windows.json .vscode\settings.json</code></pre>
-
-        <span class="os-label">Linux / macOS</span>
-        <pre><code>cp _core/vscode-settings-templates/settings.linux.json .vscode/settings.json</code></pre>
-
-        <p>Then install the recommended extensions:  <a href="https://marketplace.visualstudio.com/items?itemName=emeraldwalk.runonsave">Run on Save</a>
-        (required for the build-on-save workflow) and <a href="https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-highlight">Highlight</a>
-        (optional syntax highlighting for math and solution blocks).</p>
+        <pre><code>python3 --version
+python3.14 --version</code></pre>
       </li>
 
       <li>
