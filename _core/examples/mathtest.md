@@ -16,7 +16,7 @@ mdoffice:
   titlebgpad: "10pt"
   # Consumed by scripts/filters/solution_filter.lua, not by any Python
   # planner -- see core/schema.py's SOLUTION_FILTER_KEYS.
-  show-solution: false
+  show-solution: true
   show-blankbox: true
   ai-instructions:
     - "../ai-instructions/math.md"

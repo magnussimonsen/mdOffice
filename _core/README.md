@@ -81,6 +81,15 @@ Docx/ODT/PPTX/EPUB output only need Pandoc — skip the LaTeX install if you nev
 
 ## Getting Started
 
+### Quick-start templates
+
+If you want ready-made frontmatter templates (basic keys active, advanced keys commented out), start here:
+
+- [_core/quick-start/quickstart-epub.md](_core/quick-start/quickstart-epub.md)
+- [_core/quick-start/quickstart-standard-pdf.md](_core/quick-start/quickstart-standard-pdf.md)
+- [_core/quick-start/quickstart-exam-pdf.md](_core/quick-start/quickstart-exam-pdf.md)
+- [_core/quick-start/quickstart-fancybeamer.md](_core/quick-start/quickstart-fancybeamer.md)
+
 Follow these steps once when you set up mdOffice on a new machine.
 
 *If any of the steps below fail, copy and paste this README into an AI and troubleshoot. A common cause of failure is that your Python alias is something different than what is used here.*

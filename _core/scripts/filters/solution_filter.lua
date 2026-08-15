@@ -14,8 +14,10 @@
 
 local show_solution = false
 local show_blankbox = false
-local blankbox_text = "Vis utregningene dine i denne boksen"
-local solution_text = "Løsningsforslag"
+local blankbox_text = "Write your calculations/justification in this box"
+local solution_text = "Suggested solution"
+-- local blankbox_text = "Skriv utregningen/begrunnelsen i denne boksen"
+-- local solution_text = "Løsningsforslag"
 local has_placeins = false
 
 local DEFAULT_BLANKBOX_LINES = 5
@@ -118,7 +120,7 @@ return {
         -- sides regardless. To omit just the bottom edge, hide the built-in
         -- frame entirely and draw the other three sides by hand.
         local opts = 'breakable, enhanced, colback=white, frame hidden'
-          .. ', borderline west={0.4pt}{0pt}{gray!90}, borderline east={0.4pt}{0pt}{gray!90}, borderline north={0.4pt}{0pt}{gray!90}'
+          .. ', borderline west={0.4pt}{0pt}{gray!90}, borderline north={0.4pt}{0pt}{gray!90}'
           .. ', left=4pt, right=4pt, top=4pt, bottom=4pt'
 
         local text = el.attributes["text"] or blankbox_text
@@ -137,14 +139,16 @@ return {
           return {}
         end
 
-        local opts = 'breakable, colback=gray!0, colframe=gray!90, boxrule=0.4pt, arc=4pt, left=4pt, right=4pt, top=4pt, bottom=4pt'
+        local opts = 'breakable, enhanced, colback=white, frame hidden'
+          .. ', borderline west={0.4pt}{0pt}{gray!90}, borderline north={0.4pt}{0pt}{gray!90}'
+          .. ', left=4pt, right=4pt, top=4pt, bottom=4pt'
 
         -- "Solution" label on the top frame line; override with the
         -- `solution-text` front-matter key (e.g. "Løsning") or a per-block
         -- text attribute. An empty text gives an unlabeled box.
         local text = el.attributes["text"] or solution_text
         if text and text ~= '' then
-          opts = 'enhanced, ' .. opts .. framed_title_opts(text)
+          opts = opts .. framed_title_opts(text)
         end
 
         local begin_box = pandoc.RawBlock('latex',

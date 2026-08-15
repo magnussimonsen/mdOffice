@@ -81,6 +81,15 @@ Docx/ODT/PPTX/EPUB output only need Pandoc — skip the LaTeX install if you nev
 
 ## Getting Started
 
+### Quick-start templates
+
+If you want ready-made frontmatter templates (basic keys active, advanced keys commented out), start here:
+
+- [_core/quick-start/quickstart-epub.md](_core/quick-start/quickstart-epub.md)
+- [_core/quick-start/quickstart-standard-pdf.md](_core/quick-start/quickstart-standard-pdf.md)
+- [_core/quick-start/quickstart-exam-pdf.md](_core/quick-start/quickstart-exam-pdf.md)
+- [_core/quick-start/quickstart-fancybeamer.md](_core/quick-start/quickstart-fancybeamer.md)
+
 If you want a faster setup, use the install scripts below. They automate dependency checks and local setup:
 
 - Check Python (and fail with instructions if missing)
