@@ -1,6 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Ubuntu dependency install (run from terminal before this script if needed):
+#   sudo apt update
+#   sudo apt install -y pandoc texlive-xetex texlive-fonts-extra
+#   # fontawesome5.sty is provided by texlive-fonts-extra (not a package named fontawesome5)
+#   kpsewhich fontawesome5.sty
+#
+# If texlive-fonts-extra fails to download (mirror/network hiccup), retry with:
+#   sudo apt clean
+#   sudo apt update
+#   sudo apt -o Acquire::Retries=8 -o Acquire::http::Timeout=30 install --fix-missing texlive-fonts-extra
+#
+# If your local mirror keeps failing, switch to the main Ubuntu archive:
+#   sudo sed -i 's|http://no.archive.ubuntu.com/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+#   sudo apt update
+#   sudo apt -o Acquire::Retries=8 install --fix-missing texlive-fonts-extra
+#
+# Python used by this script defaults to 3.14.
+# If Python 3.14 is available on your system:
+#   sudo apt install -y python3.14 python3.14-venv
+# If it is not available, install your distro Python and update PYTHON_CMD below:
+#   sudo apt install -y python3 python3-venv
+
 # If your Python executable name is different, update this array.
 # Examples:
 #   PYTHON_CMD=(python3.14)
@@ -68,6 +90,13 @@ if [[ -d .venv ]]; then
 else
   "${PYTHON_CMD[@]}" -m venv .venv
 fi
+
+# If pip is missing in an existing venv, repair with:
+#   .venv/bin/python -m ensurepip --upgrade
+#   .venv/bin/python -m pip install --upgrade pip setuptools wheel
+# If repair fails, recreate the venv:
+#   rm -rf .venv
+#   bash _core/scripts/setup/install_linux.sh
 
 step "Installing Python requirements..."
 ./.venv/bin/python -m pip install --upgrade pip
