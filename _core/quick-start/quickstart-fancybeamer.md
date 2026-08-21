@@ -33,9 +33,40 @@ mdoffice:
 ---
 
 # First slide
-
+\blueheader
 ## Agenda
 
 - Topic 1
 - Topic 2
 - Topic 3
+
+# Secons slide {.t}
+\greenheader
+Two columnas with (blue box  then focusbox cyan left) and same right 
+
+:::::: {.columns totalwidth="\textwidth"}
+::: {.column width="48%"}
+\begin{bluebox*}{Definition}
+A \textbf{set} $S$ is \emph{finite} if there exists a bijection
+$S \to \{1,\ldots,n\}$ for some $n \in \mathbb{N}$.
+\end{bluebox*}
+
+\medskip
+
+\begin{cyanfocus}
+\textbf{cyanfocus} --- for exercises, tasks, or student prompts without a formal label.
+\end{cyanfocus}
+:::
+::: {.column width="48%"}
+\begin{bluebox*}{Definition}
+A \textbf{set} $S$ is \emph{finite} if there exists a bijection
+$S \to \{1,\ldots,n\}$ for some $n \in \mathbb{N}$.
+\end{bluebox*}
+
+\medskip
+
+\begin{cyanfocus}
+\textbf{cyanfocus} --- for exercises, tasks, or student prompts without a formal label.
+\end{cyanfocus}
+:::
+::::::

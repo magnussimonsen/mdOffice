@@ -17,7 +17,7 @@ mdoffice:
 ## Blue — Theorem and Focus Box
 \blueheader
 
-:::::: {.columns}
+:::::: {.columns totalwidth="\textwidth"}
 ::: {.column width="50%"}
 \begin{bluebox*}{Definition}
 A \textbf{set} $S$ is \emph{finite} if there exists a bijection
@@ -42,7 +42,7 @@ $$e^{i\pi} + 1 = 0$$
 
 \redheader
 
-:::::: {.columns}
+:::::: {.columns totalwidth="\textwidth"}
 ::: {.column width="50%"}
 \begin{redbox*}{Theorem}
 For all $a, b \in \mathbb{R}$:
@@ -69,7 +69,7 @@ Reserve red for critical content, not decoration.
 
 \greenheader
 
-:::::: {.columns}
+:::::: {.columns totalwidth="\textwidth"}
 ::: {.column width="50%"}
 \begin{greenbox*}{Example}
 Let $f(x) = x^2$. Then $f'(x) = 2x$, so the slope at $x = 3$ is
@@ -93,7 +93,7 @@ Same box, numbered.
 
 \cyanheader
 
-:::::: {.columns}
+:::::: {.columns totalwidth="\textwidth"}
 ::: {.column width="50%"}
 \begin{cyanbox*}{Exercise}
 Compute $\displaystyle\int_0^1 x^2\,dx$ and verify the answer equals $\tfrac{1}{3}$.
@@ -116,7 +116,7 @@ Same box, numbered.
 
 \grayheader
 
-:::::: {.columns}
+:::::: {.columns totalwidth="\textwidth"}
 ::: {.column width="50%"}
 \begin{graybox*}{Exploration}
 Pick two vectors $u, v \in \mathbb{R}^2$. Compare $\norm{u+v}$ with $\norm{u} + \norm{v}$.
