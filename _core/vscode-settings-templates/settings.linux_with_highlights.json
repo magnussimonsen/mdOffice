@@ -85,6 +85,251 @@
                     }
                 }
             ]
+        },
+        "(\\\\begin\\{redfocus\\})([\\s\\S]*?)(\\\\end\\{redfocus\\})": {
+            "filterFileRegex": ".*\\.(md)$",
+            "regexFlags": "gm",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#B42828"
+                    },
+                    "dark": {
+                        "color": "#E57373"
+                    }
+                },
+                {
+                    "light": {
+                        "borderColor": "rgba(180,40,40,0.4)"
+                    },
+                    "dark": {
+                        "borderColor": "rgba(229,115,115,0.5)"
+                    },
+                    "isWholeLine": true,
+                    "borderStyle": "solid",
+                    "borderWidth": "0 0 0 10px"
+                },
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#B42828"
+                    },
+                    "dark": {
+                        "color": "#E57373"
+                    }
+                }
+            ]
+        },
+        "(\\\\begin\\{greenfocus\\})([\\s\\S]*?)(\\\\end\\{greenfocus\\})": {
+            "filterFileRegex": ".*\\.(md)$",
+            "regexFlags": "gm",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#2E7D32"
+                    },
+                    "dark": {
+                        "color": "#81C784"
+                    }
+                },
+                {
+                    "light": {
+                        "borderColor": "rgba(46,125,50,0.4)"
+                    },
+                    "dark": {
+                        "borderColor": "rgba(129,199,132,0.5)"
+                    },
+                    "isWholeLine": true,
+                    "borderStyle": "solid",
+                    "borderWidth": "0 0 0 10px"
+                },
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#2E7D32"
+                    },
+                    "dark": {
+                        "color": "#81C784"
+                    }
+                }
+            ]
+        },
+        "(\\\\begin\\{(?:blue|my)focus\\})([\\s\\S]*?)(\\\\end\\{(?:blue|my)focus\\})": {
+            "filterFileRegex": ".*\\.(md)$",
+            "regexFlags": "gm",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#1E5AA0"
+                    },
+                    "dark": {
+                        "color": "#6FA8DC"
+                    }
+                },
+                {
+                    "light": {
+                        "borderColor": "rgba(30,90,160,0.4)"
+                    },
+                    "dark": {
+                        "borderColor": "rgba(111,168,220,0.5)"
+                    },
+                    "isWholeLine": true,
+                    "borderStyle": "solid",
+                    "borderWidth": "0 0 0 10px"
+                },
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#1E5AA0"
+                    },
+                    "dark": {
+                        "color": "#6FA8DC"
+                    }
+                }
+            ]
+        },
+        "(\\\\begin\\{cyanfocus\\})([\\s\\S]*?)(\\\\end\\{cyanfocus\\})": {
+            "filterFileRegex": ".*\\.(md)$",
+            "regexFlags": "gm",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#00AAB4"
+                    },
+                    "dark": {
+                        "color": "#4DD0E1"
+                    }
+                },
+                {
+                    "light": {
+                        "borderColor": "rgba(0,170,180,0.4)"
+                    },
+                    "dark": {
+                        "borderColor": "rgba(77,208,225,0.5)"
+                    },
+                    "isWholeLine": true,
+                    "borderStyle": "solid",
+                    "borderWidth": "0 0 0 10px"
+                },
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#00AAB4"
+                    },
+                    "dark": {
+                        "color": "#4DD0E1"
+                    }
+                }
+            ]
+        },
+        "(\\\\begin\\{grayfocus\\})([\\s\\S]*?)(\\\\end\\{grayfocus\\})": {
+            "filterFileRegex": ".*\\.(md)$",
+            "regexFlags": "gm",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#404040"
+                    },
+                    "dark": {
+                        "color": "#BDBDBD"
+                    }
+                },
+                {
+                    "light": {
+                        "borderColor": "rgba(64,64,64,0.4)"
+                    },
+                    "dark": {
+                        "borderColor": "rgba(189,189,189,0.5)"
+                    },
+                    "isWholeLine": true,
+                    "borderStyle": "solid",
+                    "borderWidth": "0 0 0 10px"
+                },
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#404040"
+                    },
+                    "dark": {
+                        "color": "#BDBDBD"
+                    }
+                }
+            ]
+        },
+        "(\\\\redheader)": {
+            "filterFileRegex": ".*\\.(md)$",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#B42828"
+                    },
+                    "dark": {
+                        "color": "#E57373"
+                    }
+                }
+            ]
+        },
+        "(\\\\greenheader)": {
+            "filterFileRegex": ".*\\.(md)$",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#2E7D32"
+                    },
+                    "dark": {
+                        "color": "#81C784"
+                    }
+                }
+            ]
+        },
+        "(\\\\(?:blue|my)header)": {
+            "filterFileRegex": ".*\\.(md)$",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#1E5AA0"
+                    },
+                    "dark": {
+                        "color": "#6FA8DC"
+                    }
+                }
+            ]
+        },
+        "(\\\\cyanheader)": {
+            "filterFileRegex": ".*\\.(md)$",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#00AAB4"
+                    },
+                    "dark": {
+                        "color": "#4DD0E1"
+                    }
+                }
+            ]
+        },
+        "(\\\\grayheader)": {
+            "filterFileRegex": ".*\\.(md)$",
+            "decorations": [
+                {
+                    "fontWeight": "bold",
+                    "light": {
+                        "color": "#404040"
+                    },
+                    "dark": {
+                        "color": "#BDBDBD"
+                    }
+                }
+            ]
         }
     }
 }
