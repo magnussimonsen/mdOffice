@@ -86,7 +86,7 @@
                 }
             ]
         },
-        "(\\\\begin\\{redfocus\\})([\\s\\S]*?)(\\\\end\\{redfocus\\})": {
+        "(\\\\begin\\{red(?:focus|box\\*?)\\})([\\s\\S]*?)(\\\\end\\{red(?:focus|box\\*?)\\})": {
             "filterFileRegex": ".*\\.(md)$",
             "regexFlags": "gm",
             "decorations": [
@@ -121,7 +121,7 @@
                 }
             ]
         },
-        "(\\\\begin\\{greenfocus\\})([\\s\\S]*?)(\\\\end\\{greenfocus\\})": {
+        "(\\\\begin\\{green(?:focus|box\\*?)\\})([\\s\\S]*?)(\\\\end\\{green(?:focus|box\\*?)\\})": {
             "filterFileRegex": ".*\\.(md)$",
             "regexFlags": "gm",
             "decorations": [
@@ -156,7 +156,7 @@
                 }
             ]
         },
-        "(\\\\begin\\{(?:blue|my)focus\\})([\\s\\S]*?)(\\\\end\\{(?:blue|my)focus\\})": {
+        "(\\\\begin\\{(?:blue|my)(?:focus|box\\*?)\\})([\\s\\S]*?)(\\\\end\\{(?:blue|my)(?:focus|box\\*?)\\})": {
             "filterFileRegex": ".*\\.(md)$",
             "regexFlags": "gm",
             "decorations": [
@@ -191,7 +191,7 @@
                 }
             ]
         },
-        "(\\\\begin\\{cyanfocus\\})([\\s\\S]*?)(\\\\end\\{cyanfocus\\})": {
+        "(\\\\begin\\{cyan(?:focus|box\\*?)\\})([\\s\\S]*?)(\\\\end\\{cyan(?:focus|box\\*?)\\})": {
             "filterFileRegex": ".*\\.(md)$",
             "regexFlags": "gm",
             "decorations": [
@@ -226,7 +226,7 @@
                 }
             ]
         },
-        "(\\\\begin\\{grayfocus\\})([\\s\\S]*?)(\\\\end\\{grayfocus\\})": {
+        "(\\\\begin\\{gray(?:focus|box\\*?)\\})([\\s\\S]*?)(\\\\end\\{gray(?:focus|box\\*?)\\})": {
             "filterFileRegex": ".*\\.(md)$",
             "regexFlags": "gm",
             "decorations": [

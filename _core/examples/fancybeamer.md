@@ -39,7 +39,6 @@ $$e^{i\pi} + 1 = 0$$
 ::::::
 
 ## Red — Theorem and Focus Box
-
 \redheader
 
 :::::: {.columns totalwidth="\textwidth"}
@@ -66,7 +65,6 @@ Reserve red for critical content, not decoration.
 ::::::
 
 ## Green — Theorem and Focus Box
-
 \greenheader
 
 :::::: {.columns totalwidth="\textwidth"}
@@ -90,7 +88,6 @@ Same box, numbered.
 ::::::
 
 ## Cyan — Theorem and Focus Box
-
 \cyanheader
 
 :::::: {.columns totalwidth="\textwidth"}
@@ -113,7 +110,6 @@ Same box, numbered.
 ::::::
 
 ## Gray — Theorem and Focus Box
-
 \grayheader
 
 :::::: {.columns totalwidth="\textwidth"}
@@ -136,7 +132,6 @@ Same box, numbered.
 ::::::
 
 ## Macros
-
 \blueheader
 
 **Warning and info macros:**
