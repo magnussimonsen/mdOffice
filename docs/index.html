@@ -159,7 +159,7 @@
     <img src="img/screenshot-blue-beamer.png" alt="Beamer slide with a blue header bar, showing a blue theorem box and a blue focus box" />
   </section>
 
-  <!-- Section 4b: Custom templates for consistency - markdown source -->
+  <!-- Section 4b: Custom templates for consistency  and color highlights for colored boxes- markdown source -->
   <section class="section-side-by-side">
     <div class="text">
       <p>
@@ -169,12 +169,14 @@
         render the boxes. No LaTeX beyond the theme file itself is needed.
       </p>
       <p>
-        Every color on the slide, including headers, box frames, and tinted backgrounds, is
-        derived from five base RGB values in <code>_core/scripts/themes/fancybeamer.tex</code>,
-        so changing the palette for every document that uses the theme is a one-line edit.
+        In VS Code, mdOffice also highlights these environment blocks directly in the Markdown source:
+        <code>bluefocus</code>, <code>redfocus</code>, <code>greenfocus</code>, <code>cyanfocus</code>,
+        and <code>grayfocus</code>, plus matching theorem boxes such as <code>bluebox</code>/<code>bluebox*</code>
+        (and the red, green, cyan, and gray variants). The same color system used by the slide theme
+        is mirrored in the editor, so headers, box frames, and focus sections are easy to scan while writing.
       </p>
     </div>
-    <img src="img/screenshot-fancybeamer-markdown-example.png" alt="Markdown source for the blue slide, showing the frontmatter and the .columns / bluebox* / bluefocus syntax that produces it" />
+    <img src="img/screenshot-fancybeamer-markdown-example.png" alt="Markdown source in VS Code with fancybeamer macros and highlighted bluebox and bluefocus environments" />
   </section>
 
   <!-- Section 4c: Custom templates for consistency - remaining theme colors and macros -->
