@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.12)  4 SEP 2026 16:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.12)  4 SEP 2026 16:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -293,8 +293,7 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )) (C:\Users\magnus.simonsen\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count311
-)
-No file grid-paper.aux.
+) (grid-paper.aux)
 \openout1 = `grid-paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
@@ -311,6 +310,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
 LaTeX Font Info:    ... okay on input line 41.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
 LaTeX Font Info:    ... okay on input line 41.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -400,10 +400,10 @@ L3 programming layer <2025-08-13>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 12693 strings out of 468133
- 266599 string characters out of 5425872
- 644828 words of memory out of 5000000
- 41106 multiletter control sequences out of 15000+600000
+ 12696 strings out of 468133
+ 266717 string characters out of 5425872
+ 644819 words of memory out of 5000000
+ 41107 multiletter control sequences out of 15000+600000
  629874 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,9n,107p,472b,459s stack positions out of 10000i,1000n,20000p,200000b,200000s
