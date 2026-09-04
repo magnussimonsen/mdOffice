@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{soul}
+\usepackage{xcolor}
+\sethlcolor{yellow}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\sheetheader}{%
+  \noindent\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}ll@{}}
+    Your name: \underline{\hspace{7cm}} & Sheet no.\ \underline{\hspace{1.2cm}} of \underline{\hspace{1.2cm}} total \\
+  \end{tabular*}\par
+  \vspace{0.4cm}%
+}
+
+\newcommand{\draftheader}{%
+  \noindent\hl{Draft sheet}\par
+  \vspace{0.4cm}%
+}
+
+\newcommand{\grid}{%
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[step=0.5cm, gray!45, very thin] (0,0) grid (18,24.5);
+    \end{tikzpicture}
+  \end{center}
+}
+
+\newcommand{\gridsheet}{%
+  \sheetheader
+  \grid
+}
+
+\newcommand{\draftsheet}{%
+  \draftheader
+  \grid
+}
+
+\begin{document}
+
+\gridsheet
+\newpage
+\gridsheet
+\newpage
+\draftsheet
+
+
+\end{document}
