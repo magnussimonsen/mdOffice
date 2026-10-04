@@ -3,6 +3,7 @@ markdown file's frontmatter, e.g. `logo: assets/logo.png`."""
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 
@@ -42,3 +43,23 @@ def resolve_theme(themes_dir: Path, style_name: str) -> Path | None:
     if candidate.parent != themes_dir or not candidate.exists():
         return None
     return candidate
+
+
+def available_themes(themes_dir: Path) -> list[str]:
+    """Names of the `.tex` themes directly inside `themes_dir`, sorted."""
+    return sorted(path.stem for path in themes_dir.glob("*.tex"))
+
+
+def warn_unknown_theme(themes_dir: Path, style_name: str, target: str, key: str) -> None:
+    """Warn that `mdoffice.<key>` named a theme that doesn't exist.
+
+    The build continues without a theme (pandoc's plain look), so without
+    this a typo like `doc-style: exma` would silently produce an unstyled
+    document.
+    """
+    names = ", ".join(available_themes(themes_dir)) or "(none found)"
+    print(
+        f"Warning: [{target}] theme not found: mdoffice.{key}: {style_name!r}. "
+        f"Available themes: {names}. Building without a theme.",
+        file=sys.stderr,
+    )

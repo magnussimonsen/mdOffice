@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from core.assets import resolve_asset, resolve_theme
+from core.assets import resolve_asset, resolve_theme, warn_unknown_theme
 from core.filters import apply_lua_filters
 from core.frontmatter import get_custom, get_flag, get_text_block, get_value
 from core.latex_defs import LatexDefWriter
@@ -162,6 +162,8 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     theme_file = resolve_theme(scripts_dir / "themes", doc_style)
     if theme_file is not None:
         command += ["--include-in-header", str(theme_file)]
+    else:
+        warn_unknown_theme(scripts_dir / "themes", doc_style, target="pdf", key="doc-style")
 
     if not get_value(config, "fontsize"):
         command += ["--variable", f"fontsize={DEFAULT_FONTSIZE}"]
