@@ -28,7 +28,7 @@ x &= 2 \quad \text{or} \quad x = 3
 \end{align}
 
 ## Built with a few frontmatter keys
-Everything you see on this page (the logo, the colored title, the header, the contents list) comes from a handful of keys in the frontmatter block. The `doc-style` theme itself lives in `_core_v2/scripts/themes/exam.tex` and can be edited directly, or copied as a starting point for your own theme.
+Everything you see on this page (the logo, the colored title, the header, the contents list) comes from a handful of keys in the frontmatter block. The `doc-style` theme itself lives in `_core/scripts/themes/exam.tex` and can be edited directly, or copied as a starting point for your own theme.
 
 ### Frontmatter keys used here
 | Key | What it does |

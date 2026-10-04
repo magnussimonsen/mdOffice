@@ -51,11 +51,11 @@ Apply regardless of which targets are built.
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
 | `mdoffice.beamer-style` | str |  | mdOffice theme to load from scripts/themes/, e.g. beamer, fancybeamer |
-| `mdoffice.blankbox-text` | str | `Write your solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
+| `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
 | `mdoffice.page-numbering` | bool | `True` | false = hide the frame-number footline |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
 | `mdoffice.show-solution` | bool | `False` | Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.solution-text` | str | `Solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
+| `mdoffice.solution-text` | str | `Suggested solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
 
 ### Top-level keys mdOffice also reads (intercepted)
 
@@ -107,14 +107,14 @@ _None._
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
-| `mdoffice.blankbox-text` | str | `Write your solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
+| `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
 | `mdoffice.doc-style` | str | `standard-pdf` | Theme to load from scripts/themes/, e.g. standard-pdf, exam |
 | `mdoffice.first-page-numbering` | bool | `False` | true = also number the title/first page (theme-dependent: exam.tex has no separate title page, so this has no effect there) |
 | `mdoffice.header` | str |  | Small text shown top-right on every page |
 | `mdoffice.page-numbering` | bool | `True` | false = hide page numbers everywhere |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
 | `mdoffice.show-solution` | bool | `False` | Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.solution-text` | str | `Solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
+| `mdoffice.solution-text` | str | `Suggested solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
 | `mdoffice.titlebg` | hexcolor |  | 6-digit hex color (no '#') for a block behind the title (theme-dependent: exam.tex uses it, standard-pdf.tex doesn't) |
 | `mdoffice.titlebgpad` | length |  | Padding around the title text inside that colored block (see titlebg) |
 

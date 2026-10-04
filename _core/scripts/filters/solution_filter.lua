@@ -14,7 +14,7 @@
 
 local show_solution = false
 local show_blankbox = false
-local blankbox_text = "Write your calculations/justification in this box"
+local blankbox_text = "Write solution in this box"
 local solution_text = "Suggested solution"
 -- local blankbox_text = "Skriv utregningen/begrunnelsen i denne boksen"
 -- local solution_text = "Løsningsforslag"

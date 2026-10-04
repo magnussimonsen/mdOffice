@@ -44,7 +44,7 @@ def build_document(
 
     If `requested_targets` is None (the "build-all" CLI command), the targets
     are instead taken from the `mdoffice.make-<target>` flags in the file's
-    frontmatter. `scripts_dir` is the _core_v2/scripts directory, used by
+    frontmatter. `scripts_dir` is the _core/scripts directory, used by
     planners to find filters, themes, and other supporting files.
     """
     md_file = Path(md_path).resolve()

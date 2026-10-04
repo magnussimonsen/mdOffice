@@ -30,8 +30,8 @@ mdoffice:
   # first-page-numbering: false
   # show-solution: false
   # show-blankbox: false
-  # solution-text: "Solution"
-  # blankbox-text: "Write your solution in this box"
+  # solution-text: "Suggested solution"
+  # blankbox-text: "Write solution in this box"
 ---
 
 # Start writing

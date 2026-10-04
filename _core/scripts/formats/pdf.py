@@ -6,7 +6,7 @@ from typing import Any
 
 from core.assets import resolve_asset, resolve_theme
 from core.filters import apply_lua_filters
-from core.frontmatter import get_custom, get_flag, get_value
+from core.frontmatter import get_custom, get_flag, get_text_block, get_value
 from core.latex_defs import LatexDefWriter
 from core.models import TargetPlan
 from core.schema import SOLUTION_FILTER_KEYS, FormatSchema, Key
@@ -75,8 +75,9 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     # true for every build below, since at least one mdOffice def is always
     # written), pandoc silently replaces the metadata-derived header-includes
     # with only the command-line ones, dropping the user's content entirely.
-    # Re-routing it through its own `-H` file sidesteps that.
-    user_header_includes = get_value(config, "header-includes")
+    # Re-routing it through its own `-H` file sidesteps that. It can be a
+    # single block string or a YAML list of lines; both are joined here.
+    user_header_includes = get_text_block(config, "header-includes")
     if user_header_includes:
         header_includes_file = output_dir / "_mdoffice_header_includes.tex"
         header_includes_file.write_text(user_header_includes + "\n", encoding="utf-8")

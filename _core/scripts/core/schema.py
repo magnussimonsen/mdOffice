@@ -57,9 +57,9 @@ SOLUTION_FILTER_KEYS: tuple[Key, ...] = (
         doc="Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python)"),
     Key("show-blankbox", "custom", "bool", default=False,
         doc="Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python)"),
-    Key("solution-text", "custom", "str", default="Solution",
+    Key("solution-text", "custom", "str", default="Suggested solution",
         doc="Label on the solution box frame, e.g. \"Løsning\" (read by solution_filter.lua)"),
-    Key("blankbox-text", "custom", "str", default="Write your solution in this box",
+    Key("blankbox-text", "custom", "str", default="Write solution in this box",
         doc="Label on blank answer boxes (read by solution_filter.lua)"),
 )
 

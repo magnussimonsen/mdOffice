@@ -232,7 +232,7 @@ def main() -> int:
     args = parser.parse_args()
 
     # The pipeline needs this directory to locate Pandoc filters/themes that
-    # live alongside this script under _core_v2/scripts/.
+    # live alongside this script under _core/scripts/.
     scripts_dir = Path(__file__).resolve().parent
 
     if args.command == "get-ai-instructions":
@@ -248,6 +248,14 @@ def main() -> int:
         return _cmd_docs()
 
     if args.command == "build-all":
+        # Run-on-save fires for EVERY .md file (README.md, plain notes, ...).
+        # A file without an `mdoffice:` block isn't an mdOffice document, so
+        # exit quietly instead of printing "nothing to build" on each save.
+        # Frontmatter problems (unclosed fence, invalid YAML) are still
+        # warned about by load_frontmatter() itself.
+        md_file = Path(args.markdown_file)
+        if md_file.is_file() and "mdoffice" not in load_frontmatter(md_file):
+            return 0
         report = build_document(args.markdown_file, requested_targets=None, scripts_dir=scripts_dir)
         return _print_report("build-all", report)
 

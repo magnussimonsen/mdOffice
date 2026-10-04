@@ -113,3 +113,19 @@ def get_value(config: dict[str, Any], key: str, default: str | None = None) -> s
     if value is None:
         return default
     return str(value).strip()
+
+
+def get_text_block(config: dict[str, Any], key: str) -> str | None:
+    """Read a key that may be a string OR a list of strings, joined by newlines.
+
+    Pandoc accepts list-valued fields like `header-includes` either as one
+    block string or as a YAML list of lines. `get_value()` would turn a list
+    into its Python repr (`['\\usepackage{x}']`), so list-capable keys use
+    this instead. Returns None if the key is missing or empty.
+    """
+    value = config.get(key)
+    if value is None:
+        return None
+    items = value if isinstance(value, list) else [value]
+    text = "\n".join(str(item).strip() for item in items if item is not None and str(item).strip())
+    return text or None

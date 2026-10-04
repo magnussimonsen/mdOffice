@@ -1,4 +1,4 @@
-"""Generates `_core_v2/doc/frontmatter-reference.md` from the format schemas
+"""Generates `_core/doc/frontmatter-reference.md` from the format schemas
 declared in `formats/*.py` (via `core/schema.py`).
 
 This replaces a hand-maintained template: as long as every custom or
