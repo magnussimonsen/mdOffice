@@ -113,14 +113,6 @@ nav .menu a {
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 
-nav .menu .score {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-ink-subtle);
-  white-space: nowrap;
-  user-select: none;
-}
-
 nav .menu a:not(.cta):hover {
   color: var(--color-ink);
   background: var(--color-accent-wash);
@@ -136,40 +128,6 @@ nav .menu a.cta {
 nav .menu a.cta:hover {
   background: var(--color-accent);
   color: white;
-}
-
-/* Animal wander: spawned by kittens.js on hover of .cta, position updated
-   frame-by-frame in JS as it roams the viewport, then fades out and is
-   removed. Fixed to the viewport so it isn't confined to the button. */
-.kitten {
-  position: fixed;
-  font-size: 42px;
-  line-height: 1;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* Trophy burst on a goal */
-.kitten-boom {
-  font-size: 42px;
-  animation: kitten-boom 1000ms ease-out forwards;
-}
-
-@keyframes kitten-boom {
-  from {
-    transform: translate(-50%, -50%) scale(0.4);
-    opacity: 1;
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1.8);
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .kitten {
-    display: none;
-  }
 }
 
 /* ============ Page header (all pages) ============
