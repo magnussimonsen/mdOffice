@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from core.assets import resolve_asset
+from core.filters import apply_lua_filters
 from core.frontmatter import get_custom, get_flag, get_value
 from core.models import TargetPlan
 from core.schema import FormatSchema, Key
@@ -39,6 +40,7 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
         # convert (e.g. \frac), leaving literal "$...$" in the output.
         "--mathml",
     ]
+    apply_lua_filters(command, target="epub", scripts_dir=scripts_dir)
 
     if get_flag(config, "toc", default=False):
         command += ["--toc"]

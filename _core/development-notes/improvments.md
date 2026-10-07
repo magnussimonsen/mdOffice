@@ -6,12 +6,7 @@ The three bugs listed first were reproduced in a scratch folder. Nothing in the 
 
 ## Confirmed bugs (highest priority)
 
-1. **Solutions leak into DOCX, ODT and EPUB.**
-   The Lua filters, including `solution_filter.lua`, only run for PDF and Beamer (`LATEX_TARGETS` in `core/filters.py`).
-   A DOCX built with `show-solution: false` still contains the solution text.
-   This matters for exams: enabling Word output hands out the answers.
-   The validator also warns that `show-solution` is an "unknown key" for docx, which is misleading.
-   *Fix:* run the solution filter for every target. Render the boxes natively in non-LaTeX formats, or just strip the blocks.
+1. ~~**Solutions leak into DOCX, ODT and EPUB.**~~ *Fixed 2026-10-07:* `solution_filter.lua` now runs for every output target, removing hidden solutions. Enabled solutions render as labeled plain text in non-LaTeX formats and keep their existing LaTeX boxes in PDF and Beamer. The regression check confirmed hidden and shown behavior for DOCX, ODT, EPUB and PPTX.
 
 2. **Every `media-*` folder next to the document is deleted.**
    `run_pandoc_command` in `core/pandoc.py` deletes every directory matching `media-*` in the document folder after each build.

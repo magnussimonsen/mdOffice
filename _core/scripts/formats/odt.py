@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from core.filters import apply_lua_filters
 from core.models import TargetPlan
 from core.schema import FormatSchema
 
@@ -27,4 +28,5 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
         "--resource-path",
         str(md_file.parent),
     ]
+    apply_lua_filters(command, target="odt", scripts_dir=scripts_dir)
     return TargetPlan(target="odt", output_file=output_file, command=command)
