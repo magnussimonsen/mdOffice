@@ -9,6 +9,7 @@ cover-image: "./img/logo.png"
 
 mdoffice:
   make-epub: true
+  epub-css: "epub.css"
 ---
 
 # Introduction
