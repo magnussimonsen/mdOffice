@@ -9,7 +9,7 @@ from core.filters import apply_lua_filters
 from core.frontmatter import get_custom, get_flag, get_text_block, get_value
 from core.latex_defs import LatexDefWriter
 from core.models import TargetPlan
-from core.schema import SOLUTION_FILTER_KEYS, FormatSchema, Key
+from core.schema import BLANKBOX_FILTER_KEYS, FormatSchema, Key
 from core.tex_sanitize import escape_tex_text, sanitize_hex_color, sanitize_tex_length, sanitize_tex_path
 
 # Fallback values used only when "fontsize"/"geometry" aren't set in frontmatter.
@@ -45,7 +45,7 @@ SCHEMA = FormatSchema(
             doc="mdOffice supplies this default if the key is absent"),
         Key("geometry", "intercepted", "str", default=DEFAULT_GEOMETRY,
             doc="mdOffice supplies this default if the key is absent"),
-        *SOLUTION_FILTER_KEYS,
+        *BLANKBOX_FILTER_KEYS,
     ),
 )
 

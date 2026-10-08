@@ -48,17 +48,11 @@ class FormatSchema:
         return tuple(key for key in self.keys if key.scope == "intercepted")
 
 
-# Keys read by `filters/solution_filter.lua`, not by any Python planner --
-# shared by every LaTeX-based target (pdf, beamer; see LATEX_TARGETS in
-# core/filters.py). Declared once here so pdf.py and beamer.py don't
-# duplicate the same four Key(...) lines.
-SOLUTION_FILTER_KEYS: tuple[Key, ...] = (
-    Key("show-solution", "custom", "bool", default=False,
-        doc="Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python)"),
+# Blank-box keys read by `filters/solution_filter.lua`, not by any Python
+# planner. These rendering options apply to LaTeX-based targets only.
+BLANKBOX_FILTER_KEYS: tuple[Key, ...] = (
     Key("show-blankbox", "custom", "bool", default=False,
         doc="Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python)"),
-    Key("solution-text", "custom", "str", default="Suggested solution",
-        doc="Label on the solution box frame, e.g. \"Løsning\" (read by solution_filter.lua)"),
     Key("blankbox-text", "custom", "str", default="Write solution in this box",
         doc="Label on blank answer boxes (read by solution_filter.lua)"),
 )
@@ -72,6 +66,10 @@ GLOBAL_KEYS: tuple[Key, ...] = (
     Key("make-pptx", "custom", "bool", default=False, doc="Build the pptx target on `build-all`"),
     Key("make-beamer", "custom", "bool", default=False, doc="Build the beamer target on `build-all`"),
     Key("make-epub", "custom", "bool", default=False, doc="Build the epub target on `build-all`"),
+    Key("show-solution", "custom", "bool", default=False,
+        doc="Include ::: solution ... ::: blocks in the output (read by solution_filter.lua)"),
+    Key("solution-text", "custom", "str", default="Suggested solution",
+        doc="Label on visible solution blocks (read by solution_filter.lua)"),
     Key(
         "ai-instructions",
         "custom",

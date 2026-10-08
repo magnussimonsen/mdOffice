@@ -16,6 +16,7 @@ local show_solution = false
 local show_blankbox = false
 local blankbox_text = "Write solution in this box"
 local solution_text = "Suggested solution"
+local is_latex_format = FORMAT == "latex" or FORMAT == "beamer"
 -- local blankbox_text = "Skriv utregningen/begrunnelsen i denne boksen"
 -- local solution_text = "Løsningsforslag"
 local has_placeins = false
@@ -106,6 +107,12 @@ return {
   {
     Div = function(el)
       if el.classes:includes("blankbox") then
+        -- Keep non-LaTeX blankboxes unchanged; their existing behavior is
+        -- outside this filter's LaTeX-specific rendering support.
+        if not is_latex_format then
+          return el
+        end
+
         if not show_blankbox then
           return {}
         end
@@ -137,6 +144,20 @@ return {
       if el.classes:includes("solution") then
         if not show_solution then
           return {}
+        end
+
+        if not is_latex_format then
+          local new_content = {}
+          local text = el.attributes["text"] or solution_text
+          if text and text ~= '' then
+            table.insert(new_content, pandoc.Para({
+              pandoc.Strong({pandoc.Str(text)})
+            }))
+          end
+          for _, block in ipairs(el.content) do
+            table.insert(new_content, block)
+          end
+          return new_content
         end
 
         local opts = 'breakable, enhanced, colback=white, frame hidden'

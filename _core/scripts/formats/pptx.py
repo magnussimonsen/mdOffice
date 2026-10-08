@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from core.assets import resolve_asset
+from core.filters import apply_lua_filters
 from core.frontmatter import get_value
 from core.models import TargetPlan
 from core.schema import FormatSchema, Key
@@ -32,6 +33,7 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
         "--resource-path",
         str(md_file.parent),
     ]
+    apply_lua_filters(command, target="pptx", scripts_dir=scripts_dir)
 
     reference_doc = get_value(config, "reference-doc")
     if reference_doc:

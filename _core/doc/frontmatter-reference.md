@@ -43,6 +43,8 @@ Apply regardless of which targets are built.
 | `mdoffice.make-odt` | bool | `False` | Build the odt target on `build-all` |
 | `mdoffice.make-pdf` | bool | `False` | Build the pdf target on `build-all` |
 | `mdoffice.make-pptx` | bool | `False` | Build the pptx target on `build-all` |
+| `mdoffice.show-solution` | bool | `False` | Include ::: solution ... ::: blocks in the output (read by solution_filter.lua) |
+| `mdoffice.solution-text` | str | `Suggested solution` | Label on visible solution blocks (read by solution_filter.lua) |
 
 ## beamer
 
@@ -54,8 +56,6 @@ Apply regardless of which targets are built.
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
 | `mdoffice.page-numbering` | bool | `True` | false = hide the frame-number footline |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.show-solution` | bool | `False` | Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.solution-text` | str | `Suggested solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
 
 ### Top-level keys mdOffice also reads (intercepted)
 
@@ -113,8 +113,6 @@ _None._
 | `mdoffice.header` | str |  | Small text shown top-right on every page |
 | `mdoffice.page-numbering` | bool | `True` | false = hide page numbers everywhere |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.show-solution` | bool | `False` | Show ::: solution ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.solution-text` | str | `Suggested solution` | Label on the solution box frame, e.g. "Løsning" (read by solution_filter.lua) |
 | `mdoffice.titlebg` | hexcolor |  | 6-digit hex color (no '#') for a block behind the title (theme-dependent: exam.tex uses it, standard-pdf.tex doesn't) |
 | `mdoffice.titlebgpad` | length |  | Padding around the title text inside that colored block (see titlebg) |
 

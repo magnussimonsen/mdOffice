@@ -10,10 +10,9 @@ def apply_lua_filters(command: list[str], target: str, scripts_dir: Path) -> Non
     filter_names: list[str] = []
 
     if target in LATEX_TARGETS:
-        filter_names.extend([
-            "math_env_normalize.lua",
-            "solution_filter.lua",
-        ])
+        filter_names.append("math_env_normalize.lua")
+
+    filter_names.append("solution_filter.lua")
 
     for name in filter_names:
         filter_path = scripts_dir / "filters" / name

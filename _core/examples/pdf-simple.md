@@ -2,6 +2,7 @@
 title: "mdOffice: The Office suite in a code editor"
 subtitle: "Turn VS Code into your main office workplace using Markdown and LaTeX"
 fontsize: 11pt
+mainfont: "Libron"
 logo: img/mdOffice_logo_light.png
 toc: true
 numbersections: false
@@ -35,6 +36,7 @@ Everything you see on this page (the logo, the colored title, the header, the co
 |---|---|
 | `make-pdf: true` | Builds a PDF from this file on save |
 | `doc-style: exam` | Selects this theme: logo in the header, colored title block |
+| `mainfont: "Libron"` | Sets the PDF's main typeface; Libron must be installed on the build system |
 | `titlebg` | Sets the title block's background color |
 | `titlebgpad` | Sets the padding around the title text inside that colored block |
 | `logo` | Places the logo in the header of every page |
