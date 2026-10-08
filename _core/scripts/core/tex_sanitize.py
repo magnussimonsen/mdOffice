@@ -22,6 +22,11 @@ _VALID_TEX_LENGTH = re.compile(r"^\d+(?:\.\d+)?(?:pt|mm|cm|in|em|ex|bp|pc|dd|cc|
 # Colors are passed into TeX color macros as plain hex, so enforce 6 hex digits.
 _VALID_HEX_COLOR = re.compile(r"^[0-9A-Fa-f]{6}$")
 
+# Font family names as fontspec takes them, e.g. "Fira Sans", "Source Sans 3".
+# Letters (incl. non-ASCII), digits, spaces, '.', '-' and "'" only: no TeX
+# metacharacters can get into \setmainfont{...}.
+_VALID_FONT_NAME = re.compile(r"^[\w .'\-]+$")
+
 
 def escape_tex_text(value: str) -> str:
     """Escape TeX-special characters in user-provided text."""
@@ -46,6 +51,16 @@ def sanitize_hex_color(value: str | None) -> str | None:
         return None
     text = value.strip().lstrip("#")
     if _VALID_HEX_COLOR.fullmatch(text):
+        return text
+    return None
+
+
+def sanitize_font_name(value: str | None) -> str | None:
+    """Return a safe font family name, or None if invalid."""
+    if value is None:
+        return None
+    text = value.strip()
+    if _VALID_FONT_NAME.fullmatch(text) and "_" not in text:
         return text
     return None
 

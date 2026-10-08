@@ -270,19 +270,33 @@ You can also check a single document's frontmatter against the schema without bu
 python _core/scripts/mdoffice.py validate path/to/file.md
 ```
 
-## 2) Custom themes (LaTeX headers)
+## 2) Themes (LaTeX headers)
 
-PDF and Beamer output can be customized by pointing at a LaTeX file in
-[`_core/scripts/themes/`](_core/scripts/themes/):
+PDF and Beamer output are styled by a LaTeX theme file, picked by name:
 
-- `mdoffice.doc-style` (PDF, default `standard-pdf`) loads `themes/<doc-style>.tex`
-- `mdoffice.beamer-style` (Beamer, no default — pandoc's plain beamer theme is used if unset) loads `themes/<beamer-style>.tex`
+- `mdoffice.doc-style` (PDF, default `standard-pdf`)
+- `mdoffice.beamer-style` (Beamer, no default — pandoc's plain beamer theme is used if unset)
 
-The file is included as a pandoc header (`--include-in-header`), so it can
-redefine fonts, colors, title formatting, `\geometry{...}`, etc. Available
-themes today: `standard-pdf.tex`, `exam.tex`, `beamer.tex`, `fancybeamer.tex`. Add your own
-`.tex` file to that folder and reference its name (without `.tex`) from
-`mdoffice.doc-style` or `mdoffice.beamer-style` in your document's frontmatter.
+The theme is included as a pandoc header (`--include-in-header`), so it can
+redefine fonts, colors, title formatting, `\geometry{...}`, etc. mdOffice looks
+for the name in two places:
+
+1. **Your own themes:** [`custom_themes/<name>/theme.tex`](custom_themes/).
+   Each theme is a self-contained folder with its `theme.tex` and any images
+   it needs. mdOffice defines `\mdthemedir` as the theme's folder before
+   loading it, so the theme can use `\includegraphics{\mdthemedir/img/logo.png}`.
+   See [`custom_themes/README.md`](custom_themes/README.md).
+2. **Official mdOffice themes:** [`_core/scripts/themes/<name>.tex`](_core/scripts/themes/):
+   `standard-pdf`, `exam`, `beamer`, `fancybeamer`.
+
+A custom theme with the same name as an official one overrides it (the build
+log says so). Keep your own themes in `custom_themes/` rather than editing
+`_core/`: then you can update mdOffice's core without touching your themes.
+
+To change only the font, there is no need for a new theme: set
+`mdoffice.font: "Font Name"` (PDF and Beamer) to any installed font. It is
+loaded after the theme, so it overrides the theme's font, and mdOffice warns
+if the font isn't installed.
 
 ## 3) Display math and the math_env_normalize.lua filter
 

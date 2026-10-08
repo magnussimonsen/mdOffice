@@ -6,6 +6,7 @@ from typing import Any
 
 from core.assets import resolve_asset, resolve_theme, warn_unknown_theme
 from core.filters import apply_lua_filters
+from core.fonts import write_font_header
 from core.frontmatter import get_custom, get_flag, get_text_block, get_value
 from core.latex_defs import LatexDefWriter
 from core.models import TargetPlan
@@ -24,7 +25,9 @@ SCHEMA = FormatSchema(
     target="pdf",
     keys=(
         Key("doc-style", "custom", "str", default=DEFAULT_DOC_STYLE,
-            doc="Theme to load from scripts/themes/, e.g. standard-pdf, exam"),
+            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam"),
+        Key("font", "custom", "str",
+            doc="Installed font family for all text, e.g. \"Libertinus Serif\"; overrides the theme's font"),
         Key("header", "custom", "str",
             doc="Small text shown top-right on every page"),
         Key("titlebg", "custom", "hexcolor",
@@ -140,7 +143,8 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
         defs.flag("hidefirstpagenumber")
 
     # `mdoffice.doc-style` (custom): picks WHICH theme file to load (default
-    # "standard-pdf" -> scripts/themes/standard-pdf.tex). Computed here
+    # "standard-pdf" -> scripts/themes/standard-pdf.tex, or a custom_themes/
+    # folder of the same name). Computed here
     # (rather than just before the theme is loaded) because the
     # `numbersections` default below depends on it.
     doc_style = get_value(custom, "doc-style", DEFAULT_DOC_STYLE) or DEFAULT_DOC_STYLE
@@ -154,16 +158,30 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     if doc_style == "exam" and get_flag(config, "numbersections", default=True):
         defs.flag("forcenumbersections")
 
+    # Resolved before the defs are written so \mdthemedir (the theme's own
+    # folder, for its logos/images) is available while the theme loads.
+    theme_file = resolve_theme(scripts_dir, doc_style, target="pdf")
+    if theme_file is None:
+        warn_unknown_theme(scripts_dir, doc_style, target="pdf", key="doc-style")
+    else:
+        safe_theme_dir = sanitize_tex_path(theme_file.parent.as_posix())
+        if safe_theme_dir is not None:
+            defs.define("mdthemedir", safe_theme_dir)
+
     def_file = defs.write()
     if def_file is not None:
         temp_files.append(def_file)
         command += ["--include-in-header", str(def_file)]
 
-    theme_file = resolve_theme(scripts_dir / "themes", doc_style)
     if theme_file is not None:
         command += ["--include-in-header", str(theme_file)]
-    else:
-        warn_unknown_theme(scripts_dir / "themes", doc_style, target="pdf", key="doc-style")
+
+    # `mdoffice.font` (custom): included after the theme so it overrides the
+    # theme's font choice.
+    font_file = write_font_header(output_dir, get_value(custom, "font"), target="pdf")
+    if font_file is not None:
+        temp_files.append(font_file)
+        command += ["--include-in-header", str(font_file)]
 
     if not get_value(config, "fontsize"):
         command += ["--variable", f"fontsize={DEFAULT_FONTSIZE}"]

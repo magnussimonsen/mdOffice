@@ -6,6 +6,7 @@ from typing import Any
 
 from core.assets import resolve_asset, resolve_theme, warn_unknown_theme
 from core.filters import apply_lua_filters
+from core.fonts import write_font_header
 from core.frontmatter import get_custom, get_flag, get_value
 from core.latex_defs import LatexDefWriter
 from core.models import TargetPlan
@@ -19,7 +20,9 @@ SCHEMA = FormatSchema(
     target="beamer",
     keys=(
         Key("beamer-style", "custom", "str",
-            doc="mdOffice theme to load from scripts/themes/, e.g. beamer, fancybeamer"),
+            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancybeamer"),
+        Key("font", "custom", "str",
+            doc="Installed font family for all text, e.g. \"Fira Sans\"; overrides the theme's font"),
         Key("page-numbering", "custom", "bool", default=True,
             doc="false = hide the frame-number footline"),
         Key("logo", "intercepted", "path",
@@ -38,7 +41,7 @@ SCHEMA = FormatSchema(
 # Beamer template variables, read directly by pandoc's own beamer template.
 # `logo` is ALSO read here by mdOffice (to resolve/sanitize the path), and
 # both `logo` and the theme-* family are effectively overridden by the
-# mdOffice theme file (scripts/themes/{beamer-style}.tex), which is included
+# mdOffice theme file (custom_themes/ or scripts/themes/), which is included
 # LAST and sets \logo{...}/\usetheme{...} again inside \AtBeginDocument, so
 # it always wins. Use `mdoffice.beamer-style` to choose between mdOffice's
 # own theme files -- it's unrelated to pandoc's `theme:`.
@@ -90,22 +93,38 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     if not get_flag(custom, "page-numbering", default=True):
         defs.flag("hidepagenumbers")
 
+    # `mdoffice.beamer-style` (custom): picks WHICH theme file to load, from
+    # custom_themes/<name>/theme.tex or scripts/themes/<name>.tex. Resolved
+    # before the defs are written so \mdthemedir (the theme's own folder,
+    # for its logos/images) is available while the theme loads.
+    theme_file = None
+    beamer_style = get_value(custom, "beamer-style")
+    if beamer_style:
+        theme_file = resolve_theme(scripts_dir, beamer_style, target="beamer")
+        if theme_file is None:
+            warn_unknown_theme(scripts_dir, beamer_style, target="beamer", key="beamer-style")
+        else:
+            safe_theme_dir = sanitize_tex_path(theme_file.parent.as_posix())
+            if safe_theme_dir is not None:
+                defs.define("mdthemedir", safe_theme_dir)
+
     def_file = defs.write()
     if def_file is not None:
         temp_files.append(def_file)
         command += ["--include-in-header", str(def_file)]
 
-    # `mdoffice.beamer-style` (custom): picks WHICH mdOffice theme file to
-    # load. Included after the defs above so its \ifdefined checks see them,
-    # and after pandoc's own beamer template so it wins the `logo`/`theme`
-    # race described in the note above.
-    beamer_style = get_value(custom, "beamer-style")
-    if beamer_style:
-        theme_file = resolve_theme(scripts_dir / "themes", beamer_style)
-        if theme_file is not None:
-            command += ["--include-in-header", str(theme_file)]
-        else:
-            warn_unknown_theme(scripts_dir / "themes", beamer_style, target="beamer", key="beamer-style")
+    # The theme is included after the defs above so its \ifdefined checks see
+    # them, and after pandoc's own beamer template so it wins the
+    # `logo`/`theme` race described in the note above.
+    if theme_file is not None:
+        command += ["--include-in-header", str(theme_file)]
+
+    # `mdoffice.font` (custom): included after the theme so it overrides the
+    # theme's font choice.
+    font_file = write_font_header(output_dir, get_value(custom, "font"), target="beamer")
+    if font_file is not None:
+        temp_files.append(font_file)
+        command += ["--include-in-header", str(font_file)]
 
     if not get_value(config, "aspectratio"):
         command += ["--variable", f"aspectratio={DEFAULT_ASPECTRATIO}"]

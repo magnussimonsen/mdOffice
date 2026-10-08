@@ -52,8 +52,9 @@ Apply regardless of which targets are built.
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
-| `mdoffice.beamer-style` | str |  | mdOffice theme to load from scripts/themes/, e.g. beamer, fancybeamer |
+| `mdoffice.beamer-style` | str |  | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancybeamer |
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
+| `mdoffice.font` | str |  | Installed font family for all text, e.g. "Fira Sans"; overrides the theme's font |
 | `mdoffice.page-numbering` | bool | `True` | false = hide the frame-number footline |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
 
@@ -108,8 +109,9 @@ _None._
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
-| `mdoffice.doc-style` | str | `standard-pdf` | Theme to load from scripts/themes/, e.g. standard-pdf, exam |
+| `mdoffice.doc-style` | str | `standard-pdf` | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam |
 | `mdoffice.first-page-numbering` | bool | `False` | true = also number the title/first page (theme-dependent: exam.tex has no separate title page, so this has no effect there) |
+| `mdoffice.font` | str |  | Installed font family for all text, e.g. "Libertinus Serif"; overrides the theme's font |
 | `mdoffice.header` | str |  | Small text shown top-right on every page |
 | `mdoffice.page-numbering` | bool | `True` | false = hide page numbers everywhere |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |

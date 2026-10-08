@@ -1,0 +1,233 @@
+% lektorlaget/theme.tex - Lektorlaget Beamer style (custom mdOffice theme)
+% Loaded via beamer-style: "lektorlaget" in the document front-matter.
+% Follows the look of Lektorlaget.presentasjonsmal.pptx: petrol title slide
+% with the owl watermark, petrol slide titles over a mint rule, the owl logo
+% top-right, and green arrow bullets.
+%
+% ---- FRONTMATTER EXAMPLE ---------------------------------------------------
+%
+% ---
+% title:        "Tittel"
+% subtitle:     "Undertittel"
+% author:       "Forfatter. Rolle."
+% date:         "Dato"
+% aspectratio:  169             # 16:9 (default), matches the PowerPoint
+% mdoffice:
+%   make-beamer:  true
+%   beamer-style: "lektorlaget"
+%   font:         "Arial"       # optional: any installed font
+% ---
+%
+% ---- SLIDE TYPES -----------------------------------------------------------
+%   Title slide     automatic when `title:` is set.
+%   Section slide   automatic for every level-1 heading (# Section).
+%   \tealslide      first line of a slide: petrol background, white text
+%                   (e.g. a closing "Takk!" slide).
+%
+% ---- BOXES -----------------------------------------------------------------
+%   \begin{llbox}{Title} ... \end{llbox}    petrol frame, mint background
+%   \begin{llfocus} ... \end{llfocus}       mint background, no title
+%   Pandoc/beamer blocks (block, alertblock, exampleblock) use the same palette.
+%
+% ---- FILES -----------------------------------------------------------------
+% Images live in img/ next to this file and are found through \mdthemedir,
+% which mdOffice defines as this theme's folder before loading it.
+% ----------------------------------------------------------------------------
+
+\providecommand{\mdthemedir}{.}
+
+\usetheme{default}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+
+
+% ---------------------------------------------------------------
+% COLORS - from the PowerPoint theme "Lektorlaget 1"
+\definecolor{llpetrol}{HTML}{008675}   % title slide background, slide titles
+\definecolor{llgreen}{HTML}{28714F}    % accent 1
+\definecolor{llmint}{HTML}{D5ECDD}     % rules under titles, light backgrounds
+\definecolor{llturquoise}{HTML}{00C0AA}
+\definecolor{llblue}{HTML}{4174C7}
+\definecolor{llred}{HTML}{ED5F54}
+\definecolor{llyellow}{HTML}{FFCB46}
+\definecolor{lltext}{HTML}{0A122B}     % body text (dark navy)
+
+\setbeamercolor{normal text}{fg=lltext, bg=white}
+\setbeamercolor{structure}{fg=llpetrol}
+\setbeamercolor{frametitle}{fg=llpetrol}
+\setbeamercolor{alerted text}{fg=llred}
+\setbeamercolor{item}{fg=llpetrol}
+
+\setbeamercolor{block title}{fg=white, bg=llpetrol}
+\setbeamercolor{block body}{fg=lltext, bg=llmint}
+\setbeamercolor{block title alerted}{fg=white, bg=llred}
+\setbeamercolor{block body alerted}{fg=lltext, bg=llred!12}
+\setbeamercolor{block title example}{fg=white, bg=llgreen}
+\setbeamercolor{block body example}{fg=lltext, bg=llgreen!12}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% FONT - the PowerPoint uses Arial throughout. Liberation Sans is a
+% metric-compatible stand-in on Linux. To use another font, set
+% `mdoffice.font: "Font Name"` in the frontmatter (it is loaded after this
+% theme and wins). Pandoc's top-level `sansfont:` is overridden by this block.
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{%
+  \IfFontExistsTF{Liberation Sans}{\setsansfont{Liberation Sans}}{}}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% LAYOUT - all positions are fractions of the page, measured from the
+% PowerPoint (33.87 x 19.05 cm), so they scale with any aspect ratio.
+\setbeamersize{text margin left=0.069\paperwidth, text margin right=0.07\paperwidth}
+\makeatletter
+\beamer@centeredfalse   % top-aligned slide content, like the PowerPoint
+\makeatother
+
+\setbeamertemplate{navigation symbols}{}
+\AtBeginDocument{\setbeamertemplate{logo}{}\frenchspacing}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% PAGE KINDS
+%
+% \LLpagekind is "" for normal slides, or "title", "section" or "teal".
+% It is set while the slide body is typeset and read when the page is
+% shipped out (background canvas, headline, footline), then reset.
+\gdef\LLpagekind{}
+\def\LLkindtitle{title}
+\def\LLkindsection{section}
+\def\LLkindteal{teal}
+\AddToHook{shipout/after}{\gdef\LLpagekind{}}
+
+\newcommand{\tealslide}{\gdef\LLpagekind{teal}\color{white}}
+
+\setbeamertemplate{title page}{\gdef\LLpagekind{title}}
+\setbeamertemplate{section page}{\gdef\LLpagekind{section}}
+
+% The background canvas is drawn with the page's bottom-left corner as
+% origin, so it is where the title and section slides are laid out.
+\makeatletter
+\setbeamertemplate{background canvas}{%
+  \ifx\LLpagekind\empty
+    \color{white}\vrule width\paperwidth height\paperheight
+  \else
+    \color{llpetrol}\vrule width\paperwidth height\paperheight
+    \hskip-\paperwidth
+    \begin{tikzpicture}[overlay, x=\paperwidth, y=\paperheight]
+      \ifx\LLpagekind\LLkindtitle
+        % Owl watermark bleeding off the top-left corner
+        \node[anchor=north west, inner sep=0pt] at (-0.211, 1.082)
+          {\includegraphics[width=0.6025\paperwidth]{\mdthemedir/img/owl-light.png}};
+        \node[anchor=north west, inner sep=0pt] at (0.8294, 0.9084)
+          {\includegraphics[width=0.1312\paperwidth]{\mdthemedir/img/logo-white-wide.png}};
+        \node[anchor=south west, inner sep=0pt, text width=0.745\paperwidth,
+              align=left, text=white] at (0.2106, 0.185)
+          {\fontsize{22}{25}\selectfont\MakeUppercase{\inserttitle}};
+        \draw[llmint, line width=3.2pt] (0.2188, 0.1549) -- (0.956, 0.1549);
+        \node[anchor=north west, inner sep=0pt, text width=0.745\paperwidth,
+              align=left, text=white] at (0.2106, 0.128)
+          {\ifx\insertsubtitle\@empty\else{\fontsize{10}{12}\selectfont\insertsubtitle}\par\fi
+           \fontsize{7.5}{9}\selectfont\insertauthor%
+           \ifx\insertdate\@empty\else
+             \ifx\beamer@andstripped\@empty\else\ \textbullet\ \fi\insertdate
+           \fi};
+      \fi
+      \ifx\LLpagekind\LLkindsection
+        \node[inner sep=0pt] at (0.5, 0.60)
+          {\includegraphics[width=0.0844\paperwidth]{\mdthemedir/img/logo-white.png}};
+        \node[text width=0.8\paperwidth, align=center, text=white] at (0.5, 0.40)
+          {\fontsize{20}{24}\selectfont\MakeUppercase{\insertsectionhead}};
+      \fi
+    \end{tikzpicture}%
+  \fi
+}
+\makeatother
+
+% Headline: zero height, only draws the owl logo top-right: green on
+% normal (white) slides, white on \tealslide slides.
+\def\LLheadlinelogo#1{%
+  \vbox to 0pt{\hbox{%
+    \begin{tikzpicture}[overlay, x=\paperwidth, y=\paperheight]
+      \node[anchor=north west, inner sep=0pt] at (0.9226, -0.0534)
+        {\includegraphics[height=0.0645\paperheight]{\mdthemedir/img/#1}};
+    \end{tikzpicture}}\vss}}
+\setbeamertemplate{headline}{%
+  \ifx\LLpagekind\empty\LLheadlinelogo{logo.png}\fi
+  \ifx\LLpagekind\LLkindteal\LLheadlinelogo{logo-white.png}\fi
+}
+
+% Footline: slide number bottom-right on normal slides, and the optional
+% frontmatter `logo:` bottom-left.
+\setbeamertemplate{footline}{%
+  \ifx\LLpagekind\empty
+    \hbox to \paperwidth{%
+      \hskip0.069\paperwidth
+      \ifdefined\logopath
+        \ifdefined\logoheight\else\def\logoheight{0.6cm}\fi
+        \raisebox{-0.2\height}{\includegraphics[height=\logoheight]{\logopath}}%
+      \fi
+      \hfill
+      \ifdefined\hidepagenumbers\else
+        {\color{lltext}\fontsize{6}{7}\selectfont\insertframenumber}%
+      \fi
+      \hskip0.0403\paperwidth}%
+    \vskip0.035\paperheight
+  \fi
+}
+
+% Frame title: petrol, regular weight, with a mint rule underneath. A
+% one-line title is centred at 15% of the page height with the rule at
+% 21.6%, like the PowerPoint; longer titles push the rule down instead of
+% running into it. The frametitle box starts at the left text margin, so
+% x-coordinates here are relative to that margin.
+\newbox\LLtitlebox
+\setbeamertemplate{frametitle}{%
+  \setbox\LLtitlebox=\vbox{\hsize=0.784\paperwidth \noindent\raggedright
+    \ifx\LLpagekind\LLkindteal\color{white}\else\usebeamercolor[fg]{frametitle}\fi
+    \fontsize{19}{21}\selectfont\strut\insertframetitle\strut}%
+  \nointerlineskip
+  \ifdim\dimexpr\ht\LLtitlebox+\dp\LLtitlebox\relax<0.11\paperheight
+    \vbox to 0.216\paperheight{%
+      \vskip0.05\paperheight
+      \vbox to 0.2\paperheight{\vss\box\LLtitlebox\vss}%
+      \vss}%
+  \else
+    \vskip0.035\paperheight
+    \box\LLtitlebox
+    \vskip0.02\paperheight
+  \fi
+  \nointerlineskip
+  \hbox{%
+    \begin{tikzpicture}[overlay, x=\paperwidth]
+      \draw[llmint, line width=2.4pt] (0.009, 0) -- (0.837, 0);
+    \end{tikzpicture}}%
+  \vskip0.025\paperheight
+}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% BULLETS - green arrow from the PowerPoint master
+\setbeamertemplate{itemize item}{%
+  \raisebox{0.05em}{\includegraphics[height=0.65em]{\mdthemedir/img/arrow.png}}}
+\setbeamertemplate{itemize subitem}{%
+  \raisebox{0.08em}{\includegraphics[height=0.5em]{\mdthemedir/img/arrow.png}}}
+\setbeamertemplate{itemize subsubitem}{\textcolor{llpetrol}{\textendash}}
+\setbeamertemplate{enumerate item}{\textcolor{llpetrol}{\insertenumlabel.}}
+\setbeamertemplate{enumerate subitem}{\textcolor{llpetrol}{\insertsubenumlabel)}}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% BOXES
+\tcbset{
+  llbase/.style={enhanced, breakable, arc=0pt, boxrule=0pt,
+    top=3pt, bottom=3pt, left=4pt, right=4pt},
+}
+\newtcolorbox{llbox}[1]{llbase, colback=llmint, colframe=llpetrol,
+  coltitle=white, fonttitle=\bfseries, title={#1}}
+\newtcolorbox{llfocus}{llbase, colback=llmint, colframe=llmint}
+% ---------------------------------------------------------------
