@@ -12,7 +12,7 @@ header-includes: |
 mdoffice:
   make-pdf: true
   doc-style: exam # Users can make their own doc-style. See doc/frontmatter-reference.md.
-  titlebg: "#bcf8c4"
+  titlebg: "#d6e8cf" 
   titlebgpad: 8pt
   header: "mdOffice PDF Example"
   page-numbering: true
@@ -60,6 +60,19 @@ Everything you see on this page (the logo, the colored title, the header, the co
 | `logo` | Places the logo in the header of every page |
 | `header` | The right-aligned text at the top of every page |
 | `toc: true` | Generates the contents list above |
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

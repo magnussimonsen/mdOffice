@@ -1,0 +1,3 @@
+\contentsline {subsection}{\numberline {1}Use AI to generate template markdown and LaTeX code}{1}{subsection.0.1}%
+\contentsline {subsection}{\numberline {2}Built with a few frontmatter keys}{1}{subsection.0.2}%
+\contentsline {subsubsection}{\numberline {2.1}Frontmatter keys used here}{1}{subsubsection.0.2.1}%
