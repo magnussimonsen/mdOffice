@@ -12,16 +12,19 @@ header-includes: |
 mdoffice:
   make-pdf: true
   doc-style: exam # Users can make their own doc-style. See doc/frontmatter-reference.md.
-  titlebg: "#00b5c0"
+  titlebg: "#bcf8c4"
   titlebgpad: 8pt
   header: "mdOffice PDF Example"
   page-numbering: true
 ---
 
-This PDF is built entirely from the Markdown file that produced it, no design tool, no manual export required. The logo, colored title block, header, live math, and table of contents are all driven by the frontmatter block above and a customizable doc-style theme.
+This PDF is built entirely from the Markdown file that produced it, no design tool, 
+no manual export required. The logo, colored title block, header, live math, 
+and table of contents are all driven by the frontmatter block above and a customizable doc-style theme.
 
 ## Use AI to generate template markdown and LaTeX code
-Inline math looks like this: $x^2 - 5x + 6 = 0$ has two real roots. Solve it and plot it side by side, in the same PDF, with no separate diagramming tool:
+Inline math looks like this: $x^2 - 5x + 6 = 0$ has two real roots. 
+Solve it and plot it side by side, in the same PDF, with no separate diagramming tool:
 
 \begin{figure}[h]
 \centering
@@ -57,3 +60,9 @@ Everything you see on this page (the logo, the colored title, the header, the co
 | `logo` | Places the logo in the header of every page |
 | `header` | The right-aligned text at the top of every page |
 | `toc: true` | Generates the contents list above |
+
+
+
+
+
+
