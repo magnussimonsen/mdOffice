@@ -326,6 +326,22 @@ footer {
   border: 1px solid var(--color-border);
 }
 
+/* Two screenshots next to each other (e.g. source left, PDF right) */
+.section-stack .image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  max-width: 1400px;
+  margin: auto;
+}
+
+@media (max-width: 640px) {
+  .section-stack .image-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ============ Home: theme gallery (intro text + image grid) ============ */
 .section-theme-gallery {
   padding: 0px 0px 0px;

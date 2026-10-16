@@ -45,13 +45,16 @@
       <ul>
         <li>Write once in Markdown, with optional LaTeX and pgfplots blocks.</li>
         <li>Build on save in VS Code with no export-click workflow.</li>
-        <li>Get built-in editor highlighting for math, solution/blankbox blocks, and fancybeamer color boxes.</li>
+        <li>Get built-in editor highlighting for math, solution/blankbox blocks, and fancybeamer/fancypdf color boxes.</li>
         <li>Export to PDF, DOCX, ODT, PPTX, Beamer, and EPUB.</li>
         <li>Control output per file from frontmatter, with separate output folders per format.</li>
         <li>Use built-in styles or your own reusable LaTeX themes, macros, and keybindings.</li>
       </ul>
     </div>
-    <img src="img/screenshot-1.png" alt="VS Code showing a Markdown file with frontmatter on the left and the generated PDF, with a colored title block, logo, math, and a plotted graph, on the right" />
+    <div class="image-pair">
+      <img src="img/screenshot-16.png" alt="Markdown source with frontmatter, inline math, a LaTeX align block, a pgfplots graph, and a table" />
+      <img src="img/screenshot-15.png" alt="The generated PDF, with a colored title block, logo, table of contents, math, and a plotted graph" />
+    </div>
   </section>
 
   <!-- Section 2: Frontmatter walkthrough -->
@@ -170,7 +173,7 @@
         <code>bluefocus</code>, <code>redfocus</code>, <code>greenfocus</code>, <code>cyanfocus</code>,
         and <code>grayfocus</code>, plus matching theorem boxes such as <code>bluebox</code>/<code>bluebox*</code>
         (and the red, green, cyan, and gray variants). The same color system used by the slide theme
-        is mirrored in the editor, so headers, box frames, and focus sections are easy to scan while writing.
+        (and by the <code>fancypdf</code> document theme below) is mirrored in the editor, so headers, box frames, and focus sections are easy to scan while writing.
       </p>
     </div>
   </section>
@@ -207,6 +210,42 @@
       </figure>
     </div>
   </section>
+
+  <!-- Section 5a: Fancy PDF - rendered document -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>Fancy PDF: the document companion to fancybeamer</h2>
+      <p>
+        Set <code>doc-style: "fancypdf"</code> in the frontmatter and your handouts and notes
+        get the same look as your slides. Headings stay plain by default. Write a color macro
+        such as <code>\blueheader</code> or <code>\cyanheader</code> on the line right after a
+        heading, and that one heading gets a full-width colored bar. Colors never carry over
+        to the next heading, so you only color what you want to stand out.
+      </p>
+    </div>
+    <img src="img/screenshot-12.png" alt="Three pages of a fancypdf document: a title page, colored blue, red, green, cyan, and gray heading bars with matching theorem and focus boxes, and a page with warning and info macros" />
+  </section>
+
+  <!-- Section 5b: Fancy PDF - Markdown source -->
+  <section class="section-stack">
+    <div class="text">
+      <h2>Same boxes, same macros as your slides</h2>
+      <p>
+        The source is plain Markdown with the exact same environments as fancybeamer:
+        <code>bluebox</code> / <code>bluebox*</code> for numbered or unnumbered theorem boxes,
+        <code>bluefocus</code> for key formulas and remarks, and matching red, green, cyan, and
+        gray variants. The <code>\warn</code>, <code>\info</code>, <code>\warnCustomMsg</code>,
+        and <code>\infoCustomMsg</code> macros work here too. Content you write for a slide can
+        be pasted straight into a handout, and VS Code highlights every block in its own color
+        while you write.
+      </p>
+    </div>
+  </section>
+  <section class="section-side-by-side">
+    <img src="img/screenshot-10.png" alt="Markdown source in VS Code for the fancypdf example: frontmatter with doc-style fancypdf, and highlighted bluebox, bluefocus, and redbox environments" />
+    <img src="img/screenshot-11.png" alt="Markdown source in VS Code for the fancypdf example: highlighted greenbox, cyanbox, graybox, and focus environments, followed by the warning and info macros" />
+  </section>
+
 
   <!-- Section 5: AI instructions -->
   <section class="section-stack">
@@ -252,6 +291,43 @@
     <img src="img/screenshot-8.png" alt="Screenshot: a native LaTeX plot" />
   </section>
   
+
+
+  <!-- Section 8a: Draw with TikZ - rendered figure -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <h2>Draw your own figures with TikZ</h2>
+      <p>
+        Physics and math tasks often need a figure: a block on a table, a pulley,
+        a hanging weight. With mdOffice you draw it right where the task is written,
+        so the figure, the text, and the math all live in one Markdown file.
+      </p>
+      <p>
+        The result is a sharp vector drawing that matches the fonts and math of the
+        document, with no separate drawing program and no pasted image to keep in sync.
+      </p>
+    </div>
+    <img src="img/screenshot-13.png" alt="PDF output: Task 6 with a TikZ figure of a block M on a table, connected by a string over a pulley to a hanging weight m" />
+  </section>
+
+  <!-- Section 8b: Draw with TikZ - Markdown source -->
+  <section class="section-side-by-side">
+    <div class="text">
+      <p>
+        The figure is about ten lines of TikZ placed straight in the Markdown.
+        Load the package once with <code>\usepackage{tikz}</code> under
+        <code>header-includes</code> in the frontmatter, then use <code>\draw</code>
+        for lines, <code>rectangle</code> and <code>circle</code> for shapes, and
+        <code>node[midway] {$M$}</code> for labels.
+      </p>
+      <p>
+        Since mdOffice builds on save, every change to a coordinate shows up in the
+        PDF right away. The example is in <code>_core/examples/figures.md</code>.
+      </p>
+    </div>
+    <img src="img/screenshot-14.png" alt="Markdown source in VS Code: frontmatter loading TikZ, the task text, and the tikzpicture code that draws the block, pulley, and hanging weight" />
+  </section>
+
   <!-- Section 7: Native diagrams -->
   <section class="section-stack">
     <div class="text">
