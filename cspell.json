@@ -57,6 +57,7 @@
         "fancyhead",
         "fancyfoot",
         "fancybeamer",
+        "fancypdf",
         "blueheader",
         "redheader",
         "greenheader",

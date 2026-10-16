@@ -1,0 +1,297 @@
+% fancypdf.tex — mdOffice Fancy PDF style
+% The document counterpart of fancybeamer.tex: same boxes, focus boxes and
+% macros, but with its own color palette (tuned for paper rather than a
+% projector) and plain headings by default.
+%
+% ---- FRONTMATTER EXAMPLE ---------------------------------------------------
+%
+% ---
+% title:   "Document Title"
+% author:  "Your Name"
+% date:    "Date"
+%
+% mdoffice:
+%   make-pdf:  true
+%   doc-style: "fancypdf"
+% ---
+%
+% ---- HEADING COLORS --------------------------------------------------------
+% Headings are plain (no background) by default. To give ONE heading a
+% colored bar, put a macro on the line right after it (same as fancybeamer):
+%
+%   ## My Heading
+%   \redheader
+%
+% Available: \myheader \blueheader \redheader \greenheader \cyanheader \grayheader
+% The color applies to that heading only; the next heading is plain again.
+% (The pdf_header_color.lua filter moves the macro in front of the heading,
+% so writing it before the heading works too.)
+%
+% ---- THEOREM BOXES ---------------------------------------------------------
+% Numbered, with title and cross-reference label:
+%   \begin{bluebox}{Title}{label} ... \end{bluebox}
+%   \begin{redbox}{Title}{label}  ... \end{redbox}
+%   \begin{greenbox}{Title}{label}... \end{greenbox}
+%   \begin{cyanbox}{Title}{label} ... \end{cyanbox}
+%   \begin{graybox}{Title}{label} ... \end{graybox}
+% Starred form (no counter):
+%   \begin{bluebox*}{Title} ... \end{bluebox*}
+%
+% ---- FOCUS BOXES -----------------------------------------------------------
+% No title, lightly tinted background — for key formulas, remarks, warnings:
+%   \begin{myfocus}   ... \end{myfocus}
+%   \begin{bluefocus} ... \end{bluefocus}
+%   \begin{redfocus}  ... \end{redfocus}
+%   \begin{greenfocus}... \end{greenfocus}
+%   \begin{cyanfocus} ... \end{cyanfocus}
+%   \begin{grayfocus} ... \end{grayfocus}
+%
+% ---- WARNING / INFO MACROS -------------------------------------------------
+%   \warn                              — red triangle + "Not part of the syllabus"
+%   \warnCustomMsg[color]{text}        — custom triangle message
+%   \info                              — blue circle  + "For your information"
+%   \infoCustomMsg[color]{text}        — custom info  message
+%
+% ---- MATH MACROS -----------------------------------------------------------
+%   \norm{v}   →  ‖v‖        \abs{x}   →  |x|
+% ----------------------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% PACKAGES
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{placeins}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}    % theorem/focus boxes
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titling}            % \thetitle / \theauthor / \thedate
+\usepackage{etoolbox}
+\usepackage[explicit]{titlesec} % heading styles (explicit: title passed as #1)
+\usepackage{fontawesome5}       % icons for \warn / \info
+\usepackage{xspace}             % smart spacing after macros
+\usepackage{icomma}             % no extra space after "," in math mode, e.g. $2,0$
+\usepackage{colortbl}           % \rowcolor / \cellcolor for table shading
+% ---------------------------------------------------------------
+
+% Allow @ in internal macro names (\fancypdf@...) for the rest of this file.
+\makeatletter
+
+
+% ---------------------------------------------------------------
+% COLORS — fancypdf's own palette (fancybeamer.tex has a separate one).
+% Paper shows colors darker and less luminous than a projector, so the
+% base colors are slightly deeper and the focus tints slightly lighter.
+%
+% 1. Base colors — raw RGB palette, used for inline text and as source for derived colors
+\definecolor{myblue}{RGB}{25, 80, 150}
+\definecolor{myred}{RGB}{170, 35, 35}
+\definecolor{mygreen}{RGB}{40, 115, 45}
+\definecolor{mycyan}{RGB}{0, 140, 150}
+\definecolor{mygray}{RGB}{70, 70, 70}
+%
+% 2. Heading colors — for heading bars and theorem box frames
+%    Adjust the ! expression to darken/shift without touching the base RGB
+\colorlet{myblueheading}{myblue!80}
+\colorlet{myredheading}{myred!80}
+\colorlet{mygreenheading}{mygreen!80}
+\colorlet{mycyanheading}{mycyan!80}
+\colorlet{mygrayheading}{mygray!80}
+%
+% 3. Focus colors — light tints of the base colors, for focus box backgrounds
+\colorlet{mybluefocus}{myblue!8}
+\colorlet{myredfocus}{myred!8}
+\colorlet{mygreenfocus}{mygreen!8}
+\colorlet{mycyanfocus}{mycyan!10}
+\colorlet{mygrayfocus}{mygray!6}
+%
+% 4. Plain heading text color (headings without a \xxxheader macro)
+\colorlet{myplainheading}{black}
+%
+% Header color names used by \blueheader etc.
+\def\HeaderDefault{myblueheading}
+\def\HeaderBlue{myblueheading}
+\def\HeaderRed{myredheading}
+\def\HeaderGreen{mygreenheading}
+\def\HeaderCyan{mycyanheading}
+\def\HeaderGray{mygrayheading}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% PAGE LAYOUT, HEADER AND FOOTER (same contract as standard-pdf.tex)
+\ifdefined\logopath
+  \geometry{top=0.2cm, bottom=2.54cm, left=2.54cm, right=2.54cm,
+            headheight=2.4cm, headsep=0.6cm, includehead}
+\else
+  \geometry{top=2.00cm, bottom=2.00cm, left=2.5cm, right=2.5cm}
+\fi
+
+\newcommand{\mdpagefooter}{%
+  \ifdefined\hidepagenumbers\else
+    \fancyfoot[R]{\thepage}%
+  \fi
+}
+
+\newcommand{\mdpageheader}{%
+  \fancyhf{}%
+  \ifdefined\logopath
+    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
+  \fi
+  \ifdefined\rightheader
+    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
+  \fi
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+\pagestyle{fancy}
+\mdpageheader
+\mdpagefooter
+
+\fancypagestyle{plain}{\mdpageheader\mdpagefooter}
+\fancypagestyle{titlepage}{\mdpageheader}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% TITLE PAGE — flush-left, own page, title in the theme's blue
+\def\fancypdf@empty{}
+\renewcommand{\maketitle}{%
+  \ifdefined\hidefirstpagenumber\thispagestyle{titlepage}\else\thispagestyle{fancy}\fi%
+  \noindent{\color{myblueheading}\Huge\bfseries\thetitle\par}%
+  \vspace{0.4em}%
+  \ifdefined\mdsubtitle{\noindent\Large\color{mygray}\mdsubtitle\par}\fi%
+  \vspace{0.8em}%
+  {\noindent\color{myblueheading}\rule{\linewidth}{1.2pt}\par}%
+  \vspace{0.6em}%
+  \ifx\theauthor\fancypdf@empty\else\noindent\theauthor\par\fi%
+  \ifx\thedate\fancypdf@empty\else\noindent\thedate\par\fi%
+  \newpage%
+  \ifdefined\hidefirstpagenumber\setcounter{page}{1}\fi%
+}
+
+\ifdefined\hidefirstpagenumber
+  \pretocmd{\tableofcontents}{\pagenumbering{roman}}{}{}
+  \apptocmd{\tableofcontents}{\newpage\pagenumbering{arabic}}{}{}
+\fi
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% HEADING COLOR SYSTEM
+%
+% \fancypdf@headcolor holds the color for the NEXT heading only; empty
+% means plain. \blueheader etc. set it, and every heading resets it after
+% use, so colored bars are always opt-in. \gdef keeps it global across
+% groups (e.g. when the macro ends up inside a pandoc div).
+%
+% \fancypdf@num is filled from titlesec's label slot, which titlesec only
+% typesets for numbered headings — so the number appears inside the bar
+% when `numbersections: true` and is absent otherwise.
+\gdef\fancypdf@headcolor{}
+\gdef\fancypdf@num{}
+
+\newcommand{\blueheader}{\gdef\fancypdf@headcolor{\HeaderBlue}}
+\newcommand{\redheader}{\gdef\fancypdf@headcolor{\HeaderRed}}
+\newcommand{\greenheader}{\gdef\fancypdf@headcolor{\HeaderGreen}}
+\newcommand{\cyanheader}{\gdef\fancypdf@headcolor{\HeaderCyan}}
+\newcommand{\grayheader}{\gdef\fancypdf@headcolor{\HeaderGray}}
+\newcommand{\myheader}{\gdef\fancypdf@headcolor{\HeaderDefault}}
+
+% #1 = font size of the heading level, #2 = heading text. Draws a
+% full-width colored bar with white text when a color is pending,
+% otherwise a plain heading in \myplainheading.
+% The bar uses tcolorbox's default arc, so its rounded corners match the
+% tinted area of the focus boxes. Change `arc` here for rounder/sharper bars.
+% tcolorbox resets the font inside the box, so the size is passed in again.
+\newcommand{\fancypdf@heading}[2]{%
+  \ifx\fancypdf@headcolor\fancypdf@empty
+    {\color{myplainheading}\fancypdf@num#2}%
+  \else
+    \edef\fancypdf@bgcol{\fancypdf@headcolor}%
+    \tcbox[
+        colback=\fancypdf@bgcol, colframe=\fancypdf@bgcol, coltext=white,
+        fontupper=#1\bfseries,
+        boxrule=0pt, arc=1mm, nobeforeafter, tcbox raise base,
+        boxsep=0pt, left=4pt, right=4pt, top=3pt, bottom=2pt]{%
+      \parbox{\dimexpr\linewidth-8pt\relax}{\raggedright\strut\fancypdf@num#2\strut}}%
+  \fi
+  \gdef\fancypdf@headcolor{}%
+  \gdef\fancypdf@num{}%
+}
+
+\titleformat{\section}[block]{\normalfont\Large\bfseries}%
+  {\xdef\fancypdf@num{\thesection\quad}}{0pt}{\fancypdf@heading{\Large}{#1}}
+\titleformat{\subsection}[block]{\normalfont\large\bfseries}%
+  {\xdef\fancypdf@num{\thesubsection\quad}}{0pt}{\fancypdf@heading{\large}{#1}}
+\titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}%
+  {\xdef\fancypdf@num{\thesubsubsection\quad}}{0pt}{\fancypdf@heading{\normalsize}{#1}}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% TCOLORBOX GLOBAL DEFAULTS
+\tcbset{
+  colback=white,
+  fonttitle=\bfseries,
+  breakable,
+  enhanced,
+  top=2pt, bottom=2pt, left=2pt, right=2pt,
+  boxsep=3pt
+}
+
+% Theorem-style boxes: \begin{bluebox}{Title}{label} ... \end{bluebox}
+% All share a single counter so numbering is consistent across colors.
+\newtcbtheorem{bluebox}{}%
+  {colframe=myblueheading}{bluebox}
+
+\newtcbtheorem[use counter from=bluebox]{redbox}{}%
+  {colframe=myredheading}{redbox}
+
+\newtcbtheorem[use counter from=bluebox]{greenbox}{}%
+  {colframe=mygreenheading}{greenbox}
+
+\newtcbtheorem[use counter from=bluebox]{cyanbox}{}%
+  {colframe=mycyanheading}{cyanbox}
+
+\newtcbtheorem[use counter from=bluebox]{graybox}{}%
+  {colframe=mygrayheading}{graybox}
+
+% Focus boxes: no title, lightly tinted background
+\newtcolorbox{myfocus}{colback=mybluefocus,   colframe=white}
+\newtcolorbox{bluefocus}{colback=mybluefocus, colframe=white}
+\newtcolorbox{redfocus}{colback=myredfocus,   colframe=white}
+\newtcolorbox{greenfocus}{colback=mygreenfocus, colframe=white}
+\newtcolorbox{cyanfocus}{colback=mycyanfocus, colframe=white}
+\newtcolorbox{grayfocus}{colback=mygrayfocus, colframe=white}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% WARNING AND INFO MACROS
+\newcommand{\warn}{%
+  \textcolor{myred}{\faExclamationTriangle\ \textbf{Not part of the syllabus}}\xspace%
+}
+\newcommand{\warnCustomMsg}[2][myred]{%
+  \textcolor{#1}{\faExclamationTriangle\ \textbf{#2}}\xspace%
+}
+\newcommand{\info}{%
+  \textcolor{myblue}{\faInfoCircle\ \textbf{For your information}}\xspace%
+}
+\newcommand{\infoCustomMsg}[2][myblue]{%
+  \textcolor{#1}{\faInfoCircle\ \textbf{#2}}\xspace%
+}
+% ---------------------------------------------------------------
+
+
+% ---------------------------------------------------------------
+% MATH MACROS
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+% ---------------------------------------------------------------
+
+\makeatother

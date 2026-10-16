@@ -287,7 +287,7 @@ for the name in two places:
    loading it, so the theme can use `\includegraphics{\mdthemedir/img/logo.png}`.
    See [`custom_themes/README.md`](custom_themes/README.md).
 2. **Official mdOffice themes:** [`_core/scripts/themes/<name>.tex`](_core/scripts/themes/):
-   `standard-pdf`, `exam`, `beamer`, `fancybeamer`.
+   `standard-pdf`, `exam`, `fancypdf`, `beamer`, `fancybeamer`.
 
 A custom theme with the same name as an official one overrides it (the build
 log says so). Keep your own themes in `custom_themes/` rather than editing

@@ -25,7 +25,7 @@ SCHEMA = FormatSchema(
     target="pdf",
     keys=(
         Key("doc-style", "custom", "str", default=DEFAULT_DOC_STYLE,
-            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam"),
+            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam, fancypdf"),
         Key("font", "custom", "str",
             doc="Installed font family for all text, e.g. \"Libertinus Serif\"; overrides the theme's font"),
         Key("header", "custom", "str",

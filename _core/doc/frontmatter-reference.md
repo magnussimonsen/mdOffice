@@ -109,7 +109,7 @@ _None._
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
-| `mdoffice.doc-style` | str | `standard-pdf` | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam |
+| `mdoffice.doc-style` | str | `standard-pdf` | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam, fancypdf |
 | `mdoffice.first-page-numbering` | bool | `False` | true = also number the title/first page (theme-dependent: exam.tex has no separate title page, so this has no effect there) |
 | `mdoffice.font` | str |  | Installed font family for all text, e.g. "Libertinus Serif"; overrides the theme's font |
 | `mdoffice.header` | str |  | Small text shown top-right on every page |

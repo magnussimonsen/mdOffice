@@ -12,6 +12,9 @@ def apply_lua_filters(command: list[str], target: str, scripts_dir: Path) -> Non
     if target in LATEX_TARGETS:
         filter_names.append("math_env_normalize.lua")
 
+    if target == "pdf":
+        filter_names.append("pdf_header_color.lua")
+
     filter_names.append("solution_filter.lua")
 
     for name in filter_names:
