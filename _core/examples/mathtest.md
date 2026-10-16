@@ -17,7 +17,7 @@ mdoffice:
   # Consumed by scripts/filters/solution_filter.lua, not by any Python
   # planner -- see core/schema.py's SOLUTION_FILTER_KEYS.
   show-solution: true
-  show-blankbox: true
+  show-blankbox: false
   ai-instructions:
     - "../ai-instructions/math.md"
     - "../ai-instructions/text.md"
