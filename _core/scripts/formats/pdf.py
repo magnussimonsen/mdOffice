@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from core.assets import resolve_asset, resolve_theme, warn_unknown_theme
+from core.assets import normalize_theme_name, resolve_asset, resolve_theme, warn_unknown_theme
 from core.filters import apply_lua_filters
 from core.fonts import write_font_header
 from core.frontmatter import get_custom, get_flag, get_text_block, get_value
@@ -25,19 +25,27 @@ SCHEMA = FormatSchema(
     target="pdf",
     keys=(
         Key("doc-style", "custom", "str", default=DEFAULT_DOC_STYLE,
-            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam, fancypdf"),
+            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam-pdf, fancy-pdf"),
         Key("font", "custom", "str",
             doc="Installed font family for all text, e.g. \"Libertinus Serif\"; overrides the theme's font"),
-        Key("header", "custom", "str",
+        Key("leftheader", "custom", "str",
+            doc="Small text shown top-left on every page, after the logo if there is one (theme-dependent: standard-pdf and fancy-pdf)"),
+        Key("rightheader", "custom", "str",
             doc="Small text shown top-right on every page"),
+        Key("header", "custom", "str",
+            doc="Older name for rightheader; rightheader wins if both are set"),
         Key("titlebg", "custom", "hexcolor",
-            doc="6-digit hex color (no '#') for a block behind the title (theme-dependent: exam.tex uses it, standard-pdf.tex doesn't)"),
+            doc="6-digit hex color (no '#') for a block behind the title (theme-dependent: exam-pdf.tex uses it, standard-pdf.tex doesn't)"),
         Key("titlebgpad", "custom", "length",
             doc="Padding around the title text inside that colored block (see titlebg)"),
         Key("page-numbering", "custom", "bool", default=True,
             doc="false = hide page numbers everywhere"),
         Key("first-page-numbering", "custom", "bool", default=False,
-            doc="true = also number the title/first page (theme-dependent: exam.tex has no separate title page, so this has no effect there)"),
+            doc="true = also number the title/first page (theme-dependent: exam-pdf.tex has no separate title page, so this has no effect there)"),
+        Key("add-answer-sheet", "custom", "int", default=0,
+            doc="Number of answer sheets (front and back, grid paper with name field) added at the end (theme-dependent: exam-pdf only)"),
+        Key("add-draft-sheet", "custom", "int", default=0,
+            doc="Number of draft sheets (front and back, grid paper) added after the answer sheets (theme-dependent: exam-pdf only)"),
         Key("logo", "intercepted", "path",
             doc="Logo image path; mdOffice resolves it relative to the doc and sanitizes it for TeX"),
         Key("logo-height", "intercepted", "length", default="1.2cm",
@@ -118,8 +126,17 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     if subtitle:
         defs.define("mdsubtitle", escape_tex_text(subtitle))
 
-    # `mdoffice.header` (custom): a small right-aligned header line.
-    right_header = get_value(custom, "header")
+    # `mdoffice.leftheader` / `mdoffice.rightheader` (custom): small header
+    # lines. `mdoffice.header` is the older name for rightheader.
+    left_header = get_value(custom, "leftheader")
+    if left_header:
+        defs.define("leftheader", escape_tex_text(left_header))
+    right_header = get_value(custom, "rightheader")
+    old_header = get_value(custom, "header")
+    if right_header and old_header:
+        print("Warning: [pdf] both mdoffice.rightheader and mdoffice.header are set; "
+              "using rightheader", file=sys.stderr)
+    right_header = right_header or old_header
     if right_header:
         defs.define("rightheader", escape_tex_text(right_header))
 
@@ -131,6 +148,21 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
         title_bg_pad = get_value(custom, "titlebgpad")
         if title_bg_pad:
             defs.define("titlebgpad", sanitize_tex_length(title_bg_pad, default="0pt"))
+
+    # `mdoffice.add-answer-sheet` / `mdoffice.add-draft-sheet` (custom): how
+    # many grid-paper sheets exam-pdf.tex appends at the end of the document.
+    for key, macro in (("add-answer-sheet", "answersheets"), ("add-draft-sheet", "draftsheets")):
+        raw = get_value(custom, key)
+        if raw is None:
+            continue
+        try:
+            count = int(raw)
+        except ValueError:
+            count = -1
+        if count < 0:
+            print(f"Warning: [pdf] mdoffice.{key} must be a whole number >= 0, got: {raw}", file=sys.stderr)
+        elif count > 0:
+            defs.define(macro, str(count))
 
     # `mdoffice.page-numbering: false` (custom): hide page numbers everywhere.
     if not get_flag(custom, "page-numbering", default=True):
@@ -148,14 +180,15 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     # (rather than just before the theme is loaded) because the
     # `numbersections` default below depends on it.
     doc_style = get_value(custom, "doc-style", DEFAULT_DOC_STYLE) or DEFAULT_DOC_STYLE
+    doc_style = normalize_theme_name(scripts_dir, doc_style, target="pdf")
 
     # `numbersections` (top-level, pandoc-native): pandoc's own template
     # already sets secnumdepth from this key before header-includes are
     # spliced in. Exam documents are numbered by default (their body
     # headings are the task list), but an explicit `numbersections: false`
-    # should still be able to opt out, so this only tells exam.tex to force
+    # should still be able to opt out, so this only tells exam-pdf.tex to force
     # numbering back on when the user hasn't said otherwise.
-    if doc_style == "exam" and get_flag(config, "numbersections", default=True):
+    if doc_style == "exam-pdf" and get_flag(config, "numbersections", default=True):
         defs.flag("forcenumbersections")
 
     # Resolved before the defs are written so \mdthemedir (the theme's own

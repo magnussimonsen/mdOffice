@@ -111,10 +111,26 @@ if (-not (Test-Path $targetDir)) {
 }
 
 if ((Test-Path $targetFile) -and (-not $Force)) {
-    Write-Error "Found existing .vscode/settings.json. Re-run with -Force to overwrite it."
+    Write-Step "Keeping existing .vscode/settings.json (re-run with -Force to overwrite it)."
+}
+else {
+    Copy-Item -Path $template -Destination $targetFile -Force
 }
 
-Copy-Item -Path $template -Destination $targetFile -Force
+Write-Step "Installing mdOffice VS Code extension (right-click > mdOffice in .md files)..."
+# Use code.cmd: inside a VS Code terminal, "code" can resolve to Code.exe, which rejects CLI options.
+if (Test-Command "code.cmd") {
+    $vsix = Join-Path $env:TEMP "mdoffice-insert.vsix"
+    & ".\.venv\Scripts\python.exe" "_core/vscode-extension/build-vsix.py" $vsix
+    & code.cmd --install-extension $vsix --force
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Could not install the mdOffice extension. Restart VS Code and run this script again." -ForegroundColor Yellow
+    }
+    Remove-Item $vsix -ErrorAction SilentlyContinue
+}
+else {
+    Write-Host "VS Code command 'code' not found on PATH. Skipping the extension; see _core/vscode-extension/mdoffice-insert/README.md." -ForegroundColor Yellow
+}
 
 Write-Step "Done. mdOffice setup completed successfully."
 Write-Host "Next: restart VS Code if it was open during tool installation." -ForegroundColor Green

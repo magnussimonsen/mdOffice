@@ -8,7 +8,7 @@ header-includes: |
 
 mdoffice:
   make-pdf: true
-  doc-style: exam
+  doc-style: exam-pdf
 ---
 
 ## Solving and plotting a quadratic

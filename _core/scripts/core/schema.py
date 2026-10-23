@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 Scope = Literal["custom", "intercepted"]
-KeyType = Literal["str", "bool", "length", "hexcolor", "path"]
+KeyType = Literal["str", "bool", "int", "length", "hexcolor", "path"]
 
 
 @dataclass(frozen=True)

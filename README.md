@@ -87,8 +87,25 @@ If you want ready-made frontmatter templates (basic keys active, advanced keys c
 
 - [_core/quick-start/quickstart-epub.md](_core/quick-start/quickstart-epub.md)
 - [_core/quick-start/quickstart-standard-pdf.md](_core/quick-start/quickstart-standard-pdf.md)
+- [_core/quick-start/quickstart-fancy-pdf.md](_core/quick-start/quickstart-fancy-pdf.md)
 - [_core/quick-start/quickstart-exam-pdf.md](_core/quick-start/quickstart-exam-pdf.md)
-- [_core/quick-start/quickstart-fancybeamer.md](_core/quick-start/quickstart-fancybeamer.md)
+- [_core/quick-start/quickstart-fancy-beamer.md](_core/quick-start/quickstart-fancy-beamer.md)
+
+### mdOffice Insert: templates from the right-click menu
+
+mdOffice includes a small local VS Code extension, **mdOffice Insert**, so you don't have to copy templates by hand. Right-click in any Markdown file and choose **mdOffice**:
+
+- **Insert mdOffice standard-pdf / fancy-pdf / exam-pdf / fancy-beamer template** inserts that template directly.
+- **Insert mdOffice template (choose)...** lists every `quickstart-*.md` file in `_core/quick-start/`, including ones you add yourself.
+
+What gets inserted depends on the file:
+
+- **An empty file** gets the whole template: the frontmatter and a short example document. The example shows the syntax for that theme (math, solution and answer boxes, colored boxes, TikZ drawings, slides), with explanations in comments that never show up in the output. Save the file and you get a sample PDF in your own folder.
+- **A file that already has text** gets only the frontmatter, at the cursor.
+
+The `date` field is set to today's date. The extension reads the quick-start files each time it inserts, so if you edit a template, the menu inserts your edited version without a reinstall. The same commands are also available from the Command Palette.
+
+The install scripts below install the extension for you. To install it manually, or to add a menu item for your own theme, see [`_core/vscode-extension/mdoffice-insert/README.md`](_core/vscode-extension/mdoffice-insert/README.md).
 
 If you want a faster setup, use the install scripts below. They automate dependency checks and local setup:
 
@@ -98,6 +115,7 @@ If you want a faster setup, use the install scripts below. They automate depende
 - Create `.venv`
 - Install `_core/scripts/requirements.txt`
 - Create `.vscode/settings.json` with highlight rules
+- Install the mdOffice VS Code extension (right-click in a `.md` file > **mdOffice** inserts quick-start frontmatter), if the `code` command is on `PATH`
 
 **Windows (CMD or PowerShell):**
 
@@ -139,10 +157,10 @@ Then install [MiKTeX](https://miktex.org/download) for `xelatex`. On the first P
 **Linux**
 
 ```bash
-sudo apt install pandoc texlive-xetex texlive-latex-extra texlive-fonts-extra
+sudo apt install pandoc texlive-xetex texlive-latex-extra texlive-fonts-extra texlive-science
 ```
 
-(Substitute `texlive-full` instead of the three `texlive-*` packages above if you'd rather not track down individual package names later, at the cost of a much larger download.)
+(Substitute `texlive-full` instead of the four `texlive-*` packages above if you'd rather not track down individual package names later, at the cost of a much larger download.)
 
 **macOS**
 
@@ -287,7 +305,7 @@ for the name in two places:
    loading it, so the theme can use `\includegraphics{\mdthemedir/img/logo.png}`.
    See [`custom_themes/README.md`](custom_themes/README.md).
 2. **Official mdOffice themes:** [`_core/scripts/themes/<name>.tex`](_core/scripts/themes/):
-   `standard-pdf`, `exam`, `fancypdf`, `beamer`, `fancybeamer`.
+   `standard-pdf`, `exam-pdf`, `fancy-pdf`, `beamer`, `fancy-beamer`.
 
 A custom theme with the same name as an official one overrides it (the build
 log says so). Keep your own themes in `custom_themes/` rather than editing
@@ -310,7 +328,7 @@ The goal is to make it easier to read and edit math-heavy markdown files.
 
 ## 5) Developer Pipeline Map
 
-This README is the main overview for the current mdOffice v2 pipeline.
+This README is the main overview for the current mdOffice pipeline.
 
 ```mermaid
 flowchart TD
@@ -336,7 +354,7 @@ flowchart TD
 
 The pipeline is intentionally split into small modules so each part has one job.
 
-The mdOffice v2 flow is intentionally split into small modules:
+The mdOffice flow is intentionally split into small modules:
 
 - CLI entrypoint: `_core/scripts/mdoffice.py`
 - Pipeline orchestration: `_core/scripts/core/pipeline.py`
@@ -395,6 +413,7 @@ mdoffice.py
 
 - `docs`
 	- Regenerates [`_core/doc/frontmatter-reference.md`](_core/doc/frontmatter-reference.md) from the format schemas.
+	- Also writes the mdOffice version into the website (`docs/*.html`: next to the logo, and in the footer of the front page).
 
 ### Planner Responsibilities
 
@@ -420,6 +439,16 @@ The pipeline handles the rest (looping targets, warning on unknown keys, invokin
 - `TargetPlan`: planned command and expected output
 - `TargetResult`: one target execution result
 - `BuildReport`: all target results for one source file
+
+### Version
+
+The mdOffice version (for example `2.1.0`) is written in one place: [`_core/VERSION`](_core/VERSION). To release a new version:
+
+1. Change the number in `_core/VERSION`.
+2. Run `python _core/scripts/mdoffice.py docs`. It updates the frontmatter reference and the version on the website.
+3. Rebuild the VS Code extension (`python _core/vscode-extension/build-vsix.py`). It copies the number into the extension's `package.json`.
+
+`python _core/scripts/mdoffice.py --version` prints the current version.
 
 ### Quick Dev Checks
 

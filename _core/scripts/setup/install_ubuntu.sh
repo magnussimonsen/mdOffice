@@ -37,6 +37,7 @@ _mdoffice_setup_ubuntu() {
     texlive-xetex \
     texlive-latex-extra \
     texlive-fonts-extra \
+    texlive-science \
     "${python_packages[@]}"
 
   echo "[mdOffice setup] Checking required LaTeX packages..."
@@ -67,6 +68,17 @@ _mdoffice_setup_ubuntu() {
     echo "[mdOffice setup] Creating VS Code settings..."
     mkdir -p .vscode
     cp _core/vscode-settings-templates/settings.linux_with_highlights.json .vscode/settings.json
+  fi
+
+  if command -v code >/dev/null 2>&1; then
+    echo "[mdOffice setup] Installing mdOffice VS Code extension (right-click > mdOffice in .md files)..."
+    local vsix
+    vsix="$(mktemp -d)/mdoffice-insert.vsix"
+    ./.venv/bin/python _core/vscode-extension/build-vsix.py "$vsix"
+    code --install-extension "$vsix" --force
+    rm -f "$vsix"
+  else
+    echo "[mdOffice setup] VS Code command 'code' not found on PATH. Skipping the extension; see _core/vscode-extension/mdoffice-insert/README.md."
   fi
 }
 

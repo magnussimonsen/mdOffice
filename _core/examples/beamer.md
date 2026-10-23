@@ -1,5 +1,5 @@
 ---
-title: mdOffice v2 — Beamer Example
+title: mdOffice — Beamer Example
 author: mdOffice
 logo: img/logo.png
 aspectratio: 169

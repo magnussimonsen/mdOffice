@@ -15,10 +15,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from core.schema import GLOBAL_KEYS, FormatSchema, Key  # noqa: E402
+from core.version import MDOFFICE_VERSION  # noqa: E402
 from formats import SCHEMAS  # noqa: E402
 
-_INTRO = """\
-# mdOffice v2 -- Frontmatter reference
+_INTRO = f"""\
+# mdOffice {MDOFFICE_VERSION} -- Frontmatter reference
 
 **Generated from `formats/*.py` schemas -- do not hand-edit.**
 Run `mdoffice.py docs` (or `python generate_reference.py`) to regenerate

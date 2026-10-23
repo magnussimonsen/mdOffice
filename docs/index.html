@@ -13,8 +13,10 @@
   <!-- Top Bar -->
   <nav>
     <div class="menu">
-      <a class="logo" href="index.html"><img src="img/mdOffice_logo_light.png" alt="mdOffice" /></a>
+      <a class="logo" href="index.html"><img src="img/mdOffice_logo_light.png" alt="mdOffice" /> <span class="version">Version <!-- mdoffice-version -->2.1.0<!-- /mdoffice-version --></span></a>
+      
       <div class="menu-links">
+        
         <a href="index.html">Home</a>
         <a href="getting-started.html">Get Started</a>
         <a href="https://github.com/magnussimonsen/mdOffice">View on GitHub</a>
@@ -45,17 +47,52 @@
       <ul>
         <li>Write once in Markdown, with optional LaTeX and pgfplots blocks.</li>
         <li>Build on save in VS Code with no export-click workflow.</li>
-        <li>Get built-in editor highlighting for math, solution/blankbox blocks, and fancybeamer/fancypdf color boxes.</li>
+        <li>Start a new document from the right-click menu with the mdOffice VS Code extension: a ready-made template with example content for each theme.</li>
+        <li>Get built-in editor highlighting for math, solution/blankbox blocks, and fancy-beamer/fancy-pdf color boxes.</li>
         <li>Export to PDF, DOCX, ODT, PPTX, Beamer, and EPUB.</li>
         <li>Control output per file from frontmatter, with separate output folders per format.</li>
         <li>Use built-in styles or your own reusable LaTeX themes, macros, and keybindings.</li>
       </ul>
     </div>
-    <div class="image-pair">
-      <img src="img/screenshot-16.png" alt="Markdown source with frontmatter, inline math, a LaTeX align block, a pgfplots graph, and a table" />
-      <img src="img/screenshot-15.png" alt="The generated PDF, with a colored title block, logo, table of contents, math, and a plotted graph" />
-    </div>
   </section>
+
+  <!-- Section 1b: VS Code extension -->
+  <section class="section-side-by-side section-featured">
+    <div class="text">
+      <span class="feature-badge">Built into VS Code</span>
+      <h2>The mdOffice VS Code extension</h2>
+      <p>
+        mdOffice also includes a VS Code extension, <strong>mdOffice Insert</strong>,
+        which is installed automatically when you install mdOffice. Right-click in a
+        Markdown file and choose <strong>mdOffice</strong> to insert a template for
+        standard-pdf, exam-pdf, fancy-pdf or fancy-beamer.
+      </p>
+      <p>
+        In an empty file you get a complete example document that shows the syntax
+        for that theme, and a sample PDF the first time you save. In a file that
+        already has text, only the frontmatter is inserted.
+      </p>
+    </div>
+    <img src="img/screenshot-vs-code-extenteion.png" alt="The mdOffice Insert extension in VS Code, with the mdOffice logo and a description of the right-click menu and its templates" />
+  </section>
+
+<!-- Section 1c: mdOffice overview example -->
+<section class="section-stack">
+  <div class="text">
+    <h2>From Markdown to PDF</h2>
+    <p>
+      On the left is the Markdown file you write: frontmatter, math, a graph and a table.
+      On the right is the PDF mdOffice builds from it when you save.
+    </p>
+  </div>
+  <div class="image-pair">
+    <img src="img/screenshot-16.png"
+      alt="Markdown source with frontmatter, inline math, a LaTeX align block, a pgfplots graph, and a table" />
+    <img src="img/screenshot-15.png"
+      alt="The generated PDF, with a colored title block, logo, table of contents, math, and a plotted graph" />
+  </div>
+</section>
+
 
   <!-- Section 2: Frontmatter walkthrough -->
   <section class="section-side-by-side">
@@ -63,7 +100,7 @@
       <h2>One YAML block per document</h2>
       <p>
         A <strong>frontmatter block</strong> at the top of the file controls the document:
-        <code>doc-style: exam</code> picks the theme, <code>titlebg</code> colors the
+        <code>doc-style: exam-pdf</code> picks the theme, <code>titlebg</code> colors the
         title block, <code>show-solution</code> / <code>show-blankbox</code> toggle
         whether answers appear, and <code>ai-instructions</code> adds guidance for AI
         assistants editing the document.
@@ -147,7 +184,7 @@
       <h2>One file defines the slide theme</h2>
       <p>
         Custom LaTeX themes control logo placement, colors, and title layout in one file.
-        The built-in <code>fancybeamer</code> theme gives every slide a full-width colored
+        The built-in <code>fancy-beamer</code> theme gives every slide a full-width colored
         header bar that you switch per slide with a macro like <code>\blueheader</code>,
         <code>\cyanheader</code>, <code>\greenheader</code> or <code>\grayheader</code>, plus
         matching theorem boxes (<code>bluebox</code>, <code>cyanbox</code>, …), focus boxes
@@ -173,14 +210,14 @@
         <code>bluefocus</code>, <code>redfocus</code>, <code>greenfocus</code>, <code>cyanfocus</code>,
         and <code>grayfocus</code>, plus matching theorem boxes such as <code>bluebox</code>/<code>bluebox*</code>
         (and the red, green, cyan, and gray variants). The same color system used by the slide theme
-        (and by the <code>fancypdf</code> document theme below) is mirrored in the editor, so headers, box frames, and focus sections are easy to scan while writing.
+        (and by the <code>fancy-pdf</code> document theme below) is mirrored in the editor, so headers, box frames, and focus sections are easy to scan while writing.
       </p>
     </div>
   </section>
   <section class="section-side-by-side">
-    <img src="img/screenshot-fancybeamer-markdown-example-1.png" alt="Markdown source in VS Code with fancybeamer macros and highlighted bluebox and bluefocus environments (example 1)" />
+    <img src="img/screenshot-fancybeamer-markdown-example-1.png" alt="Markdown source in VS Code with fancy-beamer macros and highlighted bluebox and bluefocus environments (example 1)" />
     <img src="img/screenshot-fancybeamer-markdown-example-2.png"
-      alt="Markdown source in VS Code with fancybeamer macros and highlighted redbox and redfocus environments (example 2)" />
+      alt="Markdown source in VS Code with fancy-beamer macros and highlighted redbox and redfocus environments (example 2)" />
   </section>
 
   <!-- Section 4c: Custom templates for consistency - remaining theme colors and macros -->
@@ -214,16 +251,16 @@
   <!-- Section 5a: Fancy PDF - rendered document -->
   <section class="section-stack">
     <div class="text">
-      <h2>Fancy PDF: the document companion to fancybeamer</h2>
+      <h2>Fancy PDF: the document companion to fancy-beamer</h2>
       <p>
-        Set <code>doc-style: "fancypdf"</code> in the frontmatter and your handouts and notes
+        Set <code>doc-style: "fancy-pdf"</code> in the frontmatter and your handouts and notes
         get the same look as your slides. Headings stay plain by default. Write a color macro
         such as <code>\blueheader</code> or <code>\cyanheader</code> on the line right after a
         heading, and that one heading gets a full-width colored bar. Colors never carry over
         to the next heading, so you only color what you want to stand out.
       </p>
     </div>
-    <img src="img/screenshot-12.png" alt="Three pages of a fancypdf document: a title page, colored blue, red, green, cyan, and gray heading bars with matching theorem and focus boxes, and a page with warning and info macros" />
+    <img src="img/screenshot-12.png" alt="Three pages of a fancy-pdf document: a title page, colored blue, red, green, cyan, and gray heading bars with matching theorem and focus boxes, and a page with warning and info macros" />
   </section>
 
   <!-- Section 5b: Fancy PDF - Markdown source -->
@@ -231,7 +268,7 @@
     <div class="text">
       <h2>Same boxes, same macros as your slides</h2>
       <p>
-        The source is plain Markdown with the exact same environments as fancybeamer:
+        The source is plain Markdown with the exact same environments as fancy-beamer:
         <code>bluebox</code> / <code>bluebox*</code> for numbered or unnumbered theorem boxes,
         <code>bluefocus</code> for key formulas and remarks, and matching red, green, cyan, and
         gray variants. The <code>\warn</code>, <code>\info</code>, <code>\warnCustomMsg</code>,
@@ -242,8 +279,8 @@
     </div>
   </section>
   <section class="section-side-by-side">
-    <img src="img/screenshot-10.png" alt="Markdown source in VS Code for the fancypdf example: frontmatter with doc-style fancypdf, and highlighted bluebox, bluefocus, and redbox environments" />
-    <img src="img/screenshot-11.png" alt="Markdown source in VS Code for the fancypdf example: highlighted greenbox, cyanbox, graybox, and focus environments, followed by the warning and info macros" />
+    <img src="img/screenshot-10.png" alt="Markdown source in VS Code for the fancy-pdf example: frontmatter with doc-style fancy-pdf, and highlighted bluebox, bluefocus, and redbox environments" />
+    <img src="img/screenshot-11.png" alt="Markdown source in VS Code for the fancy-pdf example: highlighted greenbox, cyanbox, graybox, and focus environments, followed by the warning and info macros" />
   </section>
 
 
@@ -356,6 +393,7 @@
 
   <footer>
     © 2026 mdOffice: The menu-free and AI-friendly Office suite in VS Code
+    · Version <!-- mdoffice-version -->2.1.0<!-- /mdoffice-version -->
   </footer>
 
 </body>

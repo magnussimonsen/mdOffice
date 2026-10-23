@@ -1,12 +1,12 @@
 ---
-title: mdOffice v2 — Docx Example
+title: mdOffice — Docx Example
 author: mdOffice
 
 mdoffice:
   make-docx: true
 ---
 
-# Hello from mdOffice v2
+# Hello from mdOffice
 
 docx has no custom or intercepted keys today — every option here is pure
 pandoc passthrough. `mdoffice.make-docx` is the only mdOffice-specific key,

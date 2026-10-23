@@ -19,3 +19,5 @@ etoolbox
 fontawesome5
 xspace
 icomma
+tikz
+pgfplots

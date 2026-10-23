@@ -6,6 +6,9 @@ running `.venv/bin/python _core/scripts/mdoffice.py build-ai-instructions <file.
 generates a `CLAUDE.md` in the document's own directory. Claude Code loads
 both files automatically.
 
+When changing mdOffice itself, follow the naming rules in
+@_core/development-notes/naming-conventions.md
+
 --- CUSTOM AI INSTRUCTIONS ---
 
 @_core/ai-instructions/math.md

@@ -15,6 +15,7 @@
   --color-accent: #00b5c0;
   --color-accent-ink: #007e86;
   --color-accent-wash: #e6f8f9;
+  --color-brand-navy: #1a2f5e; /* the "md Office" letters in the logo */
 
 }
 
@@ -95,6 +96,21 @@ nav .logo {
 nav .logo img {
   height: 42px;
   display: block;
+}
+
+/* Version pill next to the logo. The number is kept in step with
+   _core/VERSION by `mdoffice.py docs`. */
+nav .logo .version {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  /* Logo colors: navy like the letters, with a teal line like the logo's
+     underline. */
+  background: var(--color-bg:);
+  color: var(--color-ink-muted);
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 nav .menu-links {
@@ -254,6 +270,35 @@ footer {
   color: var(--color-ink);
   font-size: 24px;
   margin: 0 0 12px;
+}
+
+/* Home: a side-by-side section lifted out as a key feature: a tinted band
+   between two accent rules, a small badge above the heading, and a larger
+   accent-colored heading. */
+.section-featured {
+  background: var(--color-accent-wash);
+  border-top: 3px solid var(--color-accent);
+  border-bottom: 3px solid var(--color-accent);
+  padding: 40px 20px;
+  margin: 24px 0;
+}
+
+.section-featured .text h2 {
+  color: var(--color-accent-ink);
+  font-size: 28px;
+}
+
+.feature-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-accent-ink);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* Home: stacked layout, text above a full-width screenshot, for wide images

@@ -11,7 +11,7 @@ header-includes: |
 
 mdoffice:
   make-pdf: true
-  doc-style: exam # Users can make their own doc-style. See doc/frontmatter-reference.md.
+  doc-style: exam-pdf # Users can make their own doc-style. See doc/frontmatter-reference.md.
   titlebg: "#d6e8cf" 
   titlebgpad: 8pt
   header: "mdOffice PDF Example"
@@ -50,12 +50,12 @@ x &= 2 \quad \text{or} \quad x = 3
 \end{figure}
 
 ## Built with a few frontmatter keys
-Everything you see on this page (the logo, the colored title, the header, the contents list) comes from a handful of keys in the frontmatter block. The `doc-style` theme itself lives in `_core/scripts/themes/exam.tex` and can be edited directly, or copied as a starting point for your own theme.
+Everything you see on this page (the logo, the colored title, the header, the contents list) comes from a handful of keys in the frontmatter block. The `doc-style` theme itself lives in `_core/scripts/themes/exam-pdf.tex` and can be edited directly, or copied as a starting point for your own theme.
 
 ### Frontmatter keys used here
 | Key | What it does |
 |---|---|
-| `doc-style: exam` | Selects this theme: logo in the header, colored title block |
+| `doc-style: exam-pdf` | Selects this theme: logo in the header, colored title block |
 | `titlebg` | Sets the title block's background color |
 | `logo` | Places the logo in the header of every page |
 | `header` | The right-aligned text at the top of every page |

@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from core.assets import resolve_asset, resolve_theme, warn_unknown_theme
+from core.assets import normalize_theme_name, resolve_asset, resolve_theme, warn_unknown_theme
 from core.filters import apply_lua_filters
 from core.fonts import write_font_header
 from core.frontmatter import get_custom, get_flag, get_value
@@ -20,7 +20,7 @@ SCHEMA = FormatSchema(
     target="beamer",
     keys=(
         Key("beamer-style", "custom", "str",
-            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancybeamer"),
+            doc="Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancy-beamer"),
         Key("font", "custom", "str",
             doc="Installed font family for all text, e.g. \"Fira Sans\"; overrides the theme's font"),
         Key("page-numbering", "custom", "bool", default=True,
@@ -100,6 +100,7 @@ def create_plan(md_file: Path, config: dict[str, Any], scripts_dir: Path) -> Tar
     theme_file = None
     beamer_style = get_value(custom, "beamer-style")
     if beamer_style:
+        beamer_style = normalize_theme_name(scripts_dir, beamer_style, target="beamer")
         theme_file = resolve_theme(scripts_dir, beamer_style, target="beamer")
         if theme_file is None:
             warn_unknown_theme(scripts_dir, beamer_style, target="beamer", key="beamer-style")

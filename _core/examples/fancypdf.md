@@ -1,20 +1,21 @@
 ---
 title: "Fancy PDF: Feature Showcase"
-subtitle: "The document companion to fancybeamer"
+subtitle: "The document companion to fancy-beamer"
 author: "Your name"
 date: "2026"
 fontsize: 11pt
 
 mdoffice:
   make-pdf: true
-  doc-style: "fancypdf"
-  header: "fancypdf example"
+  doc-style: "fancy-pdf"
+  leftheader: "mdOffice"
+  rightheader: "fancy-pdf example"
   page-numbering: true
 ---
 
 ## Plain heading (the default)
 
-Headings have no background color unless you ask for one. Write a color macro on the line right after a heading, exactly as in fancybeamer, to give that one heading a colored bar.
+Headings have no background color unless you ask for one. Write a color macro on the line right after a heading, exactly as in fancy-beamer, to give that one heading a colored bar.
 
 ## Blue: theorem and focus box
 \blueheader

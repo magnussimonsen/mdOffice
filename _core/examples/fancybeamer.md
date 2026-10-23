@@ -10,7 +10,7 @@ fontsize: 11pt
 
 mdoffice:
   make-beamer: true
-  beamer-style: "fancybeamer"
+  beamer-style: "fancy-beamer"
   page-numbering: true
 ---
 

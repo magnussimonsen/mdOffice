@@ -25,7 +25,9 @@
    ```
 
    The script creates `.venv`, installs Python requirements, checks Pandoc and
-   LaTeX, and configures VS Code.
+   LaTeX, and configures VS Code. It also installs the mdOffice VS Code
+   extension: right-click in a Markdown file and choose **mdOffice** to insert
+   quick-start frontmatter.
 3. To activate the virtual environment in a terminal from the repository root:
    ```bash
    source .venv/bin/activate

@@ -105,10 +105,20 @@ step "Installing Python requirements..."
 step "Writing VS Code settings with highlight rules..."
 mkdir -p .vscode
 if [[ -f .vscode/settings.json ]]; then
-  echo "Found existing .vscode/settings.json. Remove it first if you want this script to replace it."
-  exit 1
+  echo "Keeping existing .vscode/settings.json. Remove it first if you want this script to replace it."
+else
+  cp _core/vscode-settings-templates/settings.linux_with_highlights.json .vscode/settings.json
 fi
-cp _core/vscode-settings-templates/settings.linux_with_highlights.json .vscode/settings.json
+
+step "Installing mdOffice VS Code extension (right-click > mdOffice in .md files)..."
+if check_cmd code; then
+  VSIX="$(mktemp -d)/mdoffice-insert.vsix"
+  ./.venv/bin/python _core/vscode-extension/build-vsix.py "$VSIX"
+  code --install-extension "$VSIX" --force
+  rm -f "$VSIX"
+else
+  echo "VS Code command 'code' not found on PATH. Skipping the extension; see _core/vscode-extension/mdoffice-insert/README.md."
+fi
 
 step "Done. mdOffice setup completed successfully."
 echo "Next: restart VS Code if it was open during tool installation."

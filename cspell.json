@@ -112,6 +112,22 @@
         "frontmatter",
         "mdoffice",
         "cursorrules",
-        "windsurfrules"
+        "windsurfrules",
+        "pgfplots",
+        "pgfplotsset",
+        "addplot",
+        "tikzpicture",
+        "xlabel",
+        "ylabel",
+        "xtick",
+        "ytick",
+        "xmin",
+        "xmax",
+        "ymin",
+        "ymax",
+        "multicolumn",
+        "hline",
+        "raggedright",
+        "arraybackslash"
     ]
 }

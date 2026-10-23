@@ -1,4 +1,4 @@
-# mdOffice v2 -- Frontmatter reference
+# mdOffice 2.1.0 -- Frontmatter reference
 
 **Generated from `formats/*.py` schemas -- do not hand-edit.**
 Run `mdoffice.py docs` (or `python generate_reference.py`) to regenerate
@@ -52,7 +52,7 @@ Apply regardless of which targets are built.
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
-| `mdoffice.beamer-style` | str |  | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancybeamer |
+| `mdoffice.beamer-style` | str |  | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. beamer, fancy-beamer |
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
 | `mdoffice.font` | str |  | Installed font family for all text, e.g. "Fira Sans"; overrides the theme's font |
 | `mdoffice.page-numbering` | bool | `True` | false = hide the frame-number footline |
@@ -108,14 +108,18 @@ _None._
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
+| `mdoffice.add-answer-sheet` | int | `0` | Number of answer sheets (front and back, grid paper with name field) added at the end (theme-dependent: exam-pdf only) |
+| `mdoffice.add-draft-sheet` | int | `0` | Number of draft sheets (front and back, grid paper) added after the answer sheets (theme-dependent: exam-pdf only) |
 | `mdoffice.blankbox-text` | str | `Write solution in this box` | Label on blank answer boxes (read by solution_filter.lua) |
-| `mdoffice.doc-style` | str | `standard-pdf` | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam, fancypdf |
-| `mdoffice.first-page-numbering` | bool | `False` | true = also number the title/first page (theme-dependent: exam.tex has no separate title page, so this has no effect there) |
+| `mdoffice.doc-style` | str | `standard-pdf` | Theme name: custom_themes/<name>/theme.tex (overrides) or scripts/themes/<name>.tex, e.g. standard-pdf, exam-pdf, fancy-pdf |
+| `mdoffice.first-page-numbering` | bool | `False` | true = also number the title/first page (theme-dependent: exam-pdf.tex has no separate title page, so this has no effect there) |
 | `mdoffice.font` | str |  | Installed font family for all text, e.g. "Libertinus Serif"; overrides the theme's font |
-| `mdoffice.header` | str |  | Small text shown top-right on every page |
+| `mdoffice.header` | str |  | Older name for rightheader; rightheader wins if both are set |
+| `mdoffice.leftheader` | str |  | Small text shown top-left on every page, after the logo if there is one (theme-dependent: standard-pdf and fancy-pdf) |
 | `mdoffice.page-numbering` | bool | `True` | false = hide page numbers everywhere |
+| `mdoffice.rightheader` | str |  | Small text shown top-right on every page |
 | `mdoffice.show-blankbox` | bool | `False` | Show ::: blankbox ... ::: blocks (read by solution_filter.lua, not Python) |
-| `mdoffice.titlebg` | hexcolor |  | 6-digit hex color (no '#') for a block behind the title (theme-dependent: exam.tex uses it, standard-pdf.tex doesn't) |
+| `mdoffice.titlebg` | hexcolor |  | 6-digit hex color (no '#') for a block behind the title (theme-dependent: exam-pdf.tex uses it, standard-pdf.tex doesn't) |
 | `mdoffice.titlebgpad` | length |  | Padding around the title text inside that colored block (see titlebg) |
 
 ### Top-level keys mdOffice also reads (intercepted)

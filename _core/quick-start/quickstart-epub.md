@@ -24,6 +24,41 @@ mdoffice:
   # make-odt: true
 ---
 
-# Start writing
+<!-- Example content: replace everything below the frontmatter with your own text.
+Comments like this one are only visible here. They never appear in the book.
+Each "#" heading starts a new chapter. -->
 
-Your EPUB content starts here.
+# First chapter
+
+This is a paragraph. Write *italic*, **bold** and `code` straight in the text. Leave an empty line between paragraphs.
+
+## A section
+
+- A bullet point
+- Another bullet point
+
+1. First step
+2. Second step
+
+> A quote starts with `>` at the beginning of the line.
+
+# Second chapter
+
+## Tables
+
+| Planet | Moons |
+|--------|-------|
+| Earth  | 1     |
+| Mars   | 2     |
+
+## Math
+
+Inline math such as $a^2 + b^2 = c^2$ sits inside the sentence. Display math gets its own line:
+
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+A footnote is marked in the text like this.[^1]
+
+[^1]: In an e-book, the footnote text is shown as a pop-up or at the end of the chapter.

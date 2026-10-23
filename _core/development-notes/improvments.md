@@ -48,3 +48,5 @@ The three bugs listed first were reproduced in a scratch folder. Nothing in the 
 2. Add a basic test suite that builds the examples, plus CI.
 3. Add value type validation, theme warnings and Pandoc/xelatex checks up front.
 4. Make the setup easier: lower the Python version, make LaTeX optional, add `doctor` and `new`.
+
+

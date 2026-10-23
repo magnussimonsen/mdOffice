@@ -1,0 +1,52 @@
+{
+  "name": "mdoffice-insert",
+  "displayName": "mdOffice Insert",
+  "description": "Right-click menu in Markdown files for inserting mdOffice templates from _core/quick-start.",
+  "version": "2.1.0",
+  "publisher": "local",
+  "icon": "icon.png",
+  "engines": { "vscode": "^1.80.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onLanguage:markdown"],
+  "contributes": {
+    "commands": [
+      { "command": "mdoffice.insertStandardPdf", "title": "Insert mdOffice standard-pdf template" },
+      { "command": "mdoffice.insertFancyPdf", "title": "Insert mdOffice fancy-pdf template" },
+      { "command": "mdoffice.insertExamPdf", "title": "Insert mdOffice exam-pdf template" },
+      { "command": "mdoffice.insertFancyBeamer", "title": "Insert mdOffice fancy-beamer template" },
+      { "command": "mdoffice.insertPick", "title": "Insert mdOffice template (choose)..." }
+    ],
+    "submenus": [
+      { "id": "mdoffice.submenu", "label": "mdOffice" }
+    ],
+    "menus": {
+      "editor/context": [
+        { "submenu": "mdoffice.submenu", "when": "editorLangId == markdown", "group": "1_modification@10" }
+      ],
+      "mdoffice.submenu": [
+        { "command": "mdoffice.insertStandardPdf", "group": "1_pdf@1" },
+        { "command": "mdoffice.insertFancyPdf", "group": "1_pdf@2" },
+        { "command": "mdoffice.insertExamPdf", "group": "1_pdf@3" },
+        { "command": "mdoffice.insertFancyBeamer", "group": "2_beamer@1" },
+        { "command": "mdoffice.insertPick", "group": "9_other@1" }
+      ],
+      "commandPalette": [
+        { "command": "mdoffice.insertStandardPdf", "when": "editorLangId == markdown" },
+        { "command": "mdoffice.insertFancyPdf", "when": "editorLangId == markdown" },
+        { "command": "mdoffice.insertExamPdf", "when": "editorLangId == markdown" },
+        { "command": "mdoffice.insertFancyBeamer", "when": "editorLangId == markdown" },
+        { "command": "mdoffice.insertPick", "when": "editorLangId == markdown" }
+      ]
+    },
+    "configuration": {
+      "title": "mdOffice Insert",
+      "properties": {
+        "mdofficeInsert.quickstartDir": {
+          "type": "string",
+          "default": "",
+          "description": "Folder containing quickstart-*.md. Empty = find _core/quick-start automatically (next to the extension, or in the workspace)."
+        }
+      }
+    }
+  }
+}

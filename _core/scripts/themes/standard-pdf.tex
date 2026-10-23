@@ -1,7 +1,7 @@
 % standard-pdf.tex - mdOffice's simple, flush-left PDF theme.
 %
 % Intentionally minimal: title, subtitle, author, date -- all flush-left, on
-% their own lines, on their OWN page (unlike exam.tex, where body text
+% their own lines, on their OWN page (unlike exam-pdf.tex, where body text
 % starts right under the title on page 1). This file is meant to double as
 % a starting point for writing new themes: copy it, rename it, and edit the
 % title block at the bottom to taste -- everything above that
@@ -10,7 +10,8 @@
 % frontmatter -> \ifdefined macro contract (set by pdf.py, consumed here):
 %   logo:                          -> \logopath / \logoheight
 %   subtitle:                      -> \mdsubtitle
-%   mdoffice.header:               -> \rightheader
+%   mdoffice.leftheader:           -> \leftheader
+%   mdoffice.rightheader (or header): -> \rightheader
 %   mdoffice.page-numbering: false -> \hidepagenumbers
 %   mdoffice.first-page-numbering: true -> number the title page too
 %                                    (default: title page is unnumbered,
@@ -59,31 +60,29 @@
   \fi
 }
 
+% \mdpageheader fills in the header: logo and \leftheader in the Left slot
+% (logo first, side by side), \rightheader in the Right slot, both texts in
+% a small 9pt font. It also hides the thin horizontal rule fancyhdr draws
+% under the header by default (headrulewidth 0pt = invisible). It starts
+% with \fancyhf{}, which clears fancyhdr's default header/footer content so
+% each page style starts from a blank slate. The trailing % after each line
+% stops LaTeX from inserting an unwanted space/newline into the output at
+% that point -- a common tic in LaTeX macro definitions.
+\newcommand{\mdpageheader}{%
+  \fancyhf{}%
+  \fancyhead[L]{%
+    \ifdefined\logopath\includegraphics[height=\logoheight]{\logopath}\ifdefined\leftheader\quad\fi\fi%
+    \ifdefined\leftheader{\fontsize{9}{8}\selectfont\leftheader}\fi}%
+  \ifdefined\rightheader
+    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
+  \fi
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
 % Activate the "fancyhdr" package's custom header/footer style for all
-% normal pages (page numbers, logos, etc. are defined further down).
+% normal pages, then fill in its header and page-number footer.
 \pagestyle{fancy}
-% Clear out fancyhdr's default header/footer content so we start from a
-% blank slate before defining our own left/right header and footer below.
-\fancyhf{}
-
-% If the frontmatter set a logo, put it in the header's Left slot (sized to
-% \logoheight) and hide the thin horizontal rule fancyhdr draws under the
-% header by default (headrulewidth 0pt = invisible). Without a logo there's
-% nothing in the header, so the rule is hidden either way.
-\ifdefined\logopath
-  \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}
-  \renewcommand{\headrulewidth}{0.0pt}
-\else
-  \renewcommand{\headrulewidth}{0pt}
-\fi
-
-% If the frontmatter set a header string (\rightheader), show it in the
-% header's Right slot, in a small 9pt font.
-\ifdefined\rightheader
-  \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}
-\fi
-
-% Apply the page-number footer defined above to this ("fancy") page style.
+\mdpageheader
 \mdpagefooter
 
 % "plain" is a page style name LaTeX itself falls back to automatically on
@@ -91,38 +90,13 @@
 % redefine it here so those pages get the same logo/header/footer as every
 % other page instead of LaTeX's plain default. \fancypagestyle{name}{...}
 % defines a *named* style; it isn't applied to any page until something
-% calls \pagestyle{name} or \thispagestyle{name}. The trailing %
-% after each line stops LaTeX from inserting an unwanted space/newline into
-% the output at that point -- a common tic in LaTeX macro definitions.
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \ifdefined\logopath
-    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
-    \renewcommand{\headrulewidth}{0.0pt}%
-  \else
-    \renewcommand{\headrulewidth}{0pt}%
-  \fi
-  \ifdefined\rightheader
-    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
-  \fi
-  \mdpagefooter
-}
+% calls \pagestyle{name} or \thispagestyle{name}.
+\fancypagestyle{plain}{\mdpageheader\mdpagefooter}
 
-% Dedicated, unnumbered title-page style: same header (logo/right-header)
-% as every other page, but no footer -- used only when the title page is
-% NOT opting into numbering (the default; see \hidefirstpagenumber below).
-\fancypagestyle{titlepage}{%
-  \fancyhf{}%
-  \ifdefined\logopath
-    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
-    \renewcommand{\headrulewidth}{0.0pt}%
-  \else
-    \renewcommand{\headrulewidth}{0pt}%
-  \fi
-  \ifdefined\rightheader
-    \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
-  \fi
-}
+% Dedicated, unnumbered title-page style: same header as every other page,
+% but no footer -- used only when the title page is NOT opting into
+% numbering (the default; see \hidefirstpagenumber below).
+\fancypagestyle{titlepage}{\mdpageheader}
 
 % Title block: flush-left title, subtitle, author, date, each on its own
 % line, then a \newpage -- the title always gets its own page, and the

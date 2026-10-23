@@ -59,6 +59,30 @@ def _resolve_custom_theme(themes_dir: Path, style_name: str) -> Path | None:
     return candidate
 
 
+# Old official theme names, kept working after the themes were renamed so
+# existing documents still build.
+THEME_ALIASES = {
+    "exam": "exam-pdf",
+    "fancypdf": "fancy-pdf",
+    "fancybeamer": "fancy-beamer",
+}
+
+
+def normalize_theme_name(scripts_dir: Path, style_name: str, target: str) -> str:
+    """Map an old official theme name to its new name, with a note on stderr.
+
+    A custom theme folder that still uses an old name (e.g.
+    `custom_themes/exam/`) keeps that name, so it isn't silently replaced
+    by the official theme.
+    """
+    new_name = THEME_ALIASES.get(style_name)
+    if new_name is None or _resolve_custom_theme(custom_themes_dir(scripts_dir), style_name):
+        return style_name
+    print(f"Note: [{target}] theme {style_name!r} has been renamed to {new_name!r}. "
+          f"Update the frontmatter to use the new name.", file=sys.stderr)
+    return new_name
+
+
 def resolve_theme(scripts_dir: Path, style_name: str, target: str) -> Path | None:
     """Resolve `mdoffice.doc-style` / `mdoffice.beamer-style` to a theme file.
 

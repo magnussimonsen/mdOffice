@@ -9,7 +9,7 @@ numbersections: false
 
 mdoffice:
   make-pdf: true
-  doc-style: exam
+  doc-style: exam-pdf
   header: "School name | School motto"
   page-numbering: true
   titlebg: "#d6e8cf" # Math test color, soft sage

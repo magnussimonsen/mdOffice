@@ -40,7 +40,7 @@ mdoffice:
   `mdoffice.font: "Font Name"`, which mdOffice loads after the theme.
 - **Frontmatter values:** the same `\ifdefined` macros as the official themes
   are available (`\logopath`, `\logoheight`, `\hidepagenumbers`, ...). See an
-  official theme such as `_core/scripts/themes/fancybeamer.tex` for examples.
+  official theme such as `_core/scripts/themes/fancy-beamer.tex` for examples.
 
 ## Private themes
 

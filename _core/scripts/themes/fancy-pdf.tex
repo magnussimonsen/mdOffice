@@ -1,5 +1,5 @@
-% fancypdf.tex — mdOffice Fancy PDF style
-% The document counterpart of fancybeamer.tex: same boxes, focus boxes and
+% fancy-pdf.tex — mdOffice Fancy PDF style
+% The document counterpart of fancy-beamer.tex: same boxes, focus boxes and
 % macros, but with its own color palette (tuned for paper rather than a
 % projector) and plain headings by default.
 %
@@ -12,12 +12,12 @@
 %
 % mdoffice:
 %   make-pdf:  true
-%   doc-style: "fancypdf"
+%   doc-style: "fancy-pdf"
 % ---
 %
 % ---- HEADING COLORS --------------------------------------------------------
 % Headings are plain (no background) by default. To give ONE heading a
-% colored bar, put a macro on the line right after it (same as fancybeamer):
+% colored bar, put a macro on the line right after it (same as fancy-beamer):
 %
 %   ## My Heading
 %   \redheader
@@ -83,7 +83,7 @@
 
 
 % ---------------------------------------------------------------
-% COLORS — fancypdf's own palette (fancybeamer.tex has a separate one).
+% COLORS — fancy-pdf's own palette (fancy-beamer.tex has a separate one).
 % Paper shows colors darker and less luminous than a projector, so the
 % base colors are slightly deeper and the focus tints slightly lighter.
 %
@@ -137,11 +137,12 @@
   \fi
 }
 
+% Left slot: logo and \leftheader side by side, logo first.
 \newcommand{\mdpageheader}{%
   \fancyhf{}%
-  \ifdefined\logopath
-    \fancyhead[L]{\includegraphics[height=\logoheight]{\logopath}}%
-  \fi
+  \fancyhead[L]{%
+    \ifdefined\logopath\includegraphics[height=\logoheight]{\logopath}\ifdefined\leftheader\quad\fi\fi%
+    \ifdefined\leftheader{\fontsize{9}{8}\selectfont\leftheader}\fi}%
   \ifdefined\rightheader
     \fancyhead[R]{{\fontsize{9}{8}\selectfont\rightheader}}%
   \fi

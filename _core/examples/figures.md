@@ -9,7 +9,7 @@ header-includes:
 
 mdoffice:
   make-pdf: true
-  doc-style: exam
+  doc-style: exam-pdf
   page-numbering: true
   show-solution: false
   show-blankbox: false

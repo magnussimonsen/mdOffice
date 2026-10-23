@@ -1,4 +1,4 @@
-"""Command-line entry point for mdoffice v2.
+"""Command-line entry point for mdOffice.
 
 Converts a markdown file into one or more output formats (pdf, docx, odt,
 pptx, beamer, epub) using the conversion pipeline in `core/pipeline.py`. This
@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from core.assets import resolve_asset
 from core.frontmatter import get_custom, load_frontmatter
 from core.pipeline import SUPPORTED_TARGETS, build_document, enabled_targets
 from core.validate import validate_custom_keys
+from core.version import MDOFFICE_VERSION
 from formats import SCHEMAS
 
 
@@ -185,19 +187,40 @@ def _cmd_validate(md_path: str) -> int:
     return 1
 
 
+# The website shows the version between these two markers (next to the logo
+# on every page, and in the footer of index.html).
+_WEBSITE_VERSION = re.compile(r"(<!-- mdoffice-version -->).*?(<!-- /mdoffice-version -->)")
+
+
+def _sync_website_version(docs_dir: Path) -> None:
+    """Write MDOFFICE_VERSION between the version markers in docs/*.html."""
+    for page in sorted(docs_dir.glob("*.html")):
+        # newline="" on both read and write keeps the file's existing line endings.
+        with open(page, encoding="utf-8", newline="") as f:
+            text = f.read()
+        updated = _WEBSITE_VERSION.sub(rf"\g<1>{MDOFFICE_VERSION}\g<2>", text)
+        if updated != text:
+            with open(page, "w", encoding="utf-8", newline="") as f:
+                f.write(updated)
+            print(f"Written: {page} (version {MDOFFICE_VERSION})")
+
+
 def _cmd_docs() -> int:
-    """Regenerate doc/frontmatter-reference.md from the format schemas."""
+    """Regenerate doc/frontmatter-reference.md from the format schemas, and
+    update the version shown on the website."""
     import generate_reference
 
     scripts_dir = Path(__file__).resolve().parent
     output_path = scripts_dir.parent / "doc" / "frontmatter-reference.md"
     generate_reference.write(output_path)
     print(f"Written: {output_path}")
+    _sync_website_version(scripts_dir.parent.parent / "docs")
     return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="mdoffice v2 converter")
+    parser = argparse.ArgumentParser(description="mdOffice converter")
+    parser.add_argument("--version", action="version", version=f"mdOffice {MDOFFICE_VERSION}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # `build-all`: read the markdown file's frontmatter to decide which
@@ -226,8 +249,9 @@ def main() -> int:
     validate = subparsers.add_parser("validate", help="Check a document's mdoffice: keys against the schema")
     validate.add_argument("markdown_file", help="Path to markdown file")
 
-    # `docs`: regenerate doc/frontmatter-reference.md from the schemas.
-    subparsers.add_parser("docs", help="Regenerate doc/frontmatter-reference.md from the format schemas")
+    # `docs`: regenerate doc/frontmatter-reference.md from the schemas, and
+    # update the version shown on the website (docs/*.html).
+    subparsers.add_parser("docs", help="Regenerate doc/frontmatter-reference.md and the website version")
 
     args = parser.parse_args()
 

@@ -14,6 +14,7 @@ def apply_lua_filters(command: list[str], target: str, scripts_dir: Path) -> Non
 
     if target == "pdf":
         filter_names.append("pdf_header_color.lua")
+        filter_names.append("pdf_columns.lua")
 
     filter_names.append("solution_filter.lua")
 

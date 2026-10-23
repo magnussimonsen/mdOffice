@@ -1,5 +1,5 @@
 -- pdf_header_color.lua
--- Lets PDF documents use the fancybeamer convention of writing a heading
+-- Lets PDF documents use the fancy-beamer convention of writing a heading
 -- color macro on the line AFTER the heading:
 --
 --   ## My Heading
@@ -8,7 +8,7 @@
 -- In Beamer that works because the frame title is drawn when the frame
 -- ends. In a normal PDF the heading is already typeset by then, so this
 -- filter moves the macro in front of the heading, where themes such as
--- fancypdf.tex read it. A macro already written before the heading is
+-- fancy-pdf.tex read it. A macro already written before the heading is
 -- left alone.
 --
 -- Only used for the pdf target (see scripts/core/filters.py). Beamer must

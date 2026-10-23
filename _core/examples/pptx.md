@@ -1,12 +1,12 @@
 ---
-title: mdOffice v2 — Pptx Example
+title: mdOffice — Pptx Example
 author: mdOffice
 
 mdoffice:
   make-pptx: true
 ---
 
-# Hello from mdOffice v2
+# Hello from mdOffice
 
 - pptx's only mdOffice-specific key is `reference-doc`, which stays
   top-level (**intercepted**) because it's pandoc's own CLI option name —

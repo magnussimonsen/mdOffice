@@ -7,7 +7,7 @@ title: "EKSAMEN VIDEREGÅENDE OPPLÆRING"
 mdoffice:
   make-pdf: true
   make-docx: false
-  doc-style: exam
+  doc-style: exam-pdf
   header: "Skolenavn"
   page-numbering: false
   titlebg: "#ffa073"
