@@ -104,8 +104,6 @@ nav .logo .version {
   margin-left: 8px;
   padding: 2px 8px;
   border-radius: 4px;
-  /* Logo colors: navy like the letters, with a teal line like the logo's
-     underline. */
   background: var(--color-bg:);
   color: var(--color-ink-muted);
   font-size: 16px;
