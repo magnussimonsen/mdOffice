@@ -138,6 +138,55 @@ the drawing is finished. Lines starting with % are LaTeX comments. -->
 \end{tikzpicture}
 \end{center}
 
+### Two graphs in one coordinate system
+
+<!-- plot (\x, {formula}) draws a graph. Write the formula with \x as the variable:
+  \x^2 is written (\x)^2, multiplication needs *, for example 0.5*(\x)^2.
+  domain=-3:3   the x values the graph is drawn for.
+  samples=100   number of points. More points give a smoother curve.
+  smooth        joins the points with a soft curve instead of straight lines.
+
+Useful color options (put them in the square brackets):
+  blue, red, green!60!black, orange, violet, gray, black
+  red!50        red mixed with 50 % white (lighter)
+  blue!70!black blue mixed with black (darker)
+  fill=blue!15  fills a closed shape with a light color
+  opacity=0.5   makes the line or fill see through
+
+Useful line options:
+  thin, thick, very thick, ultra thick   line width
+  dashed, dotted, densely dashed         line style
+  ->  <->                                arrow at one or both ends
+
+Useful grid options:
+  \draw[help lines] (-3,-1) grid (4,5);              light gray grid, 1 cm squares
+  \draw[step=0.5, gray!30] (-3,-1) grid (4,5);       finer grid with 0.5 cm squares
+  \draw[step=1, gray!50, dashed] (-3,-1) grid (4,5); dashed grid
+  scale=0.8 in \begin{tikzpicture}[scale=0.8]       makes the whole drawing smaller -->
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % Grid: a fine light grid with a stronger grid on top
+  \draw[step=0.5, gray!20] (-3,-1) grid (4,5);
+  \draw[step=1, gray!50] (-3,-1) grid (4,5);
+  % Axes with numbers
+  \draw[thick, ->] (-3,0) -- (4.4,0) node[right] {$x$};
+  \draw[thick, ->] (0,-1) -- (0,5.4) node[above] {$y$};
+  \foreach \x in {-3,...,-1,1,2,3,4} \node[below, fill=white, inner sep=1pt] at (\x,-0.1) {$\x$};
+  \foreach \y in {-1,1,2,...,5} \node[left, fill=white, inner sep=1pt] at (-0.1,\y) {$\y$};
+  % Graph 1: f(x) = 0.5x^2, with the label at the left end
+  \draw[very thick, blue, domain=-3:3, samples=100, smooth]
+    plot (\x, {0.5*(\x)^2});
+  \node[blue, left] at (-3,4.5) {$f(x) = \frac{1}{2}x^2$};
+  % Graph 2: g(x) = 0.5x + 3, with the label at the right end
+  \draw[very thick, red, dashed, domain=-3:4]
+    plot (\x, {0.5*\x + 3}) node[right] {$g(x) = \frac{1}{2}x + 3$};
+  % Intersection points
+  \fill[black] (-2,2) circle (2.5pt) node[left] {$(-2,2)$};
+  \fill[black] (3,4.5) circle (2.5pt) node[below right] {$(3,4.5)$};
+\end{tikzpicture}
+\end{center}
+
 ## Quotes and footnotes
 
 > A quote starts with `>` at the beginning of the line.
